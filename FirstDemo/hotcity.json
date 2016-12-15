@@ -1,0 +1,150 @@
+{
+    "cnhot": [
+              {
+              "cityname": "北京",
+              "citycode": "101010100"
+              },
+              {
+              "cityname": "天津",
+              "citycode": "101030100"
+              },
+              {
+              "cityname": "上海",
+              "citycode": "101020100"
+              },
+              {
+              "cityname": "重庆",
+              "citycode": "101040100"
+              },
+              {
+              "cityname": "沈阳",
+              "citycode": "101070101"
+              },
+              {
+              "cityname": "大连",
+              "citycode": "101070201"
+              },
+              {
+              "cityname": "长春",
+              "citycode": "101060101"
+              },
+              {
+              "cityname": "哈尔滨",
+              "citycode": "101050101"
+              },
+              {
+              "cityname": "郑州",
+              "citycode": "101180101"
+              },
+              {
+              "cityname": "武汉",
+              "citycode": "101200101"
+              },
+              {
+              "cityname": "长沙",
+              "citycode": "101250101"
+              },
+              {
+              "cityname": "广州",
+              "citycode": "101280101"
+              },
+              {
+              "cityname": "深圳",
+              "citycode": "101280601"
+              },
+              {
+              "cityname": "南京",
+              "citycode": "101190101"
+              },
+              {
+              "cityname": "杭州",
+              "citycode": "101210101"
+              },
+              {
+              "cityname": "福州",
+              "citycode": "101230101"
+              },
+              {
+              "cityname": "成都",
+              "citycode": "101270101"
+              },
+              {
+              "cityname": "济南",
+              "citycode": "101120101"
+              },
+              {
+              "cityname": "石家庄",
+              "citycode": "101090101"
+              },
+              {
+              "cityname": "南昌",
+              "citycode": "101240101"
+              },
+              {
+              "cityname": "昆明",
+              "citycode": "101290101"
+              },
+              {
+              "cityname": "合肥",
+              "citycode": "101220101"
+              },
+              {
+              "cityname": "西安",
+              "citycode": "101110101"
+              },
+              {
+              "cityname": "南宁",
+              "citycode": "101300101"
+              },
+              {
+              "cityname": "太原",
+              "citycode": "101100101"
+              },
+              {
+              "cityname": "呼和浩特",
+              "citycode": "101080101"
+              },
+              {
+              "cityname": "贵阳",
+              "citycode": "101260101"
+              },
+              {
+              "cityname": "兰州",
+              "citycode": "101160101"
+              }
+              ],
+    "enhot": [
+              {
+              "cityname": "纽约",
+              "citycode": "2459115"
+              },
+              {
+              "cityname": "东京",
+              "citycode": "1118370"
+              },
+              {
+              "cityname": "吉隆坡",
+              "citycode": "1154781"
+              },
+              {
+              "cityname": "新加坡",
+              "citycode": "1062617"
+              },
+              {
+              "cityname": "悉尼",
+              "citycode": "1105779"
+              },
+              {
+              "cityname": "渥太华",
+              "citycode": "3369"
+              },
+              {
+              "cityname": "首尔",
+              "citycode": "1132599"
+              },
+              {
+              "cityname": "伦敦",
+              "citycode": "44418"
+              }
+              ]
+}

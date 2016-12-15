@@ -67,9 +67,10 @@ static NSString * const FdAddCotyCollectionViewCellIdentifier = @"FdAddCotyColle
     // collectionView
     _flowLayout = [[FDEditCityFlowLayout alloc] init];
     _flowLayout.scrollDirection = UICollectionViewScrollDirectionVertical;
-    _flowLayout.minimumInteritemSpacing = 5;
-    _flowLayout.itemSize = CGSizeMake((SCREEN_WIDTH - 15 * 2 - 10 * 2) / 3, 120);
-    _flowLayout.sectionInset = UIEdgeInsetsMake(64, 15, 0, 15);
+    _flowLayout.minimumInteritemSpacing = 0;
+    _flowLayout.minimumLineSpacing = 0;
+    _flowLayout.itemSize = CGSizeMake((SCREEN_WIDTH - 15 - 5) / 3, 129);
+    _flowLayout.sectionInset = UIEdgeInsetsMake(64, 15, 0, 5);
     
     _collectionView = [[UICollectionView alloc] initWithFrame:self.view.bounds collectionViewLayout:_flowLayout];
     [_collectionView registerClass:[FDEditCityCollectionViewCell class] forCellWithReuseIdentifier:FDEditCityCollectionViewCellIdentifier];
@@ -124,19 +125,21 @@ static NSString * const FdAddCotyCollectionViewCellIdentifier = @"FdAddCotyColle
 - (void)editCity:(id)sender {
     if ([_editButton.titleLabel.text isEqualToString:@"编辑"]) {
         [_editButton setTitle:@"完成" forState:UIControlStateNormal];
-        _flowLayout.itemSize = CGSizeMake((SCREEN_WIDTH - 15 * 2 - 10 * 2) / 3, 151);
+        _flowLayout.itemSize = CGSizeMake((SCREEN_WIDTH - 15 - 5) / 3, 155);
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"editingCity"];
         
         [_flowLayout invalidateLayout];
     } else {
         [_editButton setTitle:@"编辑" forState:UIControlStateNormal];
-        _flowLayout.itemSize = CGSizeMake((SCREEN_WIDTH - 15 * 2 - 10 * 2) / 3, 120);
+        _flowLayout.itemSize = CGSizeMake((SCREEN_WIDTH - 15 - 5) / 3, 129);
         [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"editingCity"];
         
         NSInteger defaultIndex = [[NSUserDefaults standardUserDefaults] integerForKey:@"defaultCityIndex"];
-        [_cities exchangeObjectAtIndex:defaultIndex withObjectAtIndex:0];
         
-        [[NSUserDefaults standardUserDefaults] setInteger:0 forKey:@"defaultCityIndex"];
+        // pre logic
+        //[_cities exchangeObjectAtIndex:defaultIndex withObjectAtIndex:0];
+        //[[NSUserDefaults standardUserDefaults] setInteger:0 forKey:@"defaultCityIndex"];
+        
         [_flowLayout invalidateLayout];
     }
 }
@@ -230,9 +233,9 @@ static NSString * const FdAddCotyCollectionViewCellIdentifier = @"FdAddCotyColle
             // [_collectionView updateInteractiveMovementTargetPosition:[gesture locationInView:gesture.view]];
             {
                 _snapshotView.center = location;
-                [self collectionView:_collectionView moveItemAtIndexPath:_indexPathForReordering toIndexPath:indexPath];
                 if (indexPath) {
                     [_collectionView moveItemAtIndexPath:_indexPathForReordering toIndexPath:indexPath];
+                    [self collectionView:_collectionView moveItemAtIndexPath:_indexPathForReordering toIndexPath:indexPath];
                     _indexPathForReordering = indexPath;
                     [_collectionView cellForItemAtIndexPath: _indexPathForReordering].alpha = 0;
                 }

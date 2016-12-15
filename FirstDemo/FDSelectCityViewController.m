@@ -32,6 +32,8 @@ static NSString * const FDCityCollectionViewCellIdentifier = @"FDCityCollectionV
 @property (nonatomic, strong) NSMutableArray<FDWeatherModel *> *cities;
 @property (nonatomic, strong) NSArray<FDWeatherModel *> *searchCities;
 
+@property (nonatomic, strong) NSOperationQueue *queryQueue;
+
 @end
 
 @implementation FDSelectCityViewController
@@ -43,6 +45,8 @@ static NSString * const FDCityCollectionViewCellIdentifier = @"FDCityCollectionV
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    _queryQueue = [[NSOperationQueue alloc] init];
     
     [self setupView];
     [self fetchHotCity];
@@ -183,6 +187,7 @@ static NSString * const FDCityCollectionViewCellIdentifier = @"FDCityCollectionV
     }];
 }
 
+#pragma mark -
 #pragma mark - result table view
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -205,6 +210,7 @@ static NSString * const FDCityCollectionViewCellIdentifier = @"FDCityCollectionV
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+#pragma mark -
 #pragma mark - searchbar
 
 - (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar {
@@ -227,6 +233,9 @@ static NSString * const FDCityCollectionViewCellIdentifier = @"FDCityCollectionV
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
     
     searchBar.text = @"";
+    _searchCities = @[];
+    
+    [_searchResultTableView reloadData];
     
     [_navView mas_updateConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.view).offset(20);
@@ -248,10 +257,19 @@ static NSString * const FDCityCollectionViewCellIdentifier = @"FDCityCollectionV
 }
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
-    _searchCities = [[FDUtils findCitiesWithText:searchText] mutableCopy];
-    [_searchResultTableView reloadData];
+    [_queryQueue cancelAllOperations];
+    
+    [_queryQueue addOperationWithBlock:^{
+        NSArray *results = [[FDUtils findCitiesWithText:searchText] copy];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            _searchCities = results;
+            [_searchResultTableView reloadData];
+        });
+    }];
 }
 
+#pragma mark -
 #pragma mark - collection view delegate and datasource
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {

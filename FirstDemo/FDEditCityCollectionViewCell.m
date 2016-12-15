@@ -49,22 +49,36 @@
 }
 
 - (void)setupView {
-    self.layer.cornerRadius = 5;
-    self.layer.shadowRadius = 2;
-    self.layer.shadowColor = [[UIColor blackColor] colorWithAlphaComponent:0.2].CGColor;
-    self.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.2];
+    
+    //self.contentView.backgroundColor = [UIColor redColor];
+    
+    // container
+    UIView *container = [[UIView alloc] init];
+    
+    container.layer.cornerRadius = 5;
+    container.layer.shadowRadius = 2;
+    container.layer.shadowColor = [[UIColor blackColor] colorWithAlphaComponent:0.2].CGColor;
+    container.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.2];
+    
+    [self.contentView addSubview:container];
+    
+    [container mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.bottom.equalTo(self.contentView);
+        make.top.equalTo(self.contentView.mas_top).offset(10);
+        make.right.equalTo(self.contentView.mas_right).offset(-10);
+    }];
     
     // cityLabel
     _cityLabel = [UILabel commonLableWithFontName:PFSCR FontSize:15 colorAlpha:1];
-    [self.contentView addSubview:_cityLabel];
+    [container addSubview:_cityLabel];
     
     [_cityLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.contentView).offset(8);
-        make.centerX.equalTo(self.contentView);
+        make.top.equalTo(container).offset(8);
+        make.centerX.equalTo(container);
     }];
     
     _positionImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"tq-view-local-icon"]];
-    [self.contentView addSubview:_positionImageView];
+    [container addSubview:_positionImageView];
     
     [_positionImageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(_cityLabel);
@@ -72,48 +86,48 @@
     }];
     
     UIView *separatorView = [[UIView alloc] init];
-    [self.contentView addSubview:separatorView];
+    [container addSubview:separatorView];
     
     [separatorView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_cityLabel.mas_bottom).offset(8);
         make.height.mas_equalTo(1);
-        make.left.equalTo(self.contentView).offset(5);
-        make.right.equalTo(self.contentView).offset(-5);
+        make.left.equalTo(container).offset(5);
+        make.right.equalTo(container).offset(-5);
     }];
     
     separatorView.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.2];
     
     _weatherIcon = [[UIImageView alloc] init];
-    [self.contentView addSubview:_weatherIcon];
+    [container addSubview:_weatherIcon];
     
     [_weatherIcon mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.height.mas_equalTo(20);
-        make.centerX.equalTo(self.contentView);
+        make.centerX.equalTo(container);
         make.top.equalTo(separatorView.mas_bottom).offset(10);
     }];
     
     _tempLabel = [UILabel commonLableWithFontName:SFDR FontSize:13 colorAlpha:1];
-    [self.contentView addSubview:_tempLabel];
+    [container addSubview:_tempLabel];
     
     [_tempLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_weatherIcon.mas_bottom).offset(8);
-        make.centerX.equalTo(self.contentView);
+        make.centerX.equalTo(container);
     }];
     
     _weatherLabel = [UILabel commonLableWithFontName:PFSCR FontSize:13 colorAlpha:1];
-    [self.contentView addSubview:_weatherLabel];
+    [container addSubview:_weatherLabel];
     
     [_weatherLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_tempLabel.mas_bottom).offset(3);
-        make.centerX.equalTo(self.contentView);
+        make.centerX.equalTo(container);
     }];
     
     // defaultImageView
     _defaultImageView = [[FDDefaultView alloc] init];
-    [self.contentView addSubview:_defaultImageView];
+    [container addSubview:_defaultImageView];
     
     [_defaultImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.bottom.equalTo(self.contentView);
+        make.right.bottom.equalTo(container);
     }];
     
     _checkIcon = [[UIImageView alloc] init];
@@ -129,21 +143,26 @@
     stackView.alignment = UIStackViewAlignmentCenter;
     stackView.spacing = 5;
     
-    [self.contentView addSubview:stackView];
+    [container addSubview:stackView];
+    
+    stackView.backgroundColor = [UIColor redColor];
     
     [stackView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_weatherLabel.mas_bottom).offset(8);
-        make.centerX.equalTo(self.contentView);
+        make.centerX.equalTo(container);
     }];
     
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTapToMakeItDefault:)];
     [stackView addGestureRecognizer:tapGesture];
     
     _deleteButton = [[FDDeleteButton alloc] init];
-    [self addSubview:_deleteButton];
+    [self.contentView addSubview:_deleteButton];
     
-    _deleteButton.frame = CGRectMake(0, 0, 20, 20);
-    _deleteButton.center = CGPointMake((SCREEN_WIDTH - 15 * 2 - 10 * 2) / 3, 0);
+    [_deleteButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.width.height.mas_equalTo(20);
+        make.centerY.equalTo(container.mas_top);
+        make.centerX.equalTo(container.mas_right);
+    }];
     
     UITapGestureRecognizer *deleteGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(deleteItem:)];
     [_deleteButton addGestureRecognizer:deleteGesture];
@@ -256,8 +275,8 @@
     _weatherLabel.text = @"多云";
 }
 
-- (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event {
-    return CGRectContainsPoint(UIEdgeInsetsInsetRect(self.bounds, UIEdgeInsetsMake(-20, 0, 0, -20)), point);
-}
+//- (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event {
+//    return CGRectContainsPoint(UIEdgeInsetsInsetRect(self.bounds, UIEdgeInsetsMake(-20, 0, 0, -20)), point);
+//}
 
 @end

@@ -15,6 +15,7 @@
 #import "FDCityCollectionViewHeader.h"
 #import "FDWeatherModel.h"
 #import "FDUtils.h"
+#import "FDQueryCityOperation.h"
 
 static NSString * const FDCityCollectionViewCellIdentifier = @"FDCityCollectionViewCell";
 
@@ -177,6 +178,8 @@ static NSString * const FDCityCollectionViewCellIdentifier = @"FDCityCollectionV
     [_searchResultTableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"ResultCell"];
     _searchResultTableView.tableFooterView = [UIView new];
     _searchResultTableView.hidden = YES;
+#warning TODO: dismiss keyboard
+    // _searchResultTableView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag;
     [self.view addSubview:_searchResultTableView];
     
     [_searchResultTableView mas_updateConstraints:^(MASConstraintMaker *make) {
@@ -197,7 +200,7 @@ static NSString * const FDCityCollectionViewCellIdentifier = @"FDCityCollectionV
     
     FDWeatherModel *model = _searchCities[indexPath.row];
     
-    cell.textLabel.text = [NSString stringWithFormat:@"%@---%@", [FDUtils provinceOfCity:model], model.cityName];
+    cell.textLabel.text = [NSString stringWithFormat:@"%@--%@", [FDUtils provinceOfCity:model], model.cityName];
     
     return cell;
 }
@@ -255,16 +258,26 @@ static NSString * const FDCityCollectionViewCellIdentifier = @"FDCityCollectionV
 }
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
-    [_queryQueue cancelAllOperations];
     
-    [_queryQueue addOperationWithBlock:^{
-        NSArray *results = [[FDUtils findCitiesWithText:searchText] copy];
-        
+    [_queryQueue cancelAllOperations];
+
+    if ([searchText isEqualToString:@""] || searchText.length > 5) {
+        _searchCities = @[];
+        [_searchResultTableView reloadData];
+        return;
+    }
+    
+    
+    __weak typeof(self) weakSelf = self;
+    FDQueryCityOperation *operation = [[FDQueryCityOperation alloc] initWithKey:searchText complectionWithResultBlock:^(NSArray *results) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
         dispatch_async(dispatch_get_main_queue(), ^{
-            _searchCities = results;
-            [_searchResultTableView reloadData];
+            strongSelf.searchCities = results;
+            [strongSelf.searchResultTableView reloadData];
         });
     }];
+    
+    [_queryQueue addOperation:operation];
 }
 
 #pragma mark -

@@ -20,6 +20,8 @@
 		C28E79BF1DF115FF00E2C517 /* FDChartView.m in Sources */ = {isa = PBXBuildFile; fileRef = C28E79BE1DF115FF00E2C517 /* FDChartView.m */; };
 		C29F50C41DF6CB42001A92E3 /* FDEditCityCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C29F50C31DF6CB42001A92E3 /* FDEditCityCollectionViewCell.m */; };
 		C29F50C61DF6D218001A92E3 /* FDConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = C29F50C51DF6D218001A92E3 /* FDConstants.m */; };
+		C2A2079F1E03BBB2000028AB /* NSString+Util.m in Sources */ = {isa = PBXBuildFile; fileRef = C2A2079E1E03BBB2000028AB /* NSString+Util.m */; };
+		C2A207A31E03CBD7000028AB /* FDQueryCityOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = C2A207A21E03CBD7000028AB /* FDQueryCityOperation.m */; };
 		C2A3DC2B1DF9323E00829575 /* FDDeleteButton.m in Sources */ = {isa = PBXBuildFile; fileRef = C2A3DC2A1DF9323E00829575 /* FDDeleteButton.m */; };
 		C2A705F81DF946EE00110C96 /* FDMainCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C2A705F71DF946EE00110C96 /* FDMainCollectionViewCell.m */; };
 		C2A705FC1DF9569000110C96 /* FDWeatherModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C2A705FB1DF9569000110C96 /* FDWeatherModel.m */; };
@@ -114,6 +116,10 @@
 		C29F50C21DF6CB42001A92E3 /* FDEditCityCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FDEditCityCollectionViewCell.h; sourceTree = "<group>"; };
 		C29F50C31DF6CB42001A92E3 /* FDEditCityCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FDEditCityCollectionViewCell.m; sourceTree = "<group>"; };
 		C29F50C51DF6D218001A92E3 /* FDConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FDConstants.m; sourceTree = "<group>"; };
+		C2A2079D1E03BBB2000028AB /* NSString+Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Util.h"; sourceTree = "<group>"; };
+		C2A2079E1E03BBB2000028AB /* NSString+Util.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Util.m"; sourceTree = "<group>"; };
+		C2A207A11E03CBD7000028AB /* FDQueryCityOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FDQueryCityOperation.h; sourceTree = "<group>"; };
+		C2A207A21E03CBD7000028AB /* FDQueryCityOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FDQueryCityOperation.m; sourceTree = "<group>"; };
 		C2A3DC291DF9323E00829575 /* FDDeleteButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FDDeleteButton.h; sourceTree = "<group>"; };
 		C2A3DC2A1DF9323E00829575 /* FDDeleteButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FDDeleteButton.m; sourceTree = "<group>"; };
 		C2A705F61DF946EE00110C96 /* FDMainCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FDMainCollectionViewCell.h; sourceTree = "<group>"; };
@@ -257,6 +263,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		C2A207A01E03CBAB000028AB /* Operations */ = {
+			isa = PBXGroup;
+			children = (
+				C2A207A11E03CBD7000028AB /* FDQueryCityOperation.h */,
+				C2A207A21E03CBD7000028AB /* FDQueryCityOperation.m */,
+			);
+			name = Operations;
+			sourceTree = "<group>";
+		};
 		C2A705F51DF945FC00110C96 /* deprecated */ = {
 			isa = PBXGroup;
 			children = (
@@ -299,6 +314,7 @@
 		C2B2FF9D1DEFF52F00C1CD77 /* FirstDemo */ = {
 			isa = PBXGroup;
 			children = (
+				C2A207A01E03CBAB000028AB /* Operations */,
 				C2A705F91DF9567000110C96 /* Model */,
 				C2C9348E1DF6B86300590921 /* View Controllers */,
 				C2B2FFF71DF03AF600C1CD77 /* Vendor */,
@@ -352,6 +368,8 @@
 				C2B2FFD41DF0186B00C1CD77 /* UILabel+FDLabel.m */,
 				C2B2FFE01DF02A5700C1CD77 /* UIImageView+FDImageView.h */,
 				C2B2FFE11DF02A5700C1CD77 /* UIImageView+FDImageView.m */,
+				C2A2079D1E03BBB2000028AB /* NSString+Util.h */,
+				C2A2079E1E03BBB2000028AB /* NSString+Util.m */,
 			);
 			name = Category;
 			sourceTree = "<group>";
@@ -604,6 +622,7 @@
 				C2C934841DF6ADFB00590921 /* FDSwitchCityButton.m in Sources */,
 				C2B2FFA61DEFF52F00C1CD77 /* ViewController.m in Sources */,
 				C29F50C41DF6CB42001A92E3 /* FDEditCityCollectionViewCell.m in Sources */,
+				C2A2079F1E03BBB2000028AB /* NSString+Util.m in Sources */,
 				C2B2FFEA1DF032FB00C1CD77 /* FDTodayWeatherCollectionViewCell.m in Sources */,
 				C27D465E1DFA72AD00707F76 /* FDDefaultView.m in Sources */,
 				C2B2001B1DF03B1900C1CD77 /* NSLayoutConstraint+MASDebugAdditions.m in Sources */,
@@ -627,6 +646,7 @@
 				C2D7C64A1DF9621600F1D0B8 /* FDSelectCityViewController.m in Sources */,
 				C2C9348D1DF6B85E00590921 /* FDNavigationController.m in Sources */,
 				C2B2FFD91DF01AB800C1CD77 /* FDGradientView.m in Sources */,
+				C2A207A31E03CBD7000028AB /* FDQueryCityOperation.m in Sources */,
 				C2B2001A1DF03B1900C1CD77 /* NSArray+MASAdditions.m in Sources */,
 				C2B2FFD21DF0183900C1CD77 /* UIColor+FDColor.m in Sources */,
 				C200BC651DF9802E00BB9EA8 /* FDCityCollectionViewHeader.m in Sources */,

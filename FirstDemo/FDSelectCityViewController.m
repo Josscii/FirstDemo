@@ -38,6 +38,9 @@ static NSString * const FDCityCollectionViewCellIdentifier = @"FDCityCollectionV
 
 @implementation FDSelectCityViewController
 
+#pragma mark -
+#pragma mark - life cycle
+
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:FDAlertCityHasBeenAddedNotification object:nil];
 }
@@ -47,6 +50,7 @@ static NSString * const FDCityCollectionViewCellIdentifier = @"FDCityCollectionV
     // Do any additional setup after loading the view.
     
     _queryQueue = [[NSOperationQueue alloc] init];
+    _queryQueue.name = @"Query-For-Cities-Queue";
     
     [self setupView];
     [self fetchHotCity];
@@ -320,6 +324,7 @@ static NSString * const FDCityCollectionViewCellIdentifier = @"FDCityCollectionV
     [self presentViewController:alert animated:YES completion:nil];
 }
 
+#pragma mark -
 #pragma mark - fetch data
 
 - (void)fetchHotCity {
@@ -351,6 +356,7 @@ static NSString * const FDCityCollectionViewCellIdentifier = @"FDCityCollectionV
 }
 
 #pragma mark -
+#pragma mark - others
 
 - (void)alertUser:(NSNotification *)notification {
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"此城市已添加" preferredStyle:UIAlertControllerStyleAlert];;

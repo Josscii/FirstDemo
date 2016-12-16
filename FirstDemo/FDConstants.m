@@ -7,8 +7,3 @@
 //
 
 #import <Foundation/Foundation.h>
-
-
-NSString * const FDShouldDeleteCityCellNotification = @"FDShouldDeleteCityCellNotification";
-NSString * const FDShouldEnterEditingModeNotification = @"FDShouldEnterEditingModeNotification";
-NSString * const FDAlertCityHasBeenAddedNotification = @"FDAlertCityHasBeenAddedNotification";

@@ -8,6 +8,7 @@
 
 #import "FdAddCotyCollectionViewCell.h"
 #import "Masonry/Masonry.h"
+#import "FDConstants.h"
 
 @implementation FdAddCotyCollectionViewCell
 

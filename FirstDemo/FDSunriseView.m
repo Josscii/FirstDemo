@@ -103,15 +103,10 @@
     [self addSubview:_sunImageView];
 }
 
-- (void)resetAnimation {
-    _sunImageView.alpha = 0;
-    
-#warning reset layer's strokeEnd not working
-    _progressLayer.strokeEnd = 0;
-}
-
 - (void)animatedSunRise {
     if ([_currentTime compare:_endTime] == NSOrderedDescending) {
+        _sunImageView.alpha = 0;
+        _progressLayer.strokeEnd = 0;
         return;
     } else {
         _sunImageView.alpha = 1;

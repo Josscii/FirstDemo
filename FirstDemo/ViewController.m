@@ -65,7 +65,7 @@ static NSString * const FDMainCollectionViewCellIdentifier = @"FDMainCollectionV
             [_cities addObject:current];
             [FDUtils saveAllSeletedCities:[_cities copy]];
             
-            [[NSUserDefaults standardUserDefaults] setObject:cityName forKey:@"location"];
+            [[NSUserDefaults standardUserDefaults] setObject:cityName forKey:LOCATION];
             
             [self reloadDataWithPage:0 shouldReloadCollectionView:YES];
             [_collectionView reloadData];
@@ -82,7 +82,7 @@ static NSString * const FDMainCollectionViewCellIdentifier = @"FDMainCollectionV
     if (_firstLoad == YES) {
         _firstLoad = NO;
     } else {
-        double selectedIndex = [[NSUserDefaults standardUserDefaults] doubleForKey:@"selectedIndex"];
+        double selectedIndex = [[NSUserDefaults standardUserDefaults] doubleForKey:SELECTEDINDEX];
         
         _cities = [[FDUtils getAllSeletedCities] mutableCopy];
         _collectionView.contentOffset = CGPointMake(selectedIndex * SCREEN_WIDTH, 0);
@@ -226,7 +226,7 @@ static NSString * const FDMainCollectionViewCellIdentifier = @"FDMainCollectionV
     _pageControl.numberOfPages = _cities.count;
     _pageControl.currentPage = page;
     
-    if ([_cities[page].cityName isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:@"location"]]) {
+    if ([_cities[page].cityName isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:LOCATION]]) {
         _switchCityButton.positionImageView.alpha = 1;
     } else {
         _switchCityButton.positionImageView.alpha = 0;

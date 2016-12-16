@@ -18,9 +18,11 @@
 #define SCREEN_WIDTH [UIScreen mainScreen].bounds.size.width
 #define SCREEN_HEIGHT [UIScreen mainScreen].bounds.size.height
 
-extern NSString * const FDShouldDeleteCityCellNotification;
-extern NSString * const FDShouldEnterEditingModeNotification;
-extern NSString * const FDAlertCityHasBeenAddedNotification;
+#define EDITINGCITY @"editingCity"
+#define DEFAULTCIYTINDEX @"defaultCityIndex"
+#define CURRENTCITYCOUNT @"currentCityCount"
+#define LOCATION @"location"
+#define SELECTEDINDEX @"selectedIndex"
 
 typedef NS_ENUM(NSInteger, WeatherType) {
     WeatherTypeQing=0,

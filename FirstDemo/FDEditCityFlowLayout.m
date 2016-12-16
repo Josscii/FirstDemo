@@ -7,26 +7,24 @@
 //
 
 #import "FDEditCityFlowLayout.h"
-#import "FDDeleteDecorationView.h"
+#import "FDConstants.h"
 
 @implementation FDEditCityFlowLayout
 
 - (NSArray<UICollectionViewLayoutAttributes *> *)layoutAttributesForElementsInRect:(CGRect)rect {
     
-    NSArray *layoutAttributes = [super layoutAttributesForElementsInRect:rect];
+    NSArray<UICollectionViewLayoutAttributes *> *layoutAttributes = [super layoutAttributesForElementsInRect:rect];
     
-    for (UICollectionViewLayoutAttributes *attr in layoutAttributes) {
-        BOOL editingCity = [[NSUserDefaults standardUserDefaults] boolForKey:@"editingCity"];
-        if (attr.indexPath.item == [self numOfItems]-1) {
-            attr.hidden = editingCity;
-        }
+    NSInteger currentCityCount = [[NSUserDefaults standardUserDefaults] integerForKey:CURRENTCITYCOUNT];
+    if (currentCityCount >= 9) {
+        layoutAttributes[9].hidden = YES;
+        return layoutAttributes;
     }
     
+    BOOL editingCity = [[NSUserDefaults standardUserDefaults] boolForKey:EDITINGCITY];
+    layoutAttributes[currentCityCount].hidden = editingCity;
+    
     return layoutAttributes;
-}
-
-- (NSInteger)numOfItems {
-    return [self.collectionView numberOfItemsInSection:0];
 }
 
 @end

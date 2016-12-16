@@ -20,8 +20,6 @@
 @property (nonatomic, strong) UILabel *startTimeLabel;
 @property (nonatomic, strong) UILabel *endTimeLabel;
 
-@property (nonatomic, assign) BOOL hasAnimated;
-
 @end
 
 @implementation FDSunriseTableViewCell
@@ -32,8 +30,6 @@
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        _hasAnimated = NO;
-        
         [self configureLayout];
         [self feedFakeData];
     }
@@ -88,17 +84,8 @@
     }];
 }
 
-- (void)layoutSubviews {
-    if (!_hasAnimated) {
-        [_sunriseView animatedSunRise];
-        _hasAnimated = YES;
-    }
-}
-
-/// 多个 tableview 公用一个 cell 重用池
-- (void)prepareForReuse {
-    _hasAnimated = NO;
-    [_sunriseView resetAnimation];
+- (void)animateSunRise {
+    [_sunriseView animatedSunRise];
 }
 
 #pragma mark -

@@ -41,10 +41,6 @@ static NSString * const FDCityCollectionViewCellIdentifier = @"FDCityCollectionV
 #pragma mark -
 #pragma mark - life cycle
 
-- (void)dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:FDAlertCityHasBeenAddedNotification object:nil];
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -54,9 +50,7 @@ static NSString * const FDCityCollectionViewCellIdentifier = @"FDCityCollectionV
     
     [self setupView];
     [self fetchHotCity];
-    [self feedFakeData];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(alertUser:) name:FDAlertCityHasBeenAddedNotification object:nil];
+    // [self feedFakeData];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -131,7 +125,7 @@ static NSString * const FDCityCollectionViewCellIdentifier = @"FDCityCollectionV
     _positionLabel = [UILabel commonLableWithFontName:PFSCR FontSize:16 colorAlpha:1];
     _positionLabel.textColor = [UIColor colorFromHexString:@"#333333"];
     
-    NSString *cityName = [[NSUserDefaults standardUserDefaults] objectForKey:@"location"];
+    NSString *cityName = [[NSUserDefaults standardUserDefaults] objectForKey:LOCATION];
     _positionLabel.text = [NSString stringWithFormat:@"%@ %@", cityName, [FDUtils provinceOfCity:[[FDWeatherModel alloc] initWithCityCode:[FDUtils codeOfCity:cityName] cityName:cityName]]];
     
     [currentPositionView addSubview:_positionLabel];
@@ -210,7 +204,7 @@ static NSString * const FDCityCollectionViewCellIdentifier = @"FDCityCollectionV
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    [_cities addObject:_searchCities[indexPath.item]];
+    [_cities addObject:_hotCities[indexPath.item]];
     [self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -309,6 +303,7 @@ static NSString * const FDCityCollectionViewCellIdentifier = @"FDCityCollectionV
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     [_cities addObject:_hotCities[indexPath.item]];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -352,7 +347,7 @@ static NSString * const FDCityCollectionViewCellIdentifier = @"FDCityCollectionV
 }
 
 - (void)feedFakeData {
-    // _positionLabel.text = @"渝北重庆";
+    _positionLabel.text = @"定位中...";
 }
 
 #pragma mark -
@@ -371,7 +366,7 @@ static NSString * const FDCityCollectionViewCellIdentifier = @"FDCityCollectionV
 }
 
 - (void)didSelectCurrentLocation:(id)sender {
-    NSString *cityName = [[NSUserDefaults standardUserDefaults] objectForKey:@"location"];
+    NSString *cityName = [[NSUserDefaults standardUserDefaults] objectForKey:LOCATION];
     for (FDWeatherModel *city in _cities) {
         if ([city.cityName isEqualToString:cityName]) {
             return;

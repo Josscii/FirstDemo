@@ -38,6 +38,8 @@ static NSString * const FdAddCotyCollectionViewCellIdentifier = @"FdAddCotyColle
 
 @implementation FDManageCityViewController
 
+#pragma mark - life cycle
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -53,6 +55,7 @@ static NSString * const FdAddCotyCollectionViewCellIdentifier = @"FdAddCotyColle
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     _cities = [[FDUtils getAllSeletedCities] mutableCopy];
+    [[NSUserDefaults standardUserDefaults] setInteger:_cities.count forKey:CURRENTCITYCOUNT];
     [_collectionView reloadData];
 }
 
@@ -118,25 +121,28 @@ static NSString * const FdAddCotyCollectionViewCellIdentifier = @"FdAddCotyColle
         make.top.equalTo(navView).offset(32);
     }];
     
-    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"editingCity"];
-    [[NSUserDefaults standardUserDefaults] setInteger:0 forKey:@"defaultCityIndex"];
+    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:EDITINGCITY];
+    // pre logic
+    //[[NSUserDefaults standardUserDefaults] setInteger:0 forKey:@"defaultCityIndex"];
 }
+
+#pragma mark -
+#pragma mark - actions
 
 - (void)editCity:(id)sender {
     if ([_editButton.titleLabel.text isEqualToString:@"编辑"]) {
         [_editButton setTitle:@"完成" forState:UIControlStateNormal];
         _flowLayout.itemSize = CGSizeMake((SCREEN_WIDTH - 15 - 5) / 3, 155);
-        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"editingCity"];
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:EDITINGCITY];
         
         [_flowLayout invalidateLayout];
     } else {
         [_editButton setTitle:@"编辑" forState:UIControlStateNormal];
         _flowLayout.itemSize = CGSizeMake((SCREEN_WIDTH - 15 - 5) / 3, 129);
-        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"editingCity"];
-        
-        NSInteger defaultIndex = [[NSUserDefaults standardUserDefaults] integerForKey:@"defaultCityIndex"];
+        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:EDITINGCITY];
         
         // pre logic
+        //NSInteger defaultIndex = [[NSUserDefaults standardUserDefaults] integerForKey:@"defaultCityIndex"];
         //[_cities exchangeObjectAtIndex:defaultIndex withObjectAtIndex:0];
         //[[NSUserDefaults standardUserDefaults] setInteger:0 forKey:@"defaultCityIndex"];
         
@@ -144,25 +150,28 @@ static NSString * const FdAddCotyCollectionViewCellIdentifier = @"FdAddCotyColle
     }
 }
 
-/// cell delegate
+#pragma mark -
+#pragma mark - FDEditCityCollectionViewCellDelegate
 
 - (void)deleteCell:(UICollectionViewCell *)cell {
     
     NSInteger deleteIndex = [_collectionView indexPathForCell:cell].item;
-    NSInteger defaultIndex = [[NSUserDefaults standardUserDefaults] integerForKey:@"defaultCityIndex"];
+    NSInteger defaultIndex = [[NSUserDefaults standardUserDefaults] integerForKey:DEFAULTCIYTINDEX];
     
     if (defaultIndex > deleteIndex) {
-        [[NSUserDefaults standardUserDefaults] setInteger:defaultIndex-1 forKey:@"defaultCityIndex"];
+        [[NSUserDefaults standardUserDefaults] setInteger:defaultIndex-1 forKey:DEFAULTCIYTINDEX];
     }
     
     [_cities removeObjectAtIndex:deleteIndex];
+    [[NSUserDefaults standardUserDefaults] setInteger:_cities.count forKey:CURRENTCITYCOUNT];
     [_collectionView deleteItemsAtIndexPaths: @[[NSIndexPath indexPathForItem:deleteIndex inSection:0]]];
 }
 
-/// delegate & datasource
+#pragma mark - 
+#pragma mark - collection view delegate and datasource
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return _cities.count + 1;
+    return _cities.count+1;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -191,22 +200,49 @@ static NSString * const FdAddCotyCollectionViewCellIdentifier = @"FdAddCotyColle
         return;
     }
     
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"editingCity"]) {
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:EDITINGCITY]) {
         return;
     }
     
-    [[NSUserDefaults standardUserDefaults] setDouble:indexPath.item forKey:@"selectedIndex"];
+    [[NSUserDefaults standardUserDefaults] setDouble:indexPath.item forKey:SELECTEDINDEX];
     [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)collectionView:(UICollectionView *)collectionView moveItemAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath {
-    [_cities exchangeObjectAtIndex:sourceIndexPath.item withObjectAtIndex:destinationIndexPath.item];
+    
+    FDWeatherModel *model = _cities[sourceIndexPath.item];
+    [_cities removeObjectAtIndex:sourceIndexPath.item];
+    [_cities insertObject:model atIndex:destinationIndexPath.item];
+    
+    // not exchange !!!
+    // [_cities exchangeObjectAtIndex:sourceIndexPath.item withObjectAtIndex:destinationIndexPath.item];
+    
+    // current logic of reranging cells
+    NSInteger defaultIndex = [[NSUserDefaults standardUserDefaults] integerForKey:DEFAULTCIYTINDEX];
+    if (sourceIndexPath.item == defaultIndex) {
+        [[NSUserDefaults standardUserDefaults] setInteger:destinationIndexPath.item forKey:DEFAULTCIYTINDEX];
+    } else {
+        if (sourceIndexPath.item > defaultIndex) {
+            if (destinationIndexPath.item > defaultIndex) {
+                return;
+            } else {
+                [[NSUserDefaults standardUserDefaults] setInteger:defaultIndex+1 forKey:DEFAULTCIYTINDEX];
+            }
+        } else {
+            if (destinationIndexPath.item < defaultIndex) {
+                return;
+            } else {
+                [[NSUserDefaults standardUserDefaults] setInteger:defaultIndex-1 forKey:DEFAULTCIYTINDEX];
+            }
+        }
+    }
 }
 
-///
+#pragma mark -
+#pragma mark - collection view reodering
 
 - (void)handleLongGesture:(UILongPressGestureRecognizer *)gesture {
-    if (![[NSUserDefaults standardUserDefaults] boolForKey:@"editingCity"]) {
+    if (![[NSUserDefaults standardUserDefaults] boolForKey:EDITINGCITY]) {
         return;
     }
     
@@ -234,8 +270,9 @@ static NSString * const FdAddCotyCollectionViewCellIdentifier = @"FdAddCotyColle
             {
                 _snapshotView.center = location;
                 if (indexPath) {
-                    [_collectionView moveItemAtIndexPath:_indexPathForReordering toIndexPath:indexPath];
                     [self collectionView:_collectionView moveItemAtIndexPath:_indexPathForReordering toIndexPath:indexPath];
+                    [_collectionView moveItemAtIndexPath:_indexPathForReordering toIndexPath:indexPath];
+                    
                     _indexPathForReordering = indexPath;
                     [_collectionView cellForItemAtIndexPath: _indexPathForReordering].alpha = 0;
                 }
@@ -258,8 +295,11 @@ static NSString * const FdAddCotyCollectionViewCellIdentifier = @"FdAddCotyColle
     }
 }
 
+#pragma mark -
+#pragma mark - others
+
 - (void)popViewController {
-    [[NSUserDefaults standardUserDefaults] setDouble:0 forKey:@"selectedIndex"];
+    [[NSUserDefaults standardUserDefaults] setDouble:0 forKey:SELECTEDINDEX];
     [self.navigationController popViewControllerAnimated:YES];
 }
 

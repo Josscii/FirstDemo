@@ -10,6 +10,7 @@
 
 @interface FDSunriseTableViewCell : UITableViewCell
 
+- (void)animateSunRise;
 - (void)feedCellWithData:(id)data;
 
 @end

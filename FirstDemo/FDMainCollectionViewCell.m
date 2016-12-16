@@ -31,6 +31,7 @@ static NSString * const FDSunriseTableViewCellCelldentifier = @"FDSunriseTableVi
 
 @property (nonatomic, strong) id weatherData;
 @property (nonatomic, strong) UITableView *mainTableView;
+@property (nonatomic, assign) BOOL hasAnimated;
 
 @end
 
@@ -39,6 +40,7 @@ static NSString * const FDSunriseTableViewCellCelldentifier = @"FDSunriseTableVi
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
+        _hasAnimated = NO;
         [self setupView];
     }
     return self;
@@ -69,6 +71,12 @@ static NSString * const FDSunriseTableViewCellCelldentifier = @"FDSunriseTableVi
     }];
 }
 
+- (void)prepareForReuse {
+    _hasAnimated = NO;
+}
+
+#pragma mark -
+#pragma mark - tableview delegate and datasource
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row == 0) {
@@ -114,6 +122,15 @@ static NSString * const FDSunriseTableViewCellCelldentifier = @"FDSunriseTableVi
         return cell;
     }
     return [UITableViewCell new];
+}
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    if (indexPath.row == 4 && !_hasAnimated) {
+        FDSunriseTableViewCell *cell1 = (FDSunriseTableViewCell *)cell;
+        [cell1 animateSunRise];
+        _hasAnimated = YES;
+    }
 }
 
 - (void)feedCellWithData:(id)data {

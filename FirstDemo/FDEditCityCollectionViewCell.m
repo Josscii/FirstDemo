@@ -173,13 +173,13 @@
 }
 
 - (void)didTapToMakeItDefault:(id)sender {
-    [[NSUserDefaults standardUserDefaults] setInteger:_indexPath.item forKey:@"defaultCityIndex"];
+    [[NSUserDefaults standardUserDefaults] setInteger:_indexPath.item forKey:DEFAULTCIYTINDEX];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:@"FDShouldInavidateCellLayout" object:nil];
 }
 
 - (void)configureEditingMode {
-    BOOL editingCity = [[NSUserDefaults standardUserDefaults] boolForKey:@"editingCity"];
+    BOOL editingCity = [[NSUserDefaults standardUserDefaults] boolForKey:EDITINGCITY];
     
     if (editingCity) {
         _checkLabel.alpha = 1;
@@ -188,7 +188,7 @@
         
         _defaultImageView.alpha = 0;
         
-        NSInteger defaultIndex = [[NSUserDefaults standardUserDefaults] integerForKey:@"defaultCityIndex"];
+        NSInteger defaultIndex = [[NSUserDefaults standardUserDefaults] integerForKey:DEFAULTCIYTINDEX];
         if (_indexPath.item == defaultIndex) {
             _checkIcon.image = [UIImage imageNamed:CHECKEDICON];
             _checkLabel.text = @"默认";
@@ -202,7 +202,7 @@
         _checkIcon.alpha = 0;
         _deleteButton.alpha = 0;
         
-        NSInteger defaultIndex = [[NSUserDefaults standardUserDefaults] integerForKey:@"defaultCityIndex"];
+        NSInteger defaultIndex = [[NSUserDefaults standardUserDefaults] integerForKey:DEFAULTCIYTINDEX];
         if (_indexPath.item == defaultIndex) {
             _defaultImageView.alpha = 1;
         } else {
@@ -210,7 +210,7 @@
         }
     }
     
-    if ([_cityLabel.text isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:@"location"]]) {
+    if ([_cityLabel.text isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:LOCATION]]) {
         _positionImageView.alpha = 1;
     } else {
         _positionImageView.alpha = 0;
@@ -261,7 +261,7 @@
         }
     }
     
-    if ([_cityLabel.text isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:@"location"]]) {
+    if ([_cityLabel.text isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:LOCATION]]) {
         _positionImageView.alpha = 1;
     } else {
         _positionImageView.alpha = 0;
@@ -275,6 +275,7 @@
     _weatherLabel.text = @"多云";
 }
 
+// no need for this
 //- (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event {
 //    return CGRectContainsPoint(UIEdgeInsetsInsetRect(self.bounds, UIEdgeInsetsMake(-20, 0, 0, -20)), point);
 //}

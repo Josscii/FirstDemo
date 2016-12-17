@@ -17,6 +17,5 @@
 @property (nonatomic, strong) UIImageView *sunImageView;
 
 - (void)animatedSunRise;
-- (void)resetAnimation;
 
 @end

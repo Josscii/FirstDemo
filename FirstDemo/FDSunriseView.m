@@ -106,7 +106,13 @@
 - (void)animatedSunRise {
     if ([_currentTime compare:_endTime] == NSOrderedDescending) {
         _sunImageView.alpha = 0;
-        _progressLayer.strokeEnd = 0;
+        // workaround: reset the stoke end 
+        CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
+        animation.toValue = 0;
+        animation.duration = 0;
+        animation.fillMode = kCAFillModeBoth;
+        animation.removedOnCompletion = NO;
+        [_progressLayer addAnimation:animation forKey:animation.keyPath];
         return;
     } else {
         _sunImageView.alpha = 1;

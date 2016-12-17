@@ -165,6 +165,7 @@ static NSString * const FdAddCotyCollectionViewCellIdentifier = @"FdAddCotyColle
     [_cities removeObjectAtIndex:deleteIndex];
     [[NSUserDefaults standardUserDefaults] setInteger:_cities.count forKey:CURRENTCITYCOUNT];
     [_collectionView deleteItemsAtIndexPaths: @[[NSIndexPath indexPathForItem:deleteIndex inSection:0]]];
+    
 }
 
 #pragma mark - 

@@ -27,6 +27,7 @@
 @property (nonatomic, strong) UILabel *weatherLabel;
 
 @property (nonatomic, strong) FDDefaultView *defaultImageView;
+@property (nonatomic, strong) UILabel *loadingLabel;
 @property (nonatomic, strong) NSIndexPath *indexPath;
 
 @end
@@ -37,7 +38,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         [self setupView];
-        [self feedFakeData];
+        //[self feedFakeData];
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(configureEditingMode) name:@"FDShouldInavidateCellLayout" object:nil];
     }
@@ -52,12 +53,10 @@
     _weatherIcon.image = nil;
     _tempLabel.text = @"";
     _weatherLabel.text = @"";
+    _loadingLabel.alpha = 1;
 }
 
 - (void)setupView {
-    
-    //self.contentView.backgroundColor = [UIColor redColor];
-    
     // container
     UIView *container = [[UIView alloc] init];
     
@@ -161,6 +160,7 @@
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTapToMakeItDefault:)];
     [stackView addGestureRecognizer:tapGesture];
     
+    // delete button
     _deleteButton = [[FDDeleteButton alloc] init];
     [self.contentView addSubview:_deleteButton];
     
@@ -172,6 +172,16 @@
     
     UITapGestureRecognizer *deleteGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(deleteItem:)];
     [_deleteButton addGestureRecognizer:deleteGesture];
+    
+    // loading label
+    _loadingLabel = [UILabel commonLableWithFontName:PFSCR FontSize:12 colorAlpha:1];
+    _loadingLabel.text = @"正在加载";
+    [container addSubview:_loadingLabel];
+    [_loadingLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(container);
+        make.centerY.equalTo(container).mas_offset(10);
+    }];
+    _loadingLabel.alpha = 1;
 }
 
 - (void)deleteItem:(id)sender {
@@ -264,6 +274,8 @@
     } else {
         _positionImageView.alpha = 0;
     }
+    
+    _loadingLabel.alpha = 0;
 }
 
 - (void)feedFakeData {

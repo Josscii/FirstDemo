@@ -30,4 +30,6 @@
 + (NSArray<FDWeatherModel *> *)findCitiesWithText:(NSString *)text;
 + (NSString *)codeOfCity:(NSString *)cityName;
 
++ (void)toPinyin;
+
 @end

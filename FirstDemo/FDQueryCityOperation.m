@@ -50,13 +50,11 @@
     // 找到包含这个字的省份的所有城市
     for (NSDictionary *province in provinces) {
         NSString *provinceName = province[@"name"];
-        NSString *pinyin = [provinceName toPinyin];
+        NSString *pinyin = province[@"pinyin"];
         
         // 如果全是英文字符
         if ([_text isAllEngNumAndSpecialSign]) {
             NSString *tempProvinceName = [pinyin stringByReplacingOccurrencesOfString:@" " withString:@""];
-            
-            NSLog(@"%@", tempProvinceName);
             
             // 如果是以这个字符串开头
             if ([tempProvinceName hasPrefix:_text]) {
@@ -81,14 +79,17 @@
                 
                 NSArray *pinyins = [pinyin componentsSeparatedByString:@" "];
                 
-                for (int i = 0; i < pinyins.count; i++) {
-                    if (_text.length <= i) {
-                        break;
-                    } else {
-                        if ([[pinyins[i] substringToIndex:1] isEqualToString:[_text substringWithRange:NSMakeRange(i, 1)]]) {
-                            find = YES;
+                if (!(_text.length > pinyins.count)) {
+                    for (int i = 0; i < pinyins.count; i++) {
+                        if (_text.length <= i) {
+                            break;
                         } else {
-                            find = NO;
+                            if ([[pinyins[i] substringToIndex:1] isEqualToString:[_text substringWithRange:NSMakeRange(i, 1)]]) {
+                                find = YES;
+                            } else {
+                                find = NO;
+                                break;
+                            }
                         }
                     }
                 }
@@ -137,7 +138,7 @@
     for (NSArray *tempCountries in counties.allValues) {
         for (NSDictionary *country in tempCountries) {
             NSString *countryName = country[@"name"];
-            NSString *pinyin = [countryName toPinyin];
+            NSString *pinyin = country[@"pinyin"];
             
             // 如果全是英文字符
             if ([_text isAllEngNumAndSpecialSign]) {
@@ -153,14 +154,17 @@
                     
                     NSArray *pinyins = [pinyin componentsSeparatedByString:@" "];
                     
-                    for (int i = 0; i < pinyins.count; i++) {
-                        if (_text.length <= i) {
-                            break;
-                        } else {
-                            if ([[pinyins[i] substringToIndex:1] isEqualToString:[_text substringWithRange:NSMakeRange(i, 1)]]) {
-                                find = YES;
+                    if (!(_text.length > pinyins.count)) {
+                        for (int i = 0; i < pinyins.count; i++) {
+                            if (_text.length <= i) {
+                                break;
                             } else {
-                                find = NO;
+                                if ([[pinyins[i] substringToIndex:1] isEqualToString:[_text substringWithRange:NSMakeRange(i, 1)]]) {
+                                    find = YES;
+                                } else {
+                                    find = NO;
+                                    break;
+                                }
                             }
                         }
                     }

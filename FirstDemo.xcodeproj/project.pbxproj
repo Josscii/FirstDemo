@@ -13,6 +13,9 @@
 		C26C8A281DF2B353009BF06C /* FDUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = C26C8A271DF2B353009BF06C /* FDUtils.m */; };
 		C27D46511DFA4E5F00707F76 /* hotcity.json in Resources */ = {isa = PBXBuildFile; fileRef = C27D46501DFA4E5F00707F76 /* hotcity.json */; };
 		C27D465E1DFA72AD00707F76 /* FDDefaultView.m in Sources */ = {isa = PBXBuildFile; fileRef = C27D465D1DFA72AD00707F76 /* FDDefaultView.m */; };
+		C2827F9B1E07A377005B277F /* city.xml in Resources */ = {isa = PBXBuildFile; fileRef = C2827F981E07A377005B277F /* city.xml */; };
+		C2827F9C1E07A377005B277F /* province.xml in Resources */ = {isa = PBXBuildFile; fileRef = C2827F991E07A377005B277F /* province.xml */; };
+		C2827F9D1E07A377005B277F /* county.xml in Resources */ = {isa = PBXBuildFile; fileRef = C2827F9A1E07A377005B277F /* county.xml */; };
 		C28E79B41DF0FFB800E2C517 /* FDIconLabelView.m in Sources */ = {isa = PBXBuildFile; fileRef = C28E79B31DF0FFB800E2C517 /* FDIconLabelView.m */; };
 		C28E79B71DF1067E00E2C517 /* FDTodayWeatherTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C28E79B61DF1067E00E2C517 /* FDTodayWeatherTableViewCell.m */; };
 		C28E79B91DF10AD500E2C517 /* SanFranciscoDisplay-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = C28E79B81DF10AD500E2C517 /* SanFranciscoDisplay-Bold.otf */; };
@@ -25,9 +28,6 @@
 		C2A3DC2B1DF9323E00829575 /* FDDeleteButton.m in Sources */ = {isa = PBXBuildFile; fileRef = C2A3DC2A1DF9323E00829575 /* FDDeleteButton.m */; };
 		C2A705F81DF946EE00110C96 /* FDMainCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C2A705F71DF946EE00110C96 /* FDMainCollectionViewCell.m */; };
 		C2A705FC1DF9569000110C96 /* FDWeatherModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C2A705FB1DF9569000110C96 /* FDWeatherModel.m */; };
-		C2A706001DF9575C00110C96 /* city.xml in Resources */ = {isa = PBXBuildFile; fileRef = C2A705FD1DF9575C00110C96 /* city.xml */; };
-		C2A706011DF9575C00110C96 /* province.xml in Resources */ = {isa = PBXBuildFile; fileRef = C2A705FE1DF9575C00110C96 /* province.xml */; };
-		C2A706021DF9575C00110C96 /* county.xml in Resources */ = {isa = PBXBuildFile; fileRef = C2A705FF1DF9575C00110C96 /* county.xml */; };
 		C2A706051DF95C9300110C96 /* FdAddCotyCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C2A706041DF95C9300110C96 /* FdAddCotyCollectionViewCell.m */; };
 		C2B200131DF03B1900C1CD77 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C2B2FFF91DF03B1900C1CD77 /* Info.plist */; };
 		C2B200141DF03B1900C1CD77 /* MASCompositeConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = C2B2FFFB1DF03B1900C1CD77 /* MASCompositeConstraint.m */; };
@@ -101,6 +101,9 @@
 		C27D46531DFA55ED00707F76 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		C27D465C1DFA72AD00707F76 /* FDDefaultView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FDDefaultView.h; sourceTree = "<group>"; };
 		C27D465D1DFA72AD00707F76 /* FDDefaultView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FDDefaultView.m; sourceTree = "<group>"; };
+		C2827F981E07A377005B277F /* city.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = city.xml; sourceTree = "<group>"; };
+		C2827F991E07A377005B277F /* province.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = province.xml; sourceTree = "<group>"; };
+		C2827F9A1E07A377005B277F /* county.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = county.xml; sourceTree = "<group>"; };
 		C28E79B11DF0FDD300E2C517 /* FDConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FDConstants.h; sourceTree = "<group>"; };
 		C28E79B21DF0FFB800E2C517 /* FDIconLabelView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FDIconLabelView.h; sourceTree = "<group>"; };
 		C28E79B31DF0FFB800E2C517 /* FDIconLabelView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FDIconLabelView.m; sourceTree = "<group>"; };
@@ -126,9 +129,6 @@
 		C2A705F71DF946EE00110C96 /* FDMainCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FDMainCollectionViewCell.m; sourceTree = "<group>"; };
 		C2A705FA1DF9569000110C96 /* FDWeatherModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FDWeatherModel.h; sourceTree = "<group>"; };
 		C2A705FB1DF9569000110C96 /* FDWeatherModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FDWeatherModel.m; sourceTree = "<group>"; };
-		C2A705FD1DF9575C00110C96 /* city.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = city.xml; sourceTree = "<group>"; };
-		C2A705FE1DF9575C00110C96 /* province.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = province.xml; sourceTree = "<group>"; };
-		C2A705FF1DF9575C00110C96 /* county.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = county.xml; sourceTree = "<group>"; };
 		C2A706031DF95C9300110C96 /* FdAddCotyCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FdAddCotyCollectionViewCell.h; sourceTree = "<group>"; };
 		C2A706041DF95C9300110C96 /* FdAddCotyCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FdAddCotyCollectionViewCell.m; sourceTree = "<group>"; };
 		C2B200001DF03B1900C1CD77 /* MASConstraintMaker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MASConstraintMaker.m; sourceTree = "<group>"; };
@@ -336,10 +336,10 @@
 		C2B2FF9E1DEFF52F00C1CD77 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				C2827F981E07A377005B277F /* city.xml */,
+				C2827F991E07A377005B277F /* province.xml */,
+				C2827F9A1E07A377005B277F /* county.xml */,
 				C27D46501DFA4E5F00707F76 /* hotcity.json */,
-				C2A705FE1DF9575C00110C96 /* province.xml */,
-				C2A705FD1DF9575C00110C96 /* city.xml */,
-				C2A705FF1DF9575C00110C96 /* county.xml */,
 				C28E79B81DF10AD500E2C517 /* SanFranciscoDisplay-Bold.otf */,
 				C2B2FFDE1DF0277500C1CD77 /* SanFranciscoDisplay-Regular.otf */,
 				C2B2FFDC1DF0270000C1CD77 /* SanFranciscoDisplay-Ultralight.otf */,
@@ -592,16 +592,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				C27D46511DFA4E5F00707F76 /* hotcity.json in Resources */,
-				C2A706001DF9575C00110C96 /* city.xml in Resources */,
+				C2827F9C1E07A377005B277F /* province.xml in Resources */,
 				C28E79B91DF10AD500E2C517 /* SanFranciscoDisplay-Bold.otf in Resources */,
 				C2B2FFAE1DEFF52F00C1CD77 /* LaunchScreen.storyboard in Resources */,
+				C2827F9B1E07A377005B277F /* city.xml in Resources */,
+				C2827F9D1E07A377005B277F /* county.xml in Resources */,
 				C2B2FFDF1DF0277500C1CD77 /* SanFranciscoDisplay-Regular.otf in Resources */,
 				C2B200131DF03B1900C1CD77 /* Info.plist in Resources */,
-				C2A706011DF9575C00110C96 /* province.xml in Resources */,
 				C2B2FFAB1DEFF52F00C1CD77 /* Assets.xcassets in Resources */,
 				C2B2FFDD1DF0270000C1CD77 /* SanFranciscoDisplay-Ultralight.otf in Resources */,
 				C2B2FFA91DEFF52F00C1CD77 /* Main.storyboard in Resources */,
-				C2A706021DF9575C00110C96 /* county.xml in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

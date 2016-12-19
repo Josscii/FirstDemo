@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "FDUtils.h"
 
 #import <AMapFoundationKit/AMapFoundationKit.h>
 

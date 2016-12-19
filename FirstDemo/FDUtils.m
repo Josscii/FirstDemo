@@ -353,3 +353,49 @@
 
 @end
 
+//+ (void)toPinyin {
+//    NSArray *provinces = [NSArray arrayWithContentsOfFile:[[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@"province.xml"]];
+//    NSDictionary *cities = [NSDictionary dictionaryWithContentsOfFile:[[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@"city.xml"]];
+//    NSDictionary *counties = [NSDictionary dictionaryWithContentsOfFile:[[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@"county.xml"]];
+//    
+//    NSMutableDictionary *result = [counties mutableCopy];
+//    
+//    // city
+//    NSArray *keys = cities.allKeys;
+//    NSArray *values = cities.allValues;
+//    
+//    for (int i = 0; i < keys.count; i++) {
+//        NSArray *tempCities = values[i];
+//        
+//        NSMutableArray *tempArr = [NSMutableArray array];
+//        for (NSDictionary *city in tempCities) {
+//            NSMutableDictionary *copy = [city mutableCopy];
+//            NSString *cityName = city[@"name"];
+//            [copy addEntriesFromDictionary:@{@"pinyin": [cityName toPinyin]}];
+//            [tempArr addObject:copy];
+//        }
+//        
+//        result[keys[i]] = [tempArr copy];
+//    }
+//    
+//    NSArray *keys = counties.allKeys;
+//    NSArray *values = counties.allValues;
+//    
+//    for (int i = 0; i < keys.count; i++) {
+//        NSArray *tempCounties = values[i];
+//        
+//        NSMutableArray *tempArr = [NSMutableArray array];
+//        for (NSDictionary *county in tempCounties) {
+//            NSMutableDictionary *copy = [county mutableCopy];
+//            NSString *countyName = county[@"name"];
+//            [copy addEntriesFromDictionary:@{@"pinyin": [countyName toPinyin]}];
+//            [tempArr addObject:copy];
+//        }
+//        
+//        result[keys[i]] = [tempArr copy];
+//    }
+//    
+//    [result writeToFile:[[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@"test.xml"] atomically:YES];
+//    
+//    NSLog(@"%@", [[NSBundle mainBundle] bundlePath]);
+//}

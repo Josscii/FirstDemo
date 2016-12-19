@@ -261,12 +261,11 @@ static NSString * const FDCityCollectionViewCellIdentifier = @"FDCityCollectionV
     
     [_queryQueue cancelAllOperations];
 
-    if ([searchText isEqualToString:@""] || searchText.length > 5) {
+    if ([searchText isEqualToString:@""]) {
         _searchCities = @[];
         [_searchResultTableView reloadData];
         return;
     }
-    
     
     __weak typeof(self) weakSelf = self;
     FDQueryCityOperation *operation = [[FDQueryCityOperation alloc] initWithKey:searchText complectionWithResultBlock:^(NSArray *results) {

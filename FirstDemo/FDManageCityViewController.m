@@ -29,7 +29,7 @@ static NSString * const FdAddCotyCollectionViewCellIdentifier = @"FdAddCotyColle
 
 @property (nonatomic, strong) UIButton *editButton;
 
-@property (nonatomic, copy) NSMutableArray<FDWeatherModel *> *cities;
+@property (nonatomic, strong) NSMutableArray<FDWeatherModel *> *cities;
 
 @property (nonatomic, strong) NSIndexPath *indexPathForReordering;
 @property (nonatomic, strong) UIView *snapshotView;

@@ -21,9 +21,13 @@
 }
 
 - (BOOL)isAllEngNumAndSpecialSign {
-    NSString *regularString = @"^[A-Za-z0-9\\p{Z}\\p{P}]+$";
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regularString];
-    return [predicate evaluateWithObject:self];
+    BOOL flag = YES;
+    for (int i = 0; i < self.length; i++) {
+        if ([self characterAtIndex:i] < 0 || [self characterAtIndex:i] > 177) {
+            flag = NO;
+        }
+    }
+    return flag;
 }
 
 @end

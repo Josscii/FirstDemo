@@ -87,6 +87,10 @@ static NSString * const FDMainCollectionViewCellIdentifier = @"FDMainCollectionV
         _cities = [[FDUtils getAllSeletedCities] mutableCopy];
         _collectionView.contentOffset = CGPointMake(selectedIndex * SCREEN_WIDTH, 0);
         [self reloadDataWithPage:selectedIndex shouldReloadCollectionView:YES];
+        
+        for (FDWeatherModel *model in _cities) {
+            NSLog(@"%@", model.cityCode);
+        }
     }
 }
 

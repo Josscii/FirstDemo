@@ -164,9 +164,7 @@
 
 + (NSArray<FDCity *> *)getAllSeletedCities {
     NSString *home = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    NSString *filePath = [home stringByAppendingString:@"/cities"];
-    
-    NSLog(@"获取成功");
+    NSString *filePath = [home stringByAppendingString:@"/cities.plist"];
     
     NSArray *cities = [NSKeyedUnarchiver unarchiveObjectWithFile:filePath];
     
@@ -175,9 +173,8 @@
 
 + (void)saveAllSeletedCities:(NSArray<FDCity *> *)cities {
     NSString *home = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    NSString *filePath = [home stringByAppendingString:@"/cities"];
     
-    NSLog(@"保存成功");
+    NSString *filePath = [home stringByAppendingString:@"/cities.plist"];
     
     [NSKeyedArchiver archiveRootObject:cities toFile:filePath];
 }

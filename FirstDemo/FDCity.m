@@ -65,6 +65,7 @@
         _sunRiseTime = [aDecoder decodeObjectForKey:@"sr"];
         _sunFallTime = [aDecoder decodeObjectForKey:@"ss"];
         _curr = [aDecoder decodeObjectForKey:@"curr"];
+        _saveTime = [aDecoder decodeObjectForKey:@"saveTime"];
     }
     return self;
 }
@@ -78,6 +79,7 @@
     [aCoder encodeObject:_sunRiseTime forKey:@"sr"];
     [aCoder encodeObject:_sunFallTime forKey:@"ss"];
     [aCoder encodeObject:_curr forKey:@"curr"];
+    [aCoder encodeObject:_saveTime forKey:@"saveTime"];
 }
 
 - (BOOL)isExpired {

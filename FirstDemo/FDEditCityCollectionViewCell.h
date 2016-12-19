@@ -17,6 +17,7 @@
 
 @interface FDEditCityCollectionViewCell : UICollectionViewCell
 
+@property (nonatomic, strong) UILabel *cityLabel;
 @property (nonatomic, strong) UIImageView *checkIcon;
 @property (nonatomic, strong) UILabel *checkLabel;
 @property (nonatomic, strong) FDDeleteButton *deleteButton;

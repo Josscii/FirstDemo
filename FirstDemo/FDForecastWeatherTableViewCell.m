@@ -12,6 +12,8 @@
 #import "FDChartView.h"
 #import "FDConstants.h"
 #import "FDUtils.h"
+#import "FDCity.h"
+#import "FDForecastItemDate.h"
 
 static NSString * const CellIndentifier = @"FDForecastWeatherCollectionViewCell";
 
@@ -21,7 +23,7 @@ static NSString * const CellIndentifier = @"FDForecastWeatherCollectionViewCell"
 @property (nonatomic, strong) FDChartView *highChartView;
 @property (nonatomic, strong) FDChartView *lowChartView;
 
-@property (nonatomic, copy) NSArray *items;
+@property (nonatomic, strong) FDCity *city;
 
 @end
 
@@ -60,7 +62,7 @@ static NSString * const CellIndentifier = @"FDForecastWeatherCollectionViewCell"
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return _items.count;
+    return _city.fcd.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -73,10 +75,10 @@ static NSString * const CellIndentifier = @"FDForecastWeatherCollectionViewCell"
         cell.alpha = 1;
     }
     
-    id item = _items[indexPath.item];
+    FDForecastItemDate *item = _city.fcd[indexPath.item];
     
-    NSString *d = item[@"d"];
-    NSNumber *wt = item[@"wt"];
+    NSString *d = item.date;
+    NSNumber *wt = item.weatherType;
     
     cell.weakdayLabel.text = [FDUtils weakdayWithDate:d];
     cell.dateLabel.text = [FDUtils dateWithString:d];
@@ -93,7 +95,7 @@ static NSString * const CellIndentifier = @"FDForecastWeatherCollectionViewCell"
 }
 
 - (void)feedCellWithData:(id)data {
-    _items = data;
+    _city = data;
     [self.collectionView reloadData];
     [self reloadData];
 }
@@ -105,9 +107,9 @@ static NSString * const CellIndentifier = @"FDForecastWeatherCollectionViewCell"
     NSMutableArray *lowValues = [@[] mutableCopy];
     NSMutableArray *lowTitles = [@[] mutableCopy];
     
-    for (id item in _items) {
-        NSNumber *th = item[@"th"];
-        NSNumber *tl = item[@"tl"];
+    for (FDForecastItemDate *item in _city.fcd) {
+        NSNumber *th = item.tempHigh;
+        NSNumber *tl = item.tempLow;
         
         [highValues addObject:th];
         [highTitles addObject:[FDUtils tempWithNumber:th]];

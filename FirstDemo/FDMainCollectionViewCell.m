@@ -13,7 +13,7 @@
 #import "FDForecastWeatherTableViewCell.h"
 #import "FDSuggestionTableViewCell.h"
 #import "FDSunriseTableViewCell.h"
-#import "FDWeatherModel.h"
+#import "FDCity.h"
 
 #import "UIColor+FDColor.h"
 #import "FDConstants.h"
@@ -29,7 +29,7 @@ static NSString * const FDSunriseTableViewCellCelldentifier = @"FDSunriseTableVi
 
 @interface FDMainCollectionViewCell () <UITableViewDelegate, UITableViewDataSource>
 
-@property (nonatomic, strong) id weatherData;
+@property (nonatomic, strong) FDCity *city;
 @property (nonatomic, strong) UITableView *mainTableView;
 @property (nonatomic, assign) BOOL hasAnimated;
 
@@ -84,7 +84,7 @@ static NSString * const FDSunriseTableViewCellCelldentifier = @"FDSunriseTableVi
     } else if (indexPath.row == 1) {
         return 102;
     } else if (indexPath.row == 2) {
-        return 270;
+        return 260;
     } else if (indexPath.row == 3) {
         return 147;
     } else {
@@ -94,7 +94,7 @@ static NSString * const FDSunriseTableViewCellCelldentifier = @"FDSunriseTableVi
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (self.weatherData) {
+    if (self.city) {
         return 5;
     }
     return 0;
@@ -103,22 +103,22 @@ static NSString * const FDSunriseTableViewCellCelldentifier = @"FDSunriseTableVi
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row == 0) {
         FDCurrentWeatherTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:FDCurrentWeatherTableViewCellIdentifier forIndexPath:indexPath];
-        [cell feedCellWithData:self.weatherData];
+        [cell feedCellWithData:self.city];
         return cell;
     } else if (indexPath.row == 1) {
         FDTodayWeatherTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:FDTodayWeatherTableViewCelldentifier forIndexPath:indexPath];
-        [cell feedCellWithData:self.weatherData];
+        [cell feedCellWithData:self.city];
         return cell;
     } else if (indexPath.row == 2){
         FDForecastWeatherTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:FDForecastWeatherTableViewCellCelldentifier forIndexPath:indexPath];
-        [cell feedCellWithData:self.weatherData[@"fcd"]];
+        [cell feedCellWithData:self.city];
         return cell;
     } else if (indexPath.row == 3) {
         FDSuggestionTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:FDSuggestionTableViewCellCelldentifier forIndexPath:indexPath];
         return cell;
     } else {
         FDSunriseTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:FDSunriseTableViewCellCelldentifier forIndexPath:indexPath];
-        [cell feedCellWithData:self.weatherData[@"sun"]];
+        [cell feedCellWithData:self.city];
         return cell;
     }
     return [UITableViewCell new];
@@ -134,16 +134,10 @@ static NSString * const FDSunriseTableViewCellCelldentifier = @"FDSunriseTableVi
 }
 
 - (void)feedCellWithData:(id)data {
-    FDWeatherModel *model = data;
-    
+    _city = data;
     _mainTableView.contentOffset = CGPointMake(0, -64);
     
-    __weak typeof(self) wSelf = self;
-    [FDUtils fetchDataWithCityCode:model.cityCode completionBlock:^(NSDictionary *weatherData) {
-        __strong typeof(self) sSelf = wSelf;
-        sSelf.weatherData = weatherData;
-        [sSelf.mainTableView reloadData];
-    }];
+    [_mainTableView reloadData];
 }
 
 @end

@@ -13,9 +13,9 @@
 #import "FDConstants.h"
 #import "FDCityCollectionViewCell.h"
 #import "FDCityCollectionViewHeader.h"
-#import "FDWeatherModel.h"
 #import "FDUtils.h"
 #import "FDQueryCityOperation.h"
+#import "FDCity.h"
 
 static NSString * const FDCityCollectionViewCellIdentifier = @"FDCityCollectionViewCell";
 
@@ -29,9 +29,9 @@ static NSString * const FDCityCollectionViewCellIdentifier = @"FDCityCollectionV
 @property (nonatomic, strong) UILabel *positionLabel;
 @property (nonatomic, strong) UITableView *searchResultTableView;
 
-@property (nonatomic, strong) NSMutableArray<FDWeatherModel *> *hotCities;
-@property (nonatomic, strong) NSMutableArray<FDWeatherModel *> *cities;
-@property (nonatomic, strong) NSArray<FDWeatherModel *> *searchCities;
+@property (nonatomic, strong) NSMutableArray<FDCity *> *hotCities;
+@property (nonatomic, strong) NSMutableArray<FDCity *> *cities;
+@property (nonatomic, strong) NSArray<FDCity *> *searchCities;
 
 @property (nonatomic, strong) NSOperationQueue *queryQueue;
 
@@ -62,6 +62,14 @@ static NSString * const FDCityCollectionViewCellIdentifier = @"FDCityCollectionV
 
 - (void)setupView {
     self.view.backgroundColor = [UIColor backgroundColor];
+    
+    // bg
+    UIImageView *bgimageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"tq-view-bg-img"]];
+    [self.view addSubview:bgimageView];
+    [bgimageView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.top.equalTo(self.view);
+        make.height.mas_equalTo(135.0f);
+    }];
     
     _navView = [UIView new];
     [self.view addSubview:_navView];
@@ -127,7 +135,7 @@ static NSString * const FDCityCollectionViewCellIdentifier = @"FDCityCollectionV
     _positionLabel.textColor = [UIColor colorFromHexString:@"#333333"];
     
     NSString *cityName = [[NSUserDefaults standardUserDefaults] objectForKey:LOCATION];
-    _positionLabel.text = [NSString stringWithFormat:@"%@ %@", cityName, [FDUtils provinceOfCity:[[FDWeatherModel alloc] initWithCityCode:[FDUtils codeOfCity:cityName] cityName:cityName]]];
+    _positionLabel.text = [NSString stringWithFormat:@"%@ %@", cityName, [FDUtils provinceOfCity:[[FDCity alloc] initWithCityName:cityName cityCode:[FDUtils codeOfCity:cityName]]]];
     
     [currentPositionView addSubview:_positionLabel];
     [_positionLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -198,16 +206,16 @@ static NSString * const FDCityCollectionViewCellIdentifier = @"FDCityCollectionV
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ResultCell" forIndexPath:indexPath];
     
-    FDWeatherModel *model = _searchCities[indexPath.row];
+    FDCity *city = _searchCities[indexPath.row];
     
-    cell.textLabel.text = [NSString stringWithFormat:@"%@--%@", [FDUtils provinceOfCity:model], model.cityName];
+    cell.textLabel.text = [NSString stringWithFormat:@"%@--%@", [FDUtils provinceOfCity:city], city.cityName];
     
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    [_cities addObject:_hotCities[indexPath.item]];
+    [_cities addObject:_searchCities[indexPath.item]];
     [self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -297,9 +305,9 @@ static NSString * const FDCityCollectionViewCellIdentifier = @"FDCityCollectionV
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     FDCityCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:FDCityCollectionViewCellIdentifier forIndexPath:indexPath];
     
-    FDWeatherModel *hotCity = _hotCities[indexPath.item];
+    FDCity *hotCity = _hotCities[indexPath.item];
     
-    for (FDWeatherModel *city in _cities) {
+    for (FDCity *city in _cities) {
         if ([city.cityName isEqualToString:hotCity.cityName]) {
             
             // must call both of this http://stackoverflow.com/questions/15330844/uicollectionview-select-and-deselect-issue
@@ -351,7 +359,7 @@ static NSString * const FDCityCollectionViewCellIdentifier = @"FDCityCollectionV
     for (NSDictionary *city in array) {
         NSString *cityName = city[@"cityname"];
         NSString *cityCode = city[@"citycode"];
-        FDWeatherModel *model = [[FDWeatherModel alloc] initWithCityCode:cityCode cityName:cityName];
+        FDCity *model = [[FDCity alloc] initWithCityName:cityName cityCode:cityCode];
         [_hotCities addObject:model];
     }
     
@@ -379,13 +387,13 @@ static NSString * const FDCityCollectionViewCellIdentifier = @"FDCityCollectionV
 
 - (void)didSelectCurrentLocation:(id)sender {
     NSString *cityName = [[NSUserDefaults standardUserDefaults] objectForKey:LOCATION];
-    for (FDWeatherModel *city in _cities) {
+    for (FDCity *city in _cities) {
         if ([city.cityName isEqualToString:cityName]) {
             return;
         }
     }
     
-    FDWeatherModel *city = [[FDWeatherModel alloc] initWithCityCode:[FDUtils codeOfCity:cityName] cityName:cityName];
+    FDCity *city = [[FDCity alloc] initWithCityName:cityName cityCode:[FDUtils codeOfCity:cityName]];
     [_cities addObject:city];
     [FDUtils saveAllSeletedCities:_cities];
     [self.navigationController popViewControllerAnimated:YES];

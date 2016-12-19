@@ -8,7 +8,7 @@
 
 #import "FDQueryCityOperation.h"
 #import "NSString+Util.h"
-#import "FDWeatherModel.h"
+#import "FDCity.h"
 
 @interface FDQueryCityOperation ()
 
@@ -41,7 +41,6 @@
     
     if ([_text isAllEngNumAndSpecialSign]) {
         _text = _text.lowercaseString;
-
     }
     
     if (self.cancelled) {
@@ -70,7 +69,7 @@
                 
                 for (NSDictionary *city in cities[provinceId]) {
                     NSString *cityCode = [NSString stringWithFormat:@"101%@01", city[@"id"]];
-                    FDWeatherModel *model = [[FDWeatherModel alloc] initWithCityCode:cityCode cityName:city[@"name"]];
+                    FDCity *model = [[FDCity alloc] initWithCityName:city[@"name"] cityCode:cityCode];
                     [results addObject:model];
                 }
             } else { // 如果字符串和拼音的首字母相同
@@ -106,7 +105,7 @@
                     
                     for (NSDictionary *city in cities[provinceId]) {
                         NSString *cityCode = [NSString stringWithFormat:@"101%@01", city[@"id"]];
-                        FDWeatherModel *model = [[FDWeatherModel alloc] initWithCityCode:cityCode cityName:city[@"name"]];
+                        FDCity *model = [[FDCity alloc] initWithCityName:city[@"name"] cityCode:cityCode];
                         [results addObject:model];
                     }
                 }
@@ -124,7 +123,7 @@
                 
                 for (NSDictionary *city in cities[provinceId]) {
                     NSString *cityCode = [NSString stringWithFormat:@"101%@01", city[@"id"]];
-                    FDWeatherModel *model = [[FDWeatherModel alloc] initWithCityCode:cityCode cityName:city[@"name"]];
+                    FDCity *model = [[FDCity alloc] initWithCityName:city[@"name"] cityCode:cityCode];
                     [results addObject:model];
                 }
             }
@@ -146,7 +145,7 @@
                 
                 // 如果是以这个字符串开头
                 if ([tempCountryName hasPrefix:_text]) {
-                    FDWeatherModel *model = [[FDWeatherModel alloc] initWithCityCode:country[@"id"] cityName:country[@"name"]];
+                    FDCity *model = [[FDCity alloc] initWithCityName:country[@"name"] cityCode:country[@"id"]];
                     [results addObject:model];
                 } else { // 如果字符串和拼音的首字母相同
                     
@@ -170,13 +169,13 @@
                     }
                     
                     if (find) {
-                        FDWeatherModel *model = [[FDWeatherModel alloc] initWithCityCode:country[@"id"] cityName:country[@"name"]];
+                        FDCity *model = [[FDCity alloc] initWithCityName:country[@"name"] cityCode:country[@"id"]];
                         [results addObject:model];
                     }
                 }
             } else {
                 if ([countryName containsString:_text]) {
-                    FDWeatherModel *model = [[FDWeatherModel alloc] initWithCityCode:country[@"id"] cityName:country[@"name"]];
+                    FDCity *model = [[FDCity alloc] initWithCityName:country[@"name"] cityCode:country[@"id"]];
                     [results addObject:model];
                 }
             }

@@ -11,6 +11,7 @@
 #import "Masonry/Masonry.h"
 #include "FDConstants.h"
 #import "UILabel+FDLabel.h"
+#import "FDCity.h"
 
 @interface FDSunriseTableViewCell ()
 
@@ -93,8 +94,10 @@
 
 - (void)feedCellWithData:(id)data {
     
-    NSString *sr = data[@"sr"];
-    NSString *ss = data[@"ss"];
+    FDCity *city = data;
+    
+    NSString *sr = city.sunRiseTime;
+    NSString *ss = city.sunFallTime;
     
     _startTimeLabel.text = sr;
     _endTimeLabel.text = ss;

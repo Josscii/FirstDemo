@@ -12,6 +12,7 @@
 #import "UIColor+FDColor.h"
 #import "FDDefaultView.h"
 #import "FDUtils.h"
+#import "FDCity.h"
 
 #import "Masonry/Masonry.h"
 
@@ -21,7 +22,6 @@
 @interface FDEditCityCollectionViewCell ()
 
 @property (nonatomic, strong) UIImageView *positionImageView;
-@property (nonatomic, strong) UILabel *cityLabel;
 @property (nonatomic, strong) UIImageView *weatherIcon;
 @property (nonatomic, strong) UILabel *tempLabel;
 @property (nonatomic, strong) UILabel *weatherLabel;
@@ -46,6 +46,12 @@
 
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"FDShouldInavidateCellLayout" object:nil];
+}
+
+- (void)prepareForReuse {
+    _weatherIcon.image = nil;
+    _tempLabel.text = @"";
+    _weatherLabel.text = @"";
 }
 
 - (void)setupView {
@@ -148,7 +154,7 @@
     stackView.backgroundColor = [UIColor redColor];
     
     [stackView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(_weatherLabel.mas_bottom).offset(8);
+        make.bottom.equalTo(container).offset(-8);
         make.centerX.equalTo(container);
     }];
     
@@ -225,39 +231,31 @@
 
 - (void)configreCellWithData:(id)data {
     
-    NSString *cityName = data[@"c"];
+    FDCity *city = data;
     
-    NSDictionary *curr = data[@"curr"];
-    NSNumber *wt = curr[@"wt"];
-    NSNumber *tl = curr[@"tl"];
-    NSNumber *th = curr[@"th"];
+    _cityLabel.text = city.cityName;
+    _tempLabel.text = [NSString stringWithFormat:@"%@/%@°", city.curr.tempLow, city.curr.tempHigh];
+    _weatherLabel.text = [FDUtils weatherType:city.curr.weatherType.integerValue];
     
-    _cityLabel.text = cityName;
-    _tempLabel.text = [NSString stringWithFormat:@"%@/%@°", tl, th];
-    _weatherLabel.text = [FDUtils weatherType:wt.integerValue];
-    
-    NSNumber *ser = data[@"serverTime"];
-    
-    NSDate *date = [NSDate dateWithTimeIntervalSince1970:ser.doubleValue];
+    NSDate *date = [NSDate date];
     
     NSCalendar* cal = [NSCalendar currentCalendar];
     NSDateComponents* comp = [cal components:NSCalendarUnitHour fromDate:date];
     
     NSNumber *hour = @(comp.hour);
     
-    NSDictionary *sun = data[@"sun"];
-    NSNumber *sr = [FDUtils hourOfTime: sun[@"sr"]];
-    NSNumber *ss = [FDUtils hourOfTime: sun[@"ss"]];
+    NSNumber *sr = [FDUtils hourOfTime: city.sunRiseTime];
+    NSNumber *ss = [FDUtils hourOfTime: city.sunFallTime];
     
     if ([hour integerValue] >= [sr integerValue] && [hour integerValue] <= [ss integerValue]) {
-        _weatherIcon.image = [UIImage imageNamed: [NSString stringWithFormat:@"nd%@", curr[@"wt"]]];
+        _weatherIcon.image = [UIImage imageNamed: [NSString stringWithFormat:@"nd%@", city.curr.weatherType]];
     } else {
-        _weatherIcon.image = [UIImage imageNamed: [NSString stringWithFormat:@"nn%@", curr[@"wt"]]];
+        _weatherIcon.image = [UIImage imageNamed: [NSString stringWithFormat:@"nn%@", city.curr.weatherType]];
         
-        if ([UIImage imageNamed: [NSString stringWithFormat:@"nn%@", curr[@"wt"]]] == nil) {
-            _weatherIcon.image = [UIImage imageNamed: [NSString stringWithFormat:@"nd%@", curr[@"wt"]]];
+        if ([UIImage imageNamed: [NSString stringWithFormat:@"nn%@", city.curr.weatherType]] == nil) {
+            _weatherIcon.image = [UIImage imageNamed: [NSString stringWithFormat:@"nd%@", city.curr.weatherType]];
         } else {
-            _weatherIcon.image = [UIImage imageNamed: [NSString stringWithFormat:@"nn%@", curr[@"wt"]]];
+            _weatherIcon.image = [UIImage imageNamed: [NSString stringWithFormat:@"nn%@", city.curr.weatherType]];
         }
     }
     

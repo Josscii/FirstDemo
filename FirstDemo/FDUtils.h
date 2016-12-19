@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "FDConstants.h"
-#import "FDWeatherModel.h"
+#import "FDCity.h"
 
 @interface FDUtils : NSObject
 
@@ -21,15 +21,12 @@
 
 + (NSNumber *)hourOfTime:(NSString *)s;
 
-+ (NSArray<FDWeatherModel *> *)getAllSeletedCities;
-+ (void)saveAllSeletedCities:(NSArray<FDWeatherModel *> *)cities;
++ (NSArray<FDCity *> *)getAllSeletedCities;
++ (void)saveAllSeletedCities:(NSArray<FDCity *> *)cities;
 
 + (void)fetchDataWithCityCode:(NSString *)cityCode completionBlock:(void (^)(NSDictionary *weatherData))block;
 
-+ (NSString *)provinceOfCity:(FDWeatherModel *)city;
-+ (NSArray<FDWeatherModel *> *)findCitiesWithText:(NSString *)text;
++ (NSString *)provinceOfCity:(FDCity *)city;
 + (NSString *)codeOfCity:(NSString *)cityName;
-
-+ (void)toPinyin;
 
 @end

@@ -28,6 +28,11 @@
     _weakdayLabel = [UILabel commonLableWithFontName:SFDR FontSize:15 colorAlpha:1];
     _dateLabel = [UILabel commonLableWithFontName:SFDR FontSize:15 colorAlpha:1];
     _weatherIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"nd1"]];
+    
+    [_weatherIcon mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.width.height.mas_equalTo(20);
+    }];
+    
     _tempLabel = [UILabel commonLableWithFontName:SFDR FontSize:13 colorAlpha:1];
     
     UIStackView *stackView1 = [[UIStackView alloc] initWithArrangedSubviews:@[_dateLabel, _weatherIcon, _tempLabel]];

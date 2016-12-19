@@ -162,7 +162,7 @@
     }
 }
 
-+ (NSArray<FDWeatherModel *> *)getAllSeletedCities {
++ (NSArray<FDCity *> *)getAllSeletedCities {
     NSString *home = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
     NSString *filePath = [home stringByAppendingString:@"/cities"];
     
@@ -173,7 +173,7 @@
     return cities;
 }
 
-+ (void)saveAllSeletedCities:(NSArray<FDWeatherModel *> *)cities {
++ (void)saveAllSeletedCities:(NSArray<FDCity *> *)cities {
     NSString *home = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
     NSString *filePath = [home stringByAppendingString:@"/cities"];
     
@@ -208,7 +208,7 @@
     [task resume];
 }
 
-+ (NSString *)provinceOfCity:(FDWeatherModel *)city {
++ (NSString *)provinceOfCity:(FDCity *)city {
     NSString *cityCode = city.cityCode;
     
     NSString *provinceId = [cityCode substringWithRange:NSMakeRange(3, 2)];
@@ -224,116 +224,6 @@
     }
     
     return provinceName;
-}
-
-+ (NSArray<FDWeatherModel *> *)findCitiesWithText:(NSString *)text {
-    
-    NSMutableArray *results = [NSMutableArray array];
-    NSArray *provinces = [NSArray arrayWithContentsOfFile:[[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@"province.xml"]];
-    NSDictionary *cities = [NSDictionary dictionaryWithContentsOfFile:[[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@"city.xml"]];
-    NSDictionary *counties = [NSDictionary dictionaryWithContentsOfFile:[[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@"county.xml"]];
-    
-    if ([text isAllEngNumAndSpecialSign]) {
-        text = text.lowercaseString;
-    }
-    
-    // 找到包含这个字的省份的所有城市
-    for (NSDictionary *province in provinces) {
-        NSString *provinceName = province[@"name"];
-        
-        if ([text isAllEngNumAndSpecialSign]) {
-            provinceName = [provinceName toPinyin];
-            
-            BOOL find = NO;
-            
-            NSArray *pinyin = [provinceName componentsSeparatedByString:@" "];
-            
-            for (int i = 0; i < pinyin.count; i++) {
-                if (text.length <= i) {
-                    break;
-                } else {
-                    if ([[pinyin[i] substringToIndex:1] isEqualToString:[text substringToIndex: i+1]]) {
-                        find = YES;
-                    } else {
-                        find = NO;
-                    }
-                }
-            }
-            
-            if (find) {
-                NSString *provinceId = province[@"id"];
-                
-                if ([provinceId isEqualToString:@"01"] ||
-                    [provinceId isEqualToString:@"02"] ||
-                    [provinceId isEqualToString:@"03"] ||
-                    [provinceId isEqualToString:@"04"]) {
-                    break;
-                }
-                
-                for (NSDictionary *city in cities[provinceId]) {
-                    NSString *cityCode = [NSString stringWithFormat:@"101%@01", city[@"id"]];
-                    FDWeatherModel *model = [[FDWeatherModel alloc] initWithCityCode:cityCode cityName:city[@"name"]];
-                    [results addObject:model];
-                }
-            }
-        } else {
-            if ([provinceName containsString:text]) {
-                NSString *provinceId = province[@"id"];
-                
-                if ([provinceId isEqualToString:@"01"] ||
-                    [provinceId isEqualToString:@"02"] ||
-                    [provinceId isEqualToString:@"03"] ||
-                    [provinceId isEqualToString:@"04"]) {
-                    break;
-                }
-                
-                for (NSDictionary *city in cities[provinceId]) {
-                    NSString *cityCode = [NSString stringWithFormat:@"101%@01", city[@"id"]];
-                    FDWeatherModel *model = [[FDWeatherModel alloc] initWithCityCode:cityCode cityName:city[@"name"]];
-                    [results addObject:model];
-                }
-            }
-        }
-    }
-    
-    // 找到包含这个字的所有区
-    for (NSArray *tempCountries in counties.allValues) {
-        for (NSDictionary *country in tempCountries) {
-            NSString *countryName = country[@"name"];
-            
-            if ([text isAllEngNumAndSpecialSign]) {
-                countryName = [countryName toPinyin];
-                
-                BOOL find = NO;
-                
-                NSArray *pinyin = [countryName componentsSeparatedByString:@" "];
-                
-                for (int i = 0; i < pinyin.count; i++) {
-                    if (text.length <= i) {
-                        break;
-                    } else {
-                        if ([[pinyin[i] substringToIndex:1] isEqualToString:[text substringToIndex: i+1]]) {
-                            find = YES;
-                        } else {
-                            find = NO;
-                        }
-                    }
-                }
-                
-                if (find) {
-                    FDWeatherModel *model = [[FDWeatherModel alloc] initWithCityCode:country[@"id"] cityName:country[@"name"]];
-                    [results addObject:model];
-                }
-            } else {
-                if ([countryName containsString:text]) {
-                    FDWeatherModel *model = [[FDWeatherModel alloc] initWithCityCode:country[@"id"] cityName:country[@"name"]];
-                    [results addObject:model];
-                }
-            }
-        }
-    }
-    
-    return [results copy];
 }
 
 + (NSString *)codeOfCity:(NSString *)cityName {

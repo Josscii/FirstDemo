@@ -16,6 +16,10 @@
 		C2827F9B1E07A377005B277F /* city.xml in Resources */ = {isa = PBXBuildFile; fileRef = C2827F981E07A377005B277F /* city.xml */; };
 		C2827F9C1E07A377005B277F /* province.xml in Resources */ = {isa = PBXBuildFile; fileRef = C2827F991E07A377005B277F /* province.xml */; };
 		C2827F9D1E07A377005B277F /* county.xml in Resources */ = {isa = PBXBuildFile; fileRef = C2827F9A1E07A377005B277F /* county.xml */; };
+		C2827FA01E07BC34005B277F /* FDCity.m in Sources */ = {isa = PBXBuildFile; fileRef = C2827F9F1E07BC34005B277F /* FDCity.m */; };
+		C2827FA31E07BD02005B277F /* FDForecastItemHour.m in Sources */ = {isa = PBXBuildFile; fileRef = C2827FA21E07BD02005B277F /* FDForecastItemHour.m */; };
+		C2827FA71E07BD1D005B277F /* FDForecastItemDate.m in Sources */ = {isa = PBXBuildFile; fileRef = C2827FA61E07BD1D005B277F /* FDForecastItemDate.m */; };
+		C2827FAA1E07BDE2005B277F /* FDAqi.m in Sources */ = {isa = PBXBuildFile; fileRef = C2827FA91E07BDE2005B277F /* FDAqi.m */; };
 		C28E79B41DF0FFB800E2C517 /* FDIconLabelView.m in Sources */ = {isa = PBXBuildFile; fileRef = C28E79B31DF0FFB800E2C517 /* FDIconLabelView.m */; };
 		C28E79B71DF1067E00E2C517 /* FDTodayWeatherTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C28E79B61DF1067E00E2C517 /* FDTodayWeatherTableViewCell.m */; };
 		C28E79B91DF10AD500E2C517 /* SanFranciscoDisplay-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = C28E79B81DF10AD500E2C517 /* SanFranciscoDisplay-Bold.otf */; };
@@ -27,7 +31,6 @@
 		C2A207A31E03CBD7000028AB /* FDQueryCityOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = C2A207A21E03CBD7000028AB /* FDQueryCityOperation.m */; };
 		C2A3DC2B1DF9323E00829575 /* FDDeleteButton.m in Sources */ = {isa = PBXBuildFile; fileRef = C2A3DC2A1DF9323E00829575 /* FDDeleteButton.m */; };
 		C2A705F81DF946EE00110C96 /* FDMainCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C2A705F71DF946EE00110C96 /* FDMainCollectionViewCell.m */; };
-		C2A705FC1DF9569000110C96 /* FDWeatherModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C2A705FB1DF9569000110C96 /* FDWeatherModel.m */; };
 		C2A706051DF95C9300110C96 /* FdAddCotyCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C2A706041DF95C9300110C96 /* FdAddCotyCollectionViewCell.m */; };
 		C2B200131DF03B1900C1CD77 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C2B2FFF91DF03B1900C1CD77 /* Info.plist */; };
 		C2B200141DF03B1900C1CD77 /* MASCompositeConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = C2B2FFFB1DF03B1900C1CD77 /* MASCompositeConstraint.m */; };
@@ -104,6 +107,14 @@
 		C2827F981E07A377005B277F /* city.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = city.xml; sourceTree = "<group>"; };
 		C2827F991E07A377005B277F /* province.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = province.xml; sourceTree = "<group>"; };
 		C2827F9A1E07A377005B277F /* county.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = county.xml; sourceTree = "<group>"; };
+		C2827F9E1E07BC34005B277F /* FDCity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FDCity.h; sourceTree = "<group>"; };
+		C2827F9F1E07BC34005B277F /* FDCity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FDCity.m; sourceTree = "<group>"; };
+		C2827FA11E07BD02005B277F /* FDForecastItemHour.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FDForecastItemHour.h; sourceTree = "<group>"; };
+		C2827FA21E07BD02005B277F /* FDForecastItemHour.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FDForecastItemHour.m; sourceTree = "<group>"; };
+		C2827FA51E07BD1D005B277F /* FDForecastItemDate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FDForecastItemDate.h; sourceTree = "<group>"; };
+		C2827FA61E07BD1D005B277F /* FDForecastItemDate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FDForecastItemDate.m; sourceTree = "<group>"; };
+		C2827FA81E07BDE2005B277F /* FDAqi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FDAqi.h; sourceTree = "<group>"; };
+		C2827FA91E07BDE2005B277F /* FDAqi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FDAqi.m; sourceTree = "<group>"; };
 		C28E79B11DF0FDD300E2C517 /* FDConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FDConstants.h; sourceTree = "<group>"; };
 		C28E79B21DF0FFB800E2C517 /* FDIconLabelView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FDIconLabelView.h; sourceTree = "<group>"; };
 		C28E79B31DF0FFB800E2C517 /* FDIconLabelView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FDIconLabelView.m; sourceTree = "<group>"; };
@@ -127,8 +138,6 @@
 		C2A3DC2A1DF9323E00829575 /* FDDeleteButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FDDeleteButton.m; sourceTree = "<group>"; };
 		C2A705F61DF946EE00110C96 /* FDMainCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FDMainCollectionViewCell.h; sourceTree = "<group>"; };
 		C2A705F71DF946EE00110C96 /* FDMainCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FDMainCollectionViewCell.m; sourceTree = "<group>"; };
-		C2A705FA1DF9569000110C96 /* FDWeatherModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FDWeatherModel.h; sourceTree = "<group>"; };
-		C2A705FB1DF9569000110C96 /* FDWeatherModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FDWeatherModel.m; sourceTree = "<group>"; };
 		C2A706031DF95C9300110C96 /* FdAddCotyCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FdAddCotyCollectionViewCell.h; sourceTree = "<group>"; };
 		C2A706041DF95C9300110C96 /* FdAddCotyCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FdAddCotyCollectionViewCell.m; sourceTree = "<group>"; };
 		C2B200001DF03B1900C1CD77 /* MASConstraintMaker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MASConstraintMaker.m; sourceTree = "<group>"; };
@@ -263,6 +272,21 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		C2827FA41E07BD06005B277F /* New */ = {
+			isa = PBXGroup;
+			children = (
+				C2827F9E1E07BC34005B277F /* FDCity.h */,
+				C2827F9F1E07BC34005B277F /* FDCity.m */,
+				C2827FA11E07BD02005B277F /* FDForecastItemHour.h */,
+				C2827FA21E07BD02005B277F /* FDForecastItemHour.m */,
+				C2827FA51E07BD1D005B277F /* FDForecastItemDate.h */,
+				C2827FA61E07BD1D005B277F /* FDForecastItemDate.m */,
+				C2827FA81E07BDE2005B277F /* FDAqi.h */,
+				C2827FA91E07BDE2005B277F /* FDAqi.m */,
+			);
+			name = New;
+			sourceTree = "<group>";
+		};
 		C2A207A01E03CBAB000028AB /* Operations */ = {
 			isa = PBXGroup;
 			children = (
@@ -286,8 +310,7 @@
 		C2A705F91DF9567000110C96 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				C2A705FA1DF9569000110C96 /* FDWeatherModel.h */,
-				C2A705FB1DF9569000110C96 /* FDWeatherModel.m */,
+				C2827FA41E07BD06005B277F /* New */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -336,8 +359,8 @@
 		C2B2FF9E1DEFF52F00C1CD77 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				C2827F981E07A377005B277F /* city.xml */,
 				C2827F991E07A377005B277F /* province.xml */,
+				C2827F981E07A377005B277F /* city.xml */,
 				C2827F9A1E07A377005B277F /* county.xml */,
 				C27D46501DFA4E5F00707F76 /* hotcity.json */,
 				C28E79B81DF10AD500E2C517 /* SanFranciscoDisplay-Bold.otf */,
@@ -628,7 +651,9 @@
 				C2B2001B1DF03B1900C1CD77 /* NSLayoutConstraint+MASDebugAdditions.m in Sources */,
 				C2B2FFF61DF0373C00C1CD77 /* UIView+FDIconLabelView.m in Sources */,
 				C2B200191DF03B1900C1CD77 /* MASViewConstraint.m in Sources */,
+				C2827FA31E07BD02005B277F /* FDForecastItemHour.m in Sources */,
 				C2B2001C1DF03B1900C1CD77 /* View+MASAdditions.m in Sources */,
+				C2827FA01E07BC34005B277F /* FDCity.m in Sources */,
 				C2C934951DF6C1E100590921 /* FDDeleteDecorationView.m in Sources */,
 				C2B2FFD51DF0186B00C1CD77 /* UILabel+FDLabel.m in Sources */,
 				C2DCBF681DF16B7100D73815 /* FDCurrentWeatherTableViewCell.m in Sources */,
@@ -645,12 +670,14 @@
 				C28E79B71DF1067E00E2C517 /* FDTodayWeatherTableViewCell.m in Sources */,
 				C2D7C64A1DF9621600F1D0B8 /* FDSelectCityViewController.m in Sources */,
 				C2C9348D1DF6B85E00590921 /* FDNavigationController.m in Sources */,
+				C2827FA71E07BD1D005B277F /* FDForecastItemDate.m in Sources */,
 				C2B2FFD91DF01AB800C1CD77 /* FDGradientView.m in Sources */,
 				C2A207A31E03CBD7000028AB /* FDQueryCityOperation.m in Sources */,
 				C2B2001A1DF03B1900C1CD77 /* NSArray+MASAdditions.m in Sources */,
 				C2B2FFD21DF0183900C1CD77 /* UIColor+FDColor.m in Sources */,
 				C200BC651DF9802E00BB9EA8 /* FDCityCollectionViewHeader.m in Sources */,
 				C2B200171DF03B1900C1CD77 /* MASLayoutConstraint.m in Sources */,
+				C2827FAA1E07BDE2005B277F /* FDAqi.m in Sources */,
 				C2DCBF651DF15F0600D73815 /* FDSunriseTableViewCell.m in Sources */,
 				C28E79B41DF0FFB800E2C517 /* FDIconLabelView.m in Sources */,
 				C2B200141DF03B1900C1CD77 /* MASCompositeConstraint.m in Sources */,
@@ -659,7 +686,6 @@
 				C28E79BC1DF113E200E2C517 /* FDForecastWeatherTableViewCell.m in Sources */,
 				C2DCBF6E1DF17E2600D73815 /* FDTableViewCell.m in Sources */,
 				C21EB5CA1DF26F8B00A5C595 /* FDSuggestionTableViewCell.m in Sources */,
-				C2A705FC1DF9569000110C96 /* FDWeatherModel.m in Sources */,
 				C2E652571DF1335F008A5B7F /* FDSunriseView.m in Sources */,
 				C2B2FFED1DF0333200C1CD77 /* FDForecastWeatherCollectionViewCell.m in Sources */,
 				C2A705F81DF946EE00110C96 /* FDMainCollectionViewCell.m in Sources */,

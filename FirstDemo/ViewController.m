@@ -13,8 +13,8 @@
 #import "FDManageCityViewController.h"
 #import "UIColor+FDColor.h"
 #import "FDMainCollectionViewCell.h"
-#import "FDWeatherModel.h"
 #import "FDUtils.h"
+#import "FDCity.h"
 
 #import "Masonry/Masonry.h"
 
@@ -28,7 +28,7 @@ static NSString * const FDMainCollectionViewCellIdentifier = @"FDMainCollectionV
 @property (nonatomic, strong) UIImageView *backgroundImageView;
 
 @property (nonatomic, strong) UICollectionView *collectionView;
-@property (nonatomic, strong) NSMutableArray<FDWeatherModel *> *cities;
+@property (nonatomic, strong) NSMutableArray<FDCity *> *cities;
 @property (nonatomic, strong) UIPageControl *pageControl;
 @property (nonatomic, strong) FDSwitchCityButton *switchCityButton;
 @property (nonatomic, strong) AMapLocationManager *locationManager;
@@ -60,7 +60,7 @@ static NSString * const FDMainCollectionViewCellIdentifier = @"FDMainCollectionV
             NSString *cityName = [regeocode.district substringToIndex:2];
             NSString *cityCode = [FDUtils codeOfCity:cityName];
             
-            FDWeatherModel *current = [[FDWeatherModel alloc] initWithCityCode:cityCode cityName:cityName];
+            FDCity *current = [[FDCity alloc] initWithCityName:cityName cityCode:cityCode];
             
             [_cities addObject:current];
             [FDUtils saveAllSeletedCities:[_cities copy]];
@@ -87,11 +87,13 @@ static NSString * const FDMainCollectionViewCellIdentifier = @"FDMainCollectionV
         _cities = [[FDUtils getAllSeletedCities] mutableCopy];
         _collectionView.contentOffset = CGPointMake(selectedIndex * SCREEN_WIDTH, 0);
         [self reloadDataWithPage:selectedIndex shouldReloadCollectionView:YES];
-        
-        for (FDWeatherModel *model in _cities) {
-            NSLog(@"%@", model.cityCode);
-        }
     }
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    [FDUtils saveAllSeletedCities:[_cities copy]];
 }
 
 - (void)setupView {
@@ -205,7 +207,25 @@ static NSString * const FDMainCollectionViewCellIdentifier = @"FDMainCollectionV
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     FDMainCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:FDMainCollectionViewCellIdentifier forIndexPath:indexPath];
     
-    [cell feedCellWithData: _cities[indexPath.item]];
+    FDCity *city = _cities[indexPath.item];
+    
+    if (!city.saveTime) {
+        [FDUtils fetchDataWithCityCode:city.cityCode completionBlock:^(NSDictionary *weatherData) {
+            [city configureWihtDictionary:weatherData];
+            
+            [cell feedCellWithData:city];
+        }];
+    } else {
+        if (city.isExpired) {
+            [FDUtils fetchDataWithCityCode:city.cityCode completionBlock:^(NSDictionary *weatherData) {
+                [city configureWihtDictionary:weatherData];
+                
+                [cell feedCellWithData:city];
+            }];
+        } else {
+            [cell feedCellWithData:city];
+        }
+    }
     
     return cell;
 }

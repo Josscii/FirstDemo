@@ -12,6 +12,7 @@
 #import "FDConstants.h"
 #import "FDIconLabelView.h"
 #import "FDUtils.h"
+#import "FDCity.h"
 
 @implementation FDCurrentWeatherTableViewCell
 
@@ -83,24 +84,16 @@
 }
 
 - (void)feedCellWithData:(id)data {
-    NSDictionary *curr = data[@"curr"];
-    NSNumber *wt = curr[@"wt"];
-    NSNumber *tl = curr[@"tl"];
-    NSNumber *th = curr[@"th"];
-    NSNumber *ct = curr[@"ct"];
-    NSNumber *st = curr[@"st"];
-    NSString *wd = curr[@"wd"];
-    NSNumber *rh = curr[@"rh"];
+    FDCity *city = data;
     
-    _briefInfoLabel.text = [NSString stringWithFormat:@"%@ %@/%@°", [FDUtils weatherType:wt.integerValue], tl, th];
-    _currentTempLabel.text = [FDUtils tempWithNumber:ct];
+    _briefInfoLabel.text = [NSString stringWithFormat:@"%@ %@/%@°", [FDUtils weatherType: city.curr.weatherType.integerValue], city.curr.tempLow, city.curr.tempHigh];
+    _currentTempLabel.text = [FDUtils tempWithNumber:city.curr.currentTemp];
     
-    NSDictionary *aqi = data[@"aqi"];
-    _airQualityView.label.text = [NSString stringWithFormat:@"%@ | %@", aqi[@"pm25"], aqi[@"grade"]];
+    _airQualityView.label.text = [NSString stringWithFormat:@"%@ | %@", city.aqi.pm25, city.aqi.grade];
     
-    _bodyTempView.label.text = [NSString stringWithFormat:@"体感 %@", st];
-    _windView.label.text = wd;
-    _waterView.label.text = [NSString stringWithFormat:@"%@%@", rh, @"%"];
+    _bodyTempView.label.text = [NSString stringWithFormat:@"体感 %@", city.curr.sendibleTemp];
+    _windView.label.text = city.curr.windDirection;
+    _waterView.label.text = [NSString stringWithFormat:@"%@%@", city.curr.relativeHumidity, @"%"];
 }
 
 @end

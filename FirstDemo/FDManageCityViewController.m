@@ -16,7 +16,6 @@
 #import "FdAddCotyCollectionViewCell.h"
 #import "FDSelectCityViewController.h"
 #import "FDUtils.h"
-#import "FDWeatherModel.h"
 
 static NSString * const FDEditCityCollectionViewCellIdentifier = @"FDEditCityCollectionViewCell";
 static NSString * const FdAddCotyCollectionViewCellIdentifier = @"FdAddCotyCollectionViewCell";
@@ -29,7 +28,7 @@ static NSString * const FdAddCotyCollectionViewCellIdentifier = @"FdAddCotyColle
 
 @property (nonatomic, strong) UIButton *editButton;
 
-@property (nonatomic, strong) NSMutableArray<FDWeatherModel *> *cities;
+@property (nonatomic, strong) NSMutableArray<FDCity *> *cities;
 
 @property (nonatomic, strong) NSIndexPath *indexPathForReordering;
 @property (nonatomic, strong) UIView *snapshotView;
@@ -66,6 +65,14 @@ static NSString * const FdAddCotyCollectionViewCellIdentifier = @"FdAddCotyColle
 
 - (void)setupView {
     self.view.backgroundColor = [UIColor backgroundColor];
+    
+    // bg
+    UIImageView *bgimageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"tq-view-bg-img"]];
+    [self.view addSubview:bgimageView];
+    [bgimageView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.bottom.equalTo(self.view);
+        make.height.mas_equalTo(135.0f);
+    }];
     
     // collectionView
     _flowLayout = [[FDEditCityFlowLayout alloc] init];
@@ -182,15 +189,30 @@ static NSString * const FdAddCotyCollectionViewCellIdentifier = @"FdAddCotyColle
     }
     
     FDEditCityCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:FDEditCityCollectionViewCellIdentifier forIndexPath:indexPath];
-    
     cell.delegate = self;
     
-    FDWeatherModel *model = _cities[indexPath.item];
+    FDCity *city = _cities[indexPath.item];
     
-    [FDUtils fetchDataWithCityCode:model.cityCode completionBlock:^(NSDictionary *weatherData) {
-        [cell configreCellWithData:weatherData];
-    }];
+    cell.cityLabel.text = city.cityName;
     
+    if (!city.saveTime) {
+        [FDUtils fetchDataWithCityCode:city.cityCode completionBlock:^(NSDictionary *weatherData) {
+            [city configureWihtDictionary:weatherData];
+            
+            [cell configreCellWithData:city];
+        }];
+    } else {
+        if (city.isExpired) {
+            [FDUtils fetchDataWithCityCode:city.cityCode completionBlock:^(NSDictionary *weatherData) {
+                [city configureWihtDictionary:weatherData];
+                
+                [cell configreCellWithData:city];
+            }];
+        } else {
+            [cell configreCellWithData:city];
+        }
+    }
+
     return cell;
 }
 
@@ -211,7 +233,7 @@ static NSString * const FdAddCotyCollectionViewCellIdentifier = @"FdAddCotyColle
 
 - (void)collectionView:(UICollectionView *)collectionView moveItemAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath {
     
-    FDWeatherModel *model = _cities[sourceIndexPath.item];
+    FDCity *model = _cities[sourceIndexPath.item];
     [_cities removeObjectAtIndex:sourceIndexPath.item];
     [_cities insertObject:model atIndex:destinationIndexPath.item];
     

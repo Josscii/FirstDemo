@@ -11,14 +11,15 @@
 #import "FDTodayWeatherCollectionViewCell.h"
 #import "FDUtils.h"
 #import "FDConstants.h"
+#import "FDCity.h"
+#import "FDForecastItemHour.h"
 
 static NSString * const CellIndentifier = @"FDTodayWeatherCollectionViewCell";
 
 @interface FDTodayWeatherTableViewCell () <UICollectionViewDelegate, UICollectionViewDataSource>
 
 @property (nonatomic, strong) UICollectionView *collectionView;
-@property (nonatomic, copy) NSArray *items;
-@property (nonatomic, strong) NSDictionary *sun;
+@property (nonatomic, strong) FDCity *city;
 
 @end
 
@@ -56,7 +57,7 @@ static NSString * const CellIndentifier = @"FDTodayWeatherCollectionViewCell";
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return _items.count;
+    return _city.fch.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -71,21 +72,21 @@ static NSString * const CellIndentifier = @"FDTodayWeatherCollectionViewCell";
         cell.tempLabel.font = [UIFont fontWithName:SFDR size:13];
     }
     
-    id item = _items[indexPath.item];
-    cell.timeLabel.text = [NSString stringWithFormat:@"%@时", item[@"h"]];
-    cell.tempLabel.text = [FDUtils tempWithNumber: item[@"tm"]];
+    FDForecastItemHour *item = _city.fch[indexPath.item];
+    cell.timeLabel.text = [NSString stringWithFormat:@"%@时", item.hour];
+    cell.tempLabel.text = [FDUtils tempWithNumber: item.temp];
     
-    NSNumber *hour = item[@"h"];
-    NSNumber *sr = [FDUtils hourOfTime: _sun[@"sr"]];
-    NSNumber *ss = [FDUtils hourOfTime: _sun[@"ss"]];
+    NSNumber *hour = item.hour;
+    NSNumber *sr = [FDUtils hourOfTime: _city.sunRiseTime];
+    NSNumber *ss = [FDUtils hourOfTime: _city.sunFallTime];
     
     if ([hour integerValue] >= [sr integerValue] && [hour integerValue] <= [ss integerValue]) {
-        cell.weatherIcon.image = [UIImage imageNamed: [NSString stringWithFormat:@"nd%@", item[@"wt"]]];
+        cell.weatherIcon.image = [UIImage imageNamed: [NSString stringWithFormat:@"nd%@", item.weatherType]];
     } else {
-        if ([UIImage imageNamed: [NSString stringWithFormat:@"nn%@", item[@"wt"]]] == nil) {
-            cell.weatherIcon.image = [UIImage imageNamed: [NSString stringWithFormat:@"nd%@", item[@"wt"]]];
+        if ([UIImage imageNamed: [NSString stringWithFormat:@"nn%@", item.weatherType]] == nil) {
+            cell.weatherIcon.image = [UIImage imageNamed: [NSString stringWithFormat:@"nd%@", item.weatherType]];
         } else {
-            cell.weatherIcon.image = [UIImage imageNamed: [NSString stringWithFormat:@"nn%@", item[@"wt"]]];
+            cell.weatherIcon.image = [UIImage imageNamed: [NSString stringWithFormat:@"nn%@", item.weatherType]];
         }
     }
     
@@ -99,8 +100,7 @@ static NSString * const CellIndentifier = @"FDTodayWeatherCollectionViewCell";
 }
 
 - (void)feedCellWithData:(id)data {
-    _items = data[@"fch"];
-    _sun = data[@"sun"];
+    _city = data;
     [self.collectionView reloadData];
 }
 

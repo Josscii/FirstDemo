@@ -51,6 +51,10 @@
         NSString *provinceName = province[@"name"];
         NSString *pinyin = province[@"pinyin"];
         
+        if ([provinceName isEqualToString:@"自动定位"]) {
+            continue;
+        }
+        
         // 如果全是英文字符
         if ([_text isAllEngNumAndSpecialSign]) {
             NSString *tempProvinceName = [pinyin stringByReplacingOccurrencesOfString:@" " withString:@""];
@@ -138,6 +142,10 @@
         for (NSDictionary *country in tempCountries) {
             NSString *countryName = country[@"name"];
             NSString *pinyin = country[@"pinyin"];
+            
+            if ([countryName isEqualToString:@"自动定位"]) {
+                continue;
+            }
             
             // 如果全是英文字符
             if ([_text isAllEngNumAndSpecialSign]) {

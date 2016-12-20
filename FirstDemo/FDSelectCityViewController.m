@@ -95,7 +95,7 @@ static NSString * const FDCityCollectionViewCellIdentifier = @"FDCityCollectionV
     _searchBar = [[UISearchBar alloc] init];
     _searchBar.backgroundImage = [UIImage new];
     _searchBar.placeholder = @"搜索";
-    _searchBar.showsCancelButton = YES;
+    //_searchBar.showsCancelButton = YES;
     _searchBar.delegate = self;
     
     [[UIBarButtonItem appearanceWhenContainedInInstancesOfClasses:@[[UISearchBar class]]] setTitle:@"取消"];
@@ -105,9 +105,22 @@ static NSString * const FDCityCollectionViewCellIdentifier = @"FDCityCollectionV
     [self.view addSubview:_searchBar];
     [_searchBar mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.view).offset(5);
-        make.right.equalTo(self.view).offset(45);
+        make.right.equalTo(self.view).offset(-5);
         make.height.mas_equalTo(30);
         make.top.equalTo(_navView.mas_bottom).offset(15);
+    }];
+    
+    // cancel button
+    _cancelButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    _cancelButton.tintColor = [UIColor whiteColor];
+    [_cancelButton setTitle:@"取消" forState:UIControlStateNormal];
+    [_cancelButton addTarget:self action:@selector(cancelButtonDidClick:) forControlEvents:UIControlEventTouchUpInside];
+    _cancelButton.alpha = 0;
+    
+    [self.view addSubview:_cancelButton];
+    [_cancelButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(_searchBar);
+        make.left.equalTo(_searchBar.mas_right);
     }];
     
     UIView *currentPositionView = [UIView new];
@@ -186,8 +199,7 @@ static NSString * const FDCityCollectionViewCellIdentifier = @"FDCityCollectionV
     [_searchResultTableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"ResultCell"];
     _searchResultTableView.tableFooterView = [UIView new];
     _searchResultTableView.hidden = YES;
-#warning TODO: dismiss keyboard
-    // _searchResultTableView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag;
+    _searchResultTableView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag;
     [self.view addSubview:_searchResultTableView];
     
     [_searchResultTableView mas_updateConstraints:^(MASConstraintMaker *make) {
@@ -224,12 +236,14 @@ static NSString * const FDCityCollectionViewCellIdentifier = @"FDCityCollectionV
 
 - (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar {
     
+    _cancelButton.alpha = 1;
+    
     [_navView mas_updateConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.view).offset(-35);
     }];
     
     [_searchBar mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(self.view).offset(0);
+        make.right.equalTo(self.view).offset(-35);
     }];
     
     [UIView animateWithDuration:0.25 animations:^{
@@ -239,10 +253,10 @@ static NSString * const FDCityCollectionViewCellIdentifier = @"FDCityCollectionV
     }];
 }
 
-- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
-    
-    searchBar.text = @"";
+- (void)cancelButtonDidClick:(UIButton *)sender {
+    _searchBar.text = @"";
     _searchCities = @[];
+    _cancelButton.alpha = 0;
     
     [_searchResultTableView reloadData];
     
@@ -251,18 +265,23 @@ static NSString * const FDCityCollectionViewCellIdentifier = @"FDCityCollectionV
     }];
     
     [_searchBar mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(self.view).offset(45);
+        make.right.equalTo(self.view).offset(-5);
     }];
     
     [UIView beginAnimations:nil context:nil];
     [UIView setAnimationDuration:0.5];
-
+    
     _searchResultTableView.hidden = YES;
-    [searchBar resignFirstResponder];
+    [_searchBar resignFirstResponder];
     [self.view setNeedsLayout];
     [self.view layoutIfNeeded];
     
     [UIView commitAnimations];
+}
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
+    
+    
 }
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {

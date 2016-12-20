@@ -28,6 +28,7 @@ static NSString * const FDCityCollectionViewCellIdentifier = @"FDCityCollectionV
 @property (nonatomic, strong) UIView *navView;
 @property (nonatomic, strong) UILabel *positionLabel;
 @property (nonatomic, strong) UITableView *searchResultTableView;
+@property (nonatomic, strong) UILabel *noDataLabel;
 
 @property (nonatomic, strong) NSMutableArray<FDCity *> *hotCities;
 @property (nonatomic, strong) NSMutableArray<FDCity *> *cities;
@@ -95,7 +96,6 @@ static NSString * const FDCityCollectionViewCellIdentifier = @"FDCityCollectionV
     _searchBar = [[UISearchBar alloc] init];
     _searchBar.backgroundImage = [UIImage new];
     _searchBar.placeholder = @"搜索";
-    //_searchBar.showsCancelButton = YES;
     _searchBar.delegate = self;
     
     [[UIBarButtonItem appearanceWhenContainedInInstancesOfClasses:@[[UISearchBar class]]] setTitle:@"取消"];
@@ -206,6 +206,16 @@ static NSString * const FDCityCollectionViewCellIdentifier = @"FDCityCollectionV
         make.left.right.bottom.equalTo(self.view);
         make.top.equalTo(_searchBar.mas_bottom).offset(20);
     }];
+    
+    _noDataLabel = [[UILabel alloc] init];
+    _noDataLabel.text = @"没有找到该城市";
+    _noDataLabel.alpha = 0;
+    [_searchResultTableView addSubview:_noDataLabel];
+    
+    [_noDataLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(_searchResultTableView).offset(10);
+        make.left.equalTo(_searchResultTableView).offset(15);
+    }];
 }
 
 #pragma mark -
@@ -279,11 +289,6 @@ static NSString * const FDCityCollectionViewCellIdentifier = @"FDCityCollectionV
     [UIView commitAnimations];
 }
 
-- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
-    
-    
-}
-
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
     
     [_queryQueue cancelAllOperations];
@@ -298,6 +303,13 @@ static NSString * const FDCityCollectionViewCellIdentifier = @"FDCityCollectionV
     FDQueryCityOperation *operation = [[FDQueryCityOperation alloc] initWithKey:searchText complectionWithResultBlock:^(NSArray *results) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         dispatch_async(dispatch_get_main_queue(), ^{
+            
+            if (results.count == 0) {
+                strongSelf.noDataLabel.alpha = 1;
+            } else {
+                strongSelf.noDataLabel.alpha = 0;
+            }
+            
             strongSelf.searchCities = results;
             [strongSelf.searchResultTableView reloadData];
         });

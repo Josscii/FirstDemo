@@ -26,6 +26,9 @@
 		C240210B1E08C7780064CE01 /* UMSocialNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C24020FA1E08C7780064CE01 /* UMSocialNetwork.framework */; };
 		C240210C1E08C7780064CE01 /* UMSocialSDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C24020FC1E08C7780064CE01 /* UMSocialSDKResources.bundle */; };
 		C240210D1E08C7780064CE01 /* UShareUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C24020FD1E08C7780064CE01 /* UShareUI.framework */; };
+		C240210F1E08C9390064CE01 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = C240210E1E08C9390064CE01 /* libsqlite3.tbd */; };
+		C24021111E08C95D0064CE01 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C24021101E08C95D0064CE01 /* ImageIO.framework */; };
+		C24021151E08DE870064CE01 /* FDHudView.m in Sources */ = {isa = PBXBuildFile; fileRef = C24021141E08DE870064CE01 /* FDHudView.m */; };
 		C26C8A281DF2B353009BF06C /* FDUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = C26C8A271DF2B353009BF06C /* FDUtils.m */; };
 		C27D46511DFA4E5F00707F76 /* hotcity.json in Resources */ = {isa = PBXBuildFile; fileRef = C27D46501DFA4E5F00707F76 /* hotcity.json */; };
 		C27D465E1DFA72AD00707F76 /* FDDefaultView.m in Sources */ = {isa = PBXBuildFile; fileRef = C27D465D1DFA72AD00707F76 /* FDDefaultView.m */; };
@@ -149,6 +152,10 @@
 		C24020FA1E08C7780064CE01 /* UMSocialNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UMSocialNetwork.framework; sourceTree = "<group>"; };
 		C24020FC1E08C7780064CE01 /* UMSocialSDKResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = UMSocialSDKResources.bundle; sourceTree = "<group>"; };
 		C24020FD1E08C7780064CE01 /* UShareUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UShareUI.framework; sourceTree = "<group>"; };
+		C240210E1E08C9390064CE01 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
+		C24021101E08C95D0064CE01 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
+		C24021131E08DE870064CE01 /* FDHudView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FDHudView.h; sourceTree = "<group>"; };
+		C24021141E08DE870064CE01 /* FDHudView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FDHudView.m; sourceTree = "<group>"; };
 		C26C8A261DF2B353009BF06C /* FDUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FDUtils.h; sourceTree = "<group>"; };
 		C26C8A271DF2B353009BF06C /* FDUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FDUtils.m; sourceTree = "<group>"; };
 		C27D46501DFA4E5F00707F76 /* hotcity.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = hotcity.json; sourceTree = "<group>"; };
@@ -284,6 +291,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C2DE49311DFE379D0001A4D5 /* libc++.tbd in Frameworks */,
+				C2DE492F1DFE37910001A4D5 /* libz.tbd in Frameworks */,
+				C24021111E08C95D0064CE01 /* ImageIO.framework in Frameworks */,
+				C240210F1E08C9390064CE01 /* libsqlite3.tbd in Frameworks */,
 				C24021021E08C7780064CE01 /* libSocialSina.a in Frameworks */,
 				C24021071E08C7780064CE01 /* libWeChatSDK.a in Frameworks */,
 				C2DE49371DFE37D90001A4D5 /* CoreTelephony.framework in Frameworks */,
@@ -294,8 +305,6 @@
 				C24020FF1E08C7780064CE01 /* libSocialQQ.a in Frameworks */,
 				C240210B1E08C7780064CE01 /* UMSocialNetwork.framework in Frameworks */,
 				C2DE49331DFE37AB0001A4D5 /* libstdc++.6.0.9.tbd in Frameworks */,
-				C2DE49311DFE379D0001A4D5 /* libc++.tbd in Frameworks */,
-				C2DE492F1DFE37910001A4D5 /* libz.tbd in Frameworks */,
 				C2DE492D1DFE376F0001A4D5 /* SystemConfiguration.framework in Frameworks */,
 				C2DE492B1DFE37640001A4D5 /* JavaScriptCore.framework in Frameworks */,
 				C24020FE1E08C7780064CE01 /* libSocialEmail.a in Frameworks */,
@@ -423,9 +432,20 @@
 			path = UMSocialUI;
 			sourceTree = "<group>";
 		};
+		C24021121E08DDAC0064CE01 /* Map */ = {
+			isa = PBXGroup;
+			children = (
+				C2DE49241DFE367A0001A4D5 /* AMapFoundationKit.framework */,
+				C2DE49251DFE367A0001A4D5 /* AMapLocationKit.framework */,
+			);
+			name = Map;
+			sourceTree = "<group>";
+		};
 		C27D46521DFA55ED00707F76 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C24021101E08C95D0064CE01 /* ImageIO.framework */,
+				C240210E1E08C9390064CE01 /* libsqlite3.tbd */,
 				C2DE49361DFE37D90001A4D5 /* CoreTelephony.framework */,
 				C2DE49341DFE37BA0001A4D5 /* Security.framework */,
 				C2DE49321DFE37AB0001A4D5 /* libstdc++.6.0.9.tbd */,
@@ -518,8 +538,6 @@
 				C2B2FFAC1DEFF52F00C1CD77 /* LaunchScreen.storyboard */,
 				C2B2FFAF1DEFF52F00C1CD77 /* Info.plist */,
 				C2B2FF9E1DEFF52F00C1CD77 /* Supporting Files */,
-				C28E79B11DF0FDD300E2C517 /* FDConstants.h */,
-				C29F50C51DF6D218001A92E3 /* FDConstants.m */,
 			);
 			path = FirstDemo;
 			sourceTree = "<group>";
@@ -619,10 +637,11 @@
 		C2B2FFF71DF03AF600C1CD77 /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
-				C2DE49241DFE367A0001A4D5 /* AMapFoundationKit.framework */,
-				C2DE49251DFE367A0001A4D5 /* AMapLocationKit.framework */,
 				C26C8A261DF2B353009BF06C /* FDUtils.h */,
 				C26C8A271DF2B353009BF06C /* FDUtils.m */,
+				C28E79B11DF0FDD300E2C517 /* FDConstants.h */,
+				C29F50C51DF6D218001A92E3 /* FDConstants.m */,
+				C24021121E08DDAC0064CE01 /* Map */,
 				C24020D21E08C7780064CE01 /* UMSocial */,
 				C2B2FFF81DF03B1900C1CD77 /* Masonry */,
 			);
@@ -680,6 +699,8 @@
 		C2C9348F1DF6BF1200590921 /* Custom Views */ = {
 			isa = PBXGroup;
 			children = (
+				C24021131E08DE870064CE01 /* FDHudView.h */,
+				C24021141E08DE870064CE01 /* FDHudView.m */,
 				C2C934821DF6ADFB00590921 /* FDSwitchCityButton.h */,
 				C2C934831DF6ADFB00590921 /* FDSwitchCityButton.m */,
 				C2B2FFD71DF01AB800C1CD77 /* FDGradientView.h */,
@@ -828,6 +849,7 @@
 				C2827FA31E07BD02005B277F /* FDForecastItemHour.m in Sources */,
 				C2B2001C1DF03B1900C1CD77 /* View+MASAdditions.m in Sources */,
 				C2827FA01E07BC34005B277F /* FDCity.m in Sources */,
+				C24021151E08DE870064CE01 /* FDHudView.m in Sources */,
 				C2C934951DF6C1E100590921 /* FDDeleteDecorationView.m in Sources */,
 				C2B2FFD51DF0186B00C1CD77 /* UILabel+FDLabel.m in Sources */,
 				C2DCBF681DF16B7100D73815 /* FDCurrentWeatherTableViewCell.m in Sources */,
@@ -1026,6 +1048,7 @@
 					"$(PROJECT_DIR)/FirstDemo/UMSocial/SocialLibraries/SMS",
 					"$(PROJECT_DIR)/FirstDemo/UMSocial/SocialLibraries/WeChat",
 				);
+				OTHER_LDFLAGS = "-Objc";
 				PRODUCT_BUNDLE_IDENTIFIER = sss.FirstDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -1057,6 +1080,7 @@
 					"$(PROJECT_DIR)/FirstDemo/UMSocial/SocialLibraries/SMS",
 					"$(PROJECT_DIR)/FirstDemo/UMSocial/SocialLibraries/WeChat",
 				);
+				OTHER_LDFLAGS = "-Objc";
 				PRODUCT_BUNDLE_IDENTIFIER = sss.FirstDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};

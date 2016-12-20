@@ -73,6 +73,9 @@ static NSString * const FDSunriseTableViewCellCelldentifier = @"FDSunriseTableVi
 
 - (void)prepareForReuse {
     _hasAnimated = NO;
+    _city = nil;
+    
+    [_mainTableView reloadData];
 }
 
 #pragma mark -
@@ -136,7 +139,6 @@ static NSString * const FDSunriseTableViewCellCelldentifier = @"FDSunriseTableVi
 - (void)feedCellWithData:(id)data {
     _city = data;
     _mainTableView.contentOffset = CGPointMake(0, -64);
-    
     [_mainTableView reloadData];
 }
 

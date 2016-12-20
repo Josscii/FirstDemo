@@ -15,11 +15,13 @@
 #import "FDMainCollectionViewCell.h"
 #import "FDUtils.h"
 #import "FDCity.h"
+#import "FDHudView.h"
 
 #import "Masonry/Masonry.h"
 
 #import <AMapFoundationKit/AMapFoundationKit.h>
 #import <AMapLocationKit/AMapLocationKit.h>
+#import "UShareUI/UMSocialUIManager.h"
 
 static NSString * const FDMainCollectionViewCellIdentifier = @"FDMainCollectionViewCellIdentifier";
 
@@ -31,9 +33,13 @@ static NSString * const FDMainCollectionViewCellIdentifier = @"FDMainCollectionV
 @property (nonatomic, strong) NSMutableArray<FDCity *> *cities;
 @property (nonatomic, strong) UIPageControl *pageControl;
 @property (nonatomic, strong) FDSwitchCityButton *switchCityButton;
-@property (nonatomic, strong) AMapLocationManager *locationManager;
+@property (nonatomic, strong) FDHudView *hud;
+@property (nonatomic, strong) UIButton *refreshButton;
 
+@property (nonatomic, assign) BOOL forceRefresh;
 @property (nonatomic, assign) BOOL firstLoad;
+
+@property (nonatomic, strong) AMapLocationManager *locationManager;
 
 @end
 
@@ -46,6 +52,7 @@ static NSString * const FDMainCollectionViewCellIdentifier = @"FDMainCollectionV
     [self setupView];
     
     _firstLoad = YES;
+    _forceRefresh = NO;
     _cities = [[FDUtils getAllSeletedCities] mutableCopy];
     
     if (_cities.count == 0) {
@@ -159,6 +166,7 @@ static NSString * const FDMainCollectionViewCellIdentifier = @"FDMainCollectionV
     UIButton *shareButton = [UIButton buttonWithType:UIButtonTypeSystem];
     shareButton.tintColor = [UIColor whiteColor];
     [shareButton setImage:[UIImage imageNamed:@"share-icon"] forState:UIControlStateNormal];
+    [shareButton addTarget:self action:@selector(share:) forControlEvents:UIControlEventTouchUpInside];
     
     [navView addSubview:shareButton];
     [shareButton mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -166,12 +174,13 @@ static NSString * const FDMainCollectionViewCellIdentifier = @"FDMainCollectionV
         make.top.equalTo(navView).offset(32);
     }];
     
-    UIButton *refreshButton = [UIButton buttonWithType:UIButtonTypeSystem];
-    refreshButton.tintColor = [UIColor whiteColor];
-    [refreshButton setImage:[UIImage imageNamed:@"rjb-add-refresh-icon"] forState:UIControlStateNormal];
+    _refreshButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    _refreshButton.tintColor = [UIColor whiteColor];
+    [_refreshButton setImage:[UIImage imageNamed:@"rjb-add-refresh-icon"] forState:UIControlStateNormal];
+    [_refreshButton addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventTouchUpInside];
     
-    [navView addSubview:refreshButton];
-    [refreshButton mas_makeConstraints:^(MASConstraintMaker *make) {
+    [navView addSubview:_refreshButton];
+    [_refreshButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(shareButton.mas_left).offset(-30);
         make.top.equalTo(navView).offset(32);
     }];
@@ -195,6 +204,15 @@ static NSString * const FDMainCollectionViewCellIdentifier = @"FDMainCollectionV
         make.centerX.equalTo(navView);
         make.top.equalTo(_switchCityButton.mas_bottom);
     }];
+    
+    // hud
+    _hud = [[FDHudView alloc] init];
+    _hud.alpha = 0;
+    [self.view addSubview:_hud];
+    
+    [_hud mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(self.view);
+    }];
 }
 
 #pragma mark -
@@ -210,20 +228,32 @@ static NSString * const FDMainCollectionViewCellIdentifier = @"FDMainCollectionV
     FDCity *city = _cities[indexPath.item];
     
     if (!city.saveTime) {
+        [self startLoading];
         [FDUtils fetchDataWithCityCode:city.cityCode completionBlock:^(NSDictionary *weatherData) {
             [city configureWihtDictionary:weatherData];
-            
+            [self endLoading];
             [cell feedCellWithData:city];
         }];
     } else {
         if (city.isExpired) {
+            [self startLoading];
             [FDUtils fetchDataWithCityCode:city.cityCode completionBlock:^(NSDictionary *weatherData) {
                 [city configureWihtDictionary:weatherData];
-                
+                [self endLoading];
                 [cell feedCellWithData:city];
             }];
         } else {
-            [cell feedCellWithData:city];
+            if (_forceRefresh) {
+                _forceRefresh = NO;
+                [self startLoading];
+                [FDUtils fetchDataWithCityCode:city.cityCode completionBlock:^(NSDictionary *weatherData) {
+                    [city configureWihtDictionary:weatherData];
+                    [self endLoading];
+                    [cell feedCellWithData:city];
+                }];
+            } else {
+                [cell feedCellWithData:city];
+            }
         }
     }
     
@@ -237,13 +267,29 @@ static NSString * const FDMainCollectionViewCellIdentifier = @"FDMainCollectionV
 }
 
 #pragma mark -
+#pragma mark - button actions
 
 - (void)shouldSwitchCity:(id)sender {
     FDManageCityViewController *managerCityController = [self.storyboard instantiateViewControllerWithIdentifier:@"FDManageCityViewController"];
     [self.navigationController pushViewController:managerCityController animated:YES];
 }
 
+- (void)share:(id)sender {
+    // __weak typeof(self) weakSelf = self;
+    [UMSocialUIManager showShareMenuViewInWindowWithPlatformSelectionBlock:^(UMSocialPlatformType platformType, NSDictionary *userInfo) {
+        
+    }];
+}
+
+- (void)refresh:(id)sender {
+    _forceRefresh = YES;
+    
+    NSInteger page = _collectionView.contentOffset.x / SCREEN_WIDTH;
+    [_collectionView reloadItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:page inSection:0]]];
+}
+
 #pragma mark -
+#pragma mark - refresh
 
 - (void)reloadDataWithPage:(NSInteger)page shouldReloadCollectionView:(BOOL)flag {
     _switchCityButton.cityLabel.text = _cities[page].cityName;
@@ -259,6 +305,22 @@ static NSString * const FDMainCollectionViewCellIdentifier = @"FDMainCollectionV
     if (flag) {
         [_collectionView reloadData];
     }
+}
+
+- (void)startLoading {
+    _hud.alpha = 1;
+    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
+    animation.fromValue = 0;
+    animation.toValue = [NSNumber numberWithDouble:M_PI * 2];
+    animation.duration = 2;
+    animation.repeatCount = CGFLOAT_MAX;
+    [_refreshButton.layer
+     addAnimation:animation forKey:nil];
+}
+
+- (void)endLoading {
+    _hud.alpha = 0;
+    [_refreshButton.layer removeAllAnimations];
 }
 
 @end

@@ -9,7 +9,77 @@
 #import "FDEditCityFlowLayout.h"
 #import "FDConstants.h"
 
+@interface FDEditCityFlowLayout ()
+
+@property (nonatomic, strong) NSIndexPath *indexPathForReordering;
+@property (nonatomic, strong) UIView *snapshotView;
+@property (nonatomic, strong) UILongPressGestureRecognizer *longPressGesture;
+
+
+@end
+
 @implementation FDEditCityFlowLayout
+
+- (void)prepareLayout {
+    [super prepareLayout];
+    
+    if (!_longPressGesture) {
+        _longPressGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongGesture:)];
+        [self.collectionView addGestureRecognizer:_longPressGesture];
+    }
+}
+
+- (void)handleLongGesture:(UILongPressGestureRecognizer *)gesture {
+    if (![[NSUserDefaults standardUserDefaults] boolForKey:EDITINGCITY]) {
+        return;
+    }
+    
+    CGPoint location = [gesture locationInView:gesture.view];
+    NSIndexPath *indexPath = [self.collectionView indexPathForItemAtPoint:location];
+    
+    if (![_editCityDelegate fd_collectionView:self.collectionView canMoveItemAtIndexPath:indexPath]) {
+        return;
+    }
+    
+    switch(gesture.state) {
+        case UIGestureRecognizerStateBegan:
+        {
+            _indexPathForReordering = indexPath;
+            UICollectionViewCell *cell = [self.collectionView cellForItemAtIndexPath: _indexPathForReordering];
+            _snapshotView = [cell snapshotViewAfterScreenUpdates:NO];
+            _snapshotView.center = cell.center;
+            [self.collectionView addSubview:_snapshotView];
+            cell.alpha = 0;
+        }
+            break;
+        case UIGestureRecognizerStateChanged:
+        {
+            _snapshotView.center = location;
+            if (indexPath) {
+                [_editCityDelegate fd_collectionView:self.collectionView moveItemAtIndexPath:_indexPathForReordering toIndexPath:indexPath];
+                [self.collectionView moveItemAtIndexPath:_indexPathForReordering toIndexPath:indexPath];
+                
+                _indexPathForReordering = indexPath;
+                [self.collectionView cellForItemAtIndexPath: _indexPathForReordering].alpha = 0;
+            }
+        }
+            break;
+        case UIGestureRecognizerStateEnded:
+        {
+            UICollectionViewCell *cell = [self.collectionView cellForItemAtIndexPath: _indexPathForReordering];
+            
+            [UIView animateWithDuration:0.25f animations:^{
+                _snapshotView.center = cell.center;
+            } completion:^(BOOL finished) {
+                [self.collectionView cellForItemAtIndexPath: _indexPathForReordering].alpha = 1;
+                [_snapshotView removeFromSuperview];
+            }];
+        }
+            break;
+        default:
+            break;
+    }
+}
 
 - (NSArray<UICollectionViewLayoutAttributes *> *)layoutAttributesForElementsInRect:(CGRect)rect {
     

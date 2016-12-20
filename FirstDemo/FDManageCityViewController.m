@@ -20,7 +20,7 @@
 static NSString * const FDEditCityCollectionViewCellIdentifier = @"FDEditCityCollectionViewCell";
 static NSString * const FdAddCotyCollectionViewCellIdentifier = @"FdAddCotyCollectionViewCell";
 
-@interface FDManageCityViewController () <UICollectionViewDelegate, UICollectionViewDataSource, FDEditCityCollectionViewCellDelegate>
+@interface FDManageCityViewController () <UICollectionViewDelegate, UICollectionViewDataSource, FDEditCityCollectionViewCellDelegate, FDEditCityDelegate>
 
 @property (nonatomic, strong) UICollectionView *collectionView;
 @property (nonatomic, strong) FDEditCityFlowLayout *flowLayout;
@@ -44,8 +44,8 @@ static NSString * const FdAddCotyCollectionViewCellIdentifier = @"FdAddCotyColle
     // Do any additional setup after loading the view.
     [self setupView];
     
-    _longPressGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongGesture:)];
-    [_collectionView addGestureRecognizer:_longPressGesture];
+//    _longPressGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongGesture:)];
+//    [_collectionView addGestureRecognizer:_longPressGesture];
     
     _cities = [[FDUtils getAllSeletedCities] mutableCopy];
     [_collectionView reloadData];
@@ -81,6 +81,7 @@ static NSString * const FdAddCotyCollectionViewCellIdentifier = @"FdAddCotyColle
     _flowLayout.minimumLineSpacing = 0;
     _flowLayout.itemSize = CGSizeMake((SCREEN_WIDTH - 15 - 5) / 3, 129);
     _flowLayout.sectionInset = UIEdgeInsetsMake(64, 15, 0, 5);
+    _flowLayout.editCityDelegate = self;
     
     _collectionView = [[UICollectionView alloc] initWithFrame:self.view.bounds collectionViewLayout:_flowLayout];
     [_collectionView registerClass:[FDEditCityCollectionViewCell class] forCellWithReuseIdentifier:FDEditCityCollectionViewCellIdentifier];
@@ -231,8 +232,10 @@ static NSString * const FdAddCotyCollectionViewCellIdentifier = @"FdAddCotyColle
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-- (void)collectionView:(UICollectionView *)collectionView moveItemAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath {
-    
+#pragma mark -
+#pragma mark - collection view reodering
+
+- (void)fd_collectionView:(UICollectionView *)collectionView moveItemAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath {
     FDCity *model = _cities[sourceIndexPath.item];
     [_cities removeObjectAtIndex:sourceIndexPath.item];
     [_cities insertObject:model atIndex:destinationIndexPath.item];
@@ -261,61 +264,11 @@ static NSString * const FdAddCotyCollectionViewCellIdentifier = @"FdAddCotyColle
     }
 }
 
-#pragma mark -
-#pragma mark - collection view reodering
-
-- (void)handleLongGesture:(UILongPressGestureRecognizer *)gesture {
-    if (![[NSUserDefaults standardUserDefaults] boolForKey:EDITINGCITY]) {
-        return;
-    }
-    
-    CGPoint location = [gesture locationInView:gesture.view];
-    NSIndexPath *indexPath = [_collectionView indexPathForItemAtPoint:location];
-    
+- (BOOL)fd_collectionView:(UICollectionView *)collectionView canMoveItemAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.item == _cities.count) {
-        return;
+        return NO;
     }
-    
-    switch(gesture.state) {
-        case UIGestureRecognizerStateBegan:
-            // [_collectionView beginInteractiveMovementForItemAtIndexPath:selectedIndexPath];
-            {
-                _indexPathForReordering = indexPath;
-                UICollectionViewCell *cell = [_collectionView cellForItemAtIndexPath: _indexPathForReordering];
-                _snapshotView = [cell snapshotViewAfterScreenUpdates:NO];
-                _snapshotView.center = cell.center;
-                [_collectionView addSubview:_snapshotView];
-                cell.alpha = 0;
-            }
-            break;
-        case UIGestureRecognizerStateChanged:
-            // [_collectionView updateInteractiveMovementTargetPosition:[gesture locationInView:gesture.view]];
-            {
-                _snapshotView.center = location;
-                if (indexPath) {
-                    [self collectionView:_collectionView moveItemAtIndexPath:_indexPathForReordering toIndexPath:indexPath];
-                    [_collectionView moveItemAtIndexPath:_indexPathForReordering toIndexPath:indexPath];
-                    
-                    _indexPathForReordering = indexPath;
-                    [_collectionView cellForItemAtIndexPath: _indexPathForReordering].alpha = 0;
-                }
-            }
-            break;
-        case UIGestureRecognizerStateEnded:
-            {
-                UICollectionViewCell *cell = [_collectionView cellForItemAtIndexPath: _indexPathForReordering];
-                
-                [UIView animateWithDuration:0.25f animations:^{
-                    _snapshotView.center = cell.center;
-                } completion:^(BOOL finished) {
-                    [_collectionView cellForItemAtIndexPath: _indexPathForReordering].alpha = 1;
-                    [_snapshotView removeFromSuperview];
-                }];
-            }
-            break;
-        default:
-            break;
-    }
+    return YES;
 }
 
 #pragma mark -

@@ -14,6 +14,14 @@
     return [self colorFromHexString:@"#2ea9df"];
 }
 
++ (UIColor *)backgroundColorNight {
+    return [self colorFromHexString:@"#122e3b"];
+}
+
++ (UIColor *)backgroundColorDayRain {
+    return [self colorFromHexString:@"#4e849c"];
+}
+
 + (UIColor *)separatorLineColor {
     return [[self whiteColor] colorWithAlphaComponent:0.2f];;
 }

@@ -35,6 +35,8 @@ static NSString * const FDMainCollectionViewCellIdentifier = @"FDMainCollectionV
 @property (nonatomic, strong) FDSwitchCityButton *switchCityButton;
 @property (nonatomic, strong) FDHudView *hud;
 @property (nonatomic, strong) UIButton *refreshButton;
+@property (nonatomic, strong) UIView *navView;
+@property (nonatomic, strong) CAGradientLayer *navLayer;
 
 @property (nonatomic, assign) BOOL forceRefresh;
 @property (nonatomic, assign) BOOL firstLoad;
@@ -79,6 +81,7 @@ static NSString * const FDMainCollectionViewCellIdentifier = @"FDMainCollectionV
         }];
     } else {
         [self reloadDataWithPage:0 shouldReloadCollectionView:YES];
+        [self setBackgroundColorWithCity:_cities[0]];
         [_collectionView reloadData];
     }
 }
@@ -131,6 +134,7 @@ static NSString * const FDMainCollectionViewCellIdentifier = @"FDMainCollectionV
     _collectionView.showsHorizontalScrollIndicator = NO;
     _collectionView.bounces = NO;
     _collectionView.pagingEnabled = YES;
+    _collectionView.prefetchingEnabled = NO;
     [_collectionView registerClass:[FDMainCollectionViewCell class] forCellWithReuseIdentifier:FDMainCollectionViewCellIdentifier];
     [self.view addSubview:_collectionView];
     
@@ -140,16 +144,16 @@ static NSString * const FDMainCollectionViewCellIdentifier = @"FDMainCollectionV
     
     // nav layer
     
-    CAGradientLayer *navLayer = [CAGradientLayer layer];
-    navLayer.frame = CGRectMake(0, 0, SCREEN_WIDTH, 84);
-    navLayer.colors = @[(__bridge id)[UIColor backgroundColor].CGColor, (__bridge id)[UIColor backgroundColor].CGColor, (__bridge id)[UIColor clearColor].CGColor];
-    navLayer.locations = @[@0, @0.8, @1];
+    _navLayer = [CAGradientLayer layer];
+    _navLayer.frame = CGRectMake(0, 0, SCREEN_WIDTH, 84);
+    _navLayer.colors = @[(__bridge id)[UIColor backgroundColor].CGColor, (__bridge id)[UIColor backgroundColor].CGColor, (__bridge id)[UIColor clearColor].CGColor];
+    _navLayer.locations = @[@0, @0.8, @1];
     
-    UIView *navView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 84)];
-    navView.backgroundColor = [UIColor backgroundColor];
-    navView.layer.mask = navLayer;
+    _navView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 84)];
+    _navView.backgroundColor = [UIColor backgroundColor];
+    _navView.layer.mask = _navLayer;
     
-    [self.view addSubview:navView];
+    [self.view addSubview:_navView];
     
     /*
     UIButton *backButton = [UIButton buttonWithType:UIButtonTypeSystem];
@@ -168,10 +172,10 @@ static NSString * const FDMainCollectionViewCellIdentifier = @"FDMainCollectionV
     [shareButton setImage:[UIImage imageNamed:@"share-icon"] forState:UIControlStateNormal];
     [shareButton addTarget:self action:@selector(share:) forControlEvents:UIControlEventTouchUpInside];
     
-    [navView addSubview:shareButton];
+    [_navView addSubview:shareButton];
     [shareButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(navView).offset(-15);
-        make.top.equalTo(navView).offset(32);
+        make.right.equalTo(_navView).offset(-15);
+        make.top.equalTo(_navView).offset(32);
     }];
     
     _refreshButton = [UIButton buttonWithType:UIButtonTypeSystem];
@@ -179,18 +183,18 @@ static NSString * const FDMainCollectionViewCellIdentifier = @"FDMainCollectionV
     [_refreshButton setImage:[UIImage imageNamed:@"rjb-add-refresh-icon"] forState:UIControlStateNormal];
     [_refreshButton addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventTouchUpInside];
     
-    [navView addSubview:_refreshButton];
+    [_navView addSubview:_refreshButton];
     [_refreshButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(shareButton.mas_left).offset(-30);
-        make.top.equalTo(navView).offset(32);
+        make.top.equalTo(_navView).offset(32);
     }];
     
     _switchCityButton = [[FDSwitchCityButton alloc] init];
     _switchCityButton.cityLabel.text = @"正在定位...";
-    [navView addSubview:_switchCityButton];
+    [_navView addSubview:_switchCityButton];
     [_switchCityButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(navView).offset(30);
-        make.centerX.equalTo(navView);
+        make.top.equalTo(_navView).offset(30);
+        make.centerX.equalTo(_navView);
     }];
     
     [_switchCityButton addTarget:self action:@selector(shouldSwitchCity:) forControlEvents:UIControlEventTouchUpInside];
@@ -201,7 +205,7 @@ static NSString * const FDMainCollectionViewCellIdentifier = @"FDMainCollectionV
     [self.view addSubview:_pageControl];
     
     [_pageControl mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(navView);
+        make.centerX.equalTo(_navView);
         make.top.equalTo(_switchCityButton.mas_bottom);
     }];
     
@@ -232,6 +236,7 @@ static NSString * const FDMainCollectionViewCellIdentifier = @"FDMainCollectionV
         [FDUtils fetchDataWithCityCode:city.cityCode completionBlock:^(NSDictionary *weatherData) {
             [city configureWihtDictionary:weatherData];
             [self endLoading];
+            [self setBackgroundColorWithCity:city];
             [cell feedCellWithData:city];
         }];
     } else {
@@ -240,6 +245,7 @@ static NSString * const FDMainCollectionViewCellIdentifier = @"FDMainCollectionV
             [FDUtils fetchDataWithCityCode:city.cityCode completionBlock:^(NSDictionary *weatherData) {
                 [city configureWihtDictionary:weatherData];
                 [self endLoading];
+                [self setBackgroundColorWithCity:city];
                 [cell feedCellWithData:city];
             }];
         } else {
@@ -249,6 +255,7 @@ static NSString * const FDMainCollectionViewCellIdentifier = @"FDMainCollectionV
                 [FDUtils fetchDataWithCityCode:city.cityCode completionBlock:^(NSDictionary *weatherData) {
                     [city configureWihtDictionary:weatherData];
                     [self endLoading];
+                    [self setBackgroundColorWithCity:city];
                     [cell feedCellWithData:city];
                 }];
             } else {
@@ -263,6 +270,7 @@ static NSString * const FDMainCollectionViewCellIdentifier = @"FDMainCollectionV
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     NSInteger page = scrollView.contentOffset.x / SCREEN_WIDTH;
     
+    [self setBackgroundColorWithCity:_cities[page]];
     [self reloadDataWithPage:page shouldReloadCollectionView:NO];
 }
 
@@ -321,6 +329,36 @@ static NSString * const FDMainCollectionViewCellIdentifier = @"FDMainCollectionV
 - (void)endLoading {
     _hud.alpha = 0;
     [_refreshButton.layer removeAllAnimations];
+}
+
+- (void)setBackgroundColorWithCity:(FDCity *)city {
+    NSDate *now = [NSDate date];
+    
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    dateFormatter.dateFormat = @"yyyy-MM-dd";
+    
+    NSString *currentYMD = [dateFormatter stringFromDate:now];
+    
+    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm"];
+    NSDate *endDate = [dateFormatter dateFromString:[NSString stringWithFormat:@"%@ %@", currentYMD, city.sunFallTime]];
+    
+    [UIView animateWithDuration:0.25 animations:^{
+        if ([now compare:endDate] == NSOrderedDescending) {
+            self.view.backgroundColor= [UIColor backgroundColorNight];
+            _navView.backgroundColor = [UIColor backgroundColorNight];
+            _navLayer.colors = @[(__bridge id)[UIColor backgroundColorNight].CGColor, (__bridge id)[UIColor backgroundColorNight].CGColor, (__bridge id)[UIColor clearColor].CGColor];
+        } else {
+            if (city.curr.weatherType.integerValue == 0) {
+                self.view.backgroundColor= [UIColor backgroundColor];
+                _navView.backgroundColor = [UIColor backgroundColor];
+                _navLayer.colors = @[(__bridge id)[UIColor backgroundColor].CGColor, (__bridge id)[UIColor backgroundColor].CGColor, (__bridge id)[UIColor clearColor].CGColor];
+            } else {
+                self.view.backgroundColor= [UIColor backgroundColorDayRain];
+                _navView.backgroundColor = [UIColor backgroundColorDayRain];
+                _navLayer.colors = @[(__bridge id)[UIColor backgroundColorDayRain].CGColor, (__bridge id)[UIColor backgroundColorDayRain].CGColor, (__bridge id)[UIColor clearColor].CGColor];
+            }
+        }
+    }];
 }
 
 @end

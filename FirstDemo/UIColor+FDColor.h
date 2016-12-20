@@ -11,6 +11,9 @@
 @interface UIColor (FDColor)
 
 + (UIColor *)backgroundColor;
++ (UIColor *)backgroundColorNight;
++ (UIColor *)backgroundColorDayRain;
+
 + (UIColor *)separatorLineColor;
 + (UIColor *)shadowColor;
 

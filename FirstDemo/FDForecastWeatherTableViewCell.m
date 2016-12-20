@@ -136,8 +136,8 @@ static NSString * const CellIndentifier = @"FDForecastWeatherCollectionViewCell"
                                                  titles:[lowTitles copy]
                                                  startY: 90];
     _lowChartView.position = FDChartViewTextPositionBottom;
-   [_collectionView addSubview:_lowChartView];
-[_lowChartView mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_collectionView addSubview:_lowChartView];
+    [_lowChartView mas_makeConstraints:^(MASConstraintMaker *make) {
        make.left.equalTo(_collectionView);
     make.bottom.equalTo(self.contentView);
    }];

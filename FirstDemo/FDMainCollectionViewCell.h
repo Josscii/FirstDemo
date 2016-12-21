@@ -12,4 +12,7 @@
 
 - (void)feedCellWithData:(id)data;
 
+// use this when need force refresh
+- (void)refreshCellWithData:(id)data;
+
 @end

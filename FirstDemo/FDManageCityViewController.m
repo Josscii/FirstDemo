@@ -44,9 +44,6 @@ static NSString * const FdAddCotyCollectionViewCellIdentifier = @"FdAddCotyColle
     // Do any additional setup after loading the view.
     [self setupView];
     
-//    _longPressGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongGesture:)];
-//    [_collectionView addGestureRecognizer:_longPressGesture];
-    
     _cities = [[FDUtils getAllSeletedCities] mutableCopy];
     [_collectionView reloadData];
 }

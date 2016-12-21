@@ -210,13 +210,9 @@ static NSString * const FDMainCollectionViewCellIdentifier = @"FDMainCollectionV
     }];
     
     // hud
-    _hud = [[FDHudView alloc] init];
+    _hud = [[FDHudView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
     _hud.alpha = 0;
-    [self.view addSubview:_hud];
-    
-    [_hud mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo(self.view);
-    }];
+    [self.collectionView addSubview:_hud];
 }
 
 #pragma mark -
@@ -232,35 +228,24 @@ static NSString * const FDMainCollectionViewCellIdentifier = @"FDMainCollectionV
     FDCity *city = _cities[indexPath.item];
     
     if (!city.saveTime) {
-        [self startLoading];
+        [self startLoadingWithCell:cell];
         [FDUtils fetchDataWithCityCode:city.cityCode completionBlock:^(NSDictionary *weatherData) {
             [city configureWihtDictionary:weatherData];
-            [self endLoading];
             [self setBackgroundColorWithCity:city];
             [cell feedCellWithData:city];
+            [self endLoadingWithCell:cell];
         }];
     } else {
         if (city.isExpired) {
-            [self startLoading];
+            [self startLoadingWithCell:cell];
             [FDUtils fetchDataWithCityCode:city.cityCode completionBlock:^(NSDictionary *weatherData) {
                 [city configureWihtDictionary:weatherData];
-                [self endLoading];
                 [self setBackgroundColorWithCity:city];
                 [cell feedCellWithData:city];
+                [self endLoadingWithCell:cell];
             }];
         } else {
-            if (_forceRefresh) {
-                _forceRefresh = NO;
-                [self startLoading];
-                [FDUtils fetchDataWithCityCode:city.cityCode completionBlock:^(NSDictionary *weatherData) {
-                    [city configureWihtDictionary:weatherData];
-                    [self endLoading];
-                    [self setBackgroundColorWithCity:city];
-                    [cell feedCellWithData:city];
-                }];
-            } else {
-                [cell feedCellWithData:city];
-            }
+            [cell feedCellWithData:city];
         }
     }
     
@@ -290,10 +275,19 @@ static NSString * const FDMainCollectionViewCellIdentifier = @"FDMainCollectionV
 }
 
 - (void)refresh:(id)sender {
-    _forceRefresh = YES;
-    
     NSInteger page = _collectionView.contentOffset.x / SCREEN_WIDTH;
-    [_collectionView reloadItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:page inSection:0]]];
+    
+    FDCity *city = _cities[page];
+    FDMainCollectionViewCell *cell = (FDMainCollectionViewCell *)[_collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:page inSection:0]];
+    cell.alpha = 0;
+    
+    [self startLoadingWithCell:cell];
+    [FDUtils fetchDataWithCityCode:city.cityCode completionBlock:^(NSDictionary *weatherData) {
+        [city configureWihtDictionary:weatherData];
+        [self setBackgroundColorWithCity:city];
+        [cell refreshCellWithData:city];
+        [self endLoadingWithCell:cell];
+    }];
 }
 
 #pragma mark -
@@ -315,20 +309,28 @@ static NSString * const FDMainCollectionViewCellIdentifier = @"FDMainCollectionV
     }
 }
 
-- (void)startLoading {
+- (void)startLoadingWithCell:(UICollectionViewCell *)cell {
     _hud.alpha = 1;
+    cell.alpha = 0;
+    _hud.frame = CGRectMake(_collectionView.contentOffset.x, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
     CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
     animation.fromValue = 0;
     animation.toValue = [NSNumber numberWithDouble:M_PI * 2];
-    animation.duration = 2;
+    animation.duration = 1;
     animation.repeatCount = CGFLOAT_MAX;
-    [_refreshButton.layer
-     addAnimation:animation forKey:nil];
+    [_refreshButton.layer addAnimation:animation forKey:nil];
 }
 
-- (void)endLoading {
-    _hud.alpha = 0;
-    [_refreshButton.layer removeAllAnimations];
+- (void)endLoadingWithCell:(UICollectionViewCell *)cell {
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [_refreshButton.layer removeAllAnimations];
+    });
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.25 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        _hud.alpha = 0;
+        cell.alpha = 1;
+    });
 }
 
 - (void)setBackgroundColorWithCity:(FDCity *)city {
@@ -342,7 +344,7 @@ static NSString * const FDMainCollectionViewCellIdentifier = @"FDMainCollectionV
     [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm"];
     NSDate *endDate = [dateFormatter dateFromString:[NSString stringWithFormat:@"%@ %@", currentYMD, city.sunFallTime]];
     
-    [UIView animateWithDuration:0.25 animations:^{
+    [UIView animateWithDuration:0.1 animations:^{
         if ([now compare:endDate] == NSOrderedDescending) {
             self.view.backgroundColor= [UIColor backgroundColorNight];
             _navView.backgroundColor = [UIColor backgroundColorNight];

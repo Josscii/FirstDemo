@@ -35,7 +35,7 @@
     [container mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.bottom.equalTo(self.contentView);
         make.top.equalTo(self.contentView.mas_top).offset(10);
-        make.right.equalTo(self.contentView.mas_right).offset(-10);
+        make.right.equalTo(self.contentView.mas_right).offset(-15);
     }];
     
     UIImageView *imageView = [[UIImageView alloc] init];

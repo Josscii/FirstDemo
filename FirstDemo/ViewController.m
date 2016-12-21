@@ -144,7 +144,6 @@ static NSString * const FDMainCollectionViewCellIdentifier = @"FDMainCollectionV
     }];
     
     // nav layer
-    
     _navLayer = [CAGradientLayer layer];
     _navLayer.frame = CGRectMake(0, 0, SCREEN_WIDTH, 84);
     _navLayer.colors = @[(__bridge id)[UIColor backgroundColor].CGColor, (__bridge id)[UIColor backgroundColor].CGColor, (__bridge id)[UIColor clearColor].CGColor];

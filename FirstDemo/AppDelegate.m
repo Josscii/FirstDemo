@@ -23,6 +23,8 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
+    [[AMapServices sharedServices] setApiKey:@"3cca037e6bf832d652e4806e32f6c588"];
+    
     [[UMSocialManager defaultManager] openLog:YES];
     
     [[UMSocialManager defaultManager] setUmSocialAppkey:@"57b432afe0f55a9832001a0a"];

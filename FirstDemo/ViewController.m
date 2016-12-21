@@ -272,9 +272,10 @@ static NSString * const FDMainCollectionViewCellIdentifier = @"FDMainCollectionV
     
     NSInteger page = _collectionView.contentOffset.x / SCREEN_WIDTH;
     
-    [UMSocialUIManager removeAllCustomPlatformWithoutFilted];
     [UMSocialShareUIConfig shareInstance].sharePageGroupViewConfig.sharePageGroupViewPostionType = UMSocialSharePageGroupViewPositionType_Bottom;
     [UMSocialShareUIConfig shareInstance].sharePageScrollViewConfig.shareScrollViewPageItemStyleType = UMSocialPlatformItemViewBackgroudType_IconAndBGRadius;
+    [UMSocialShareUIConfig shareInstance].shareTitleViewConfig.isShow = NO;
+    
     [UMSocialUIManager showShareMenuViewInWindowWithPlatformSelectionBlock:^(UMSocialPlatformType platformType, NSDictionary *userInfo) {
         
         // 创建分享消息对象
@@ -286,14 +287,12 @@ static NSString * const FDMainCollectionViewCellIdentifier = @"FDMainCollectionV
         dateFormatter.dateFormat = @"yyyy年MM月dd日";
         NSString *dateString = [dateFormatter stringFromDate:city.saveTime];
         NSString *desc = [NSString stringWithFormat:@"%@%@,%@℃,%@,%@%@级,湿度%@,空气指数%@,%@。更多天气信息,请点击 http://www.51wnl.com/products.html?f=15&cityid=%@&p=i", dateString, city.cityName, city.curr.currentTemp, city.curr.weatherType, city.curr.windDirection, city.curr.windSpeed, city.curr.sendibleTemp, city.aqi.pm25, city.aqi.grade, city.cityCode];
-        
         UIImage *image = [self.view ar_snapshot];
         
-        if (platformType == UMSocialPlatformType_Email) {
-            UMShareEmailObject *shareObject = [UMShareEmailObject shareObjectWithTitle:@"万年历" descr:desc thumImage:image];
-            messageObject.shareObject = shareObject;
-        } else if (platformType == UMSocialPlatformType_Sms) {
-            UMShareSmsObject *shareObject = [UMShareSmsObject shareObjectWithTitle:@"万年历" descr:desc thumImage:image];
+        if (platformType == UMSocialPlatformType_Email || platformType == UMSocialPlatformType_Sms) {
+            messageObject.text = desc;
+            UMShareImageObject *shareObject = [[UMShareImageObject alloc] init];
+            shareObject.shareImage = image;
             messageObject.shareObject = shareObject;
         } else {
             UMShareWebpageObject *shareObject = [UMShareWebpageObject shareObjectWithTitle:@"万年历" descr:desc thumImage:image];

@@ -98,6 +98,7 @@
 		C2DE49351DFE37BA0001A4D5 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2DE49341DFE37BA0001A4D5 /* Security.framework */; };
 		C2DE49371DFE37D90001A4D5 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2DE49361DFE37D90001A4D5 /* CoreTelephony.framework */; };
 		C2E652571DF1335F008A5B7F /* FDSunriseView.m in Sources */ = {isa = PBXBuildFile; fileRef = C2E652561DF1335F008A5B7F /* FDSunriseView.m */; };
+		C2F018DE1E0A869E00CC3EC3 /* UIView+OldSchoolSnapshots.m in Sources */ = {isa = PBXBuildFile; fileRef = C2F018DD1E0A869E00CC3EC3 /* UIView+OldSchoolSnapshots.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -285,6 +286,8 @@
 		C2DE49361DFE37D90001A4D5 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		C2E652551DF1335F008A5B7F /* FDSunriseView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FDSunriseView.h; sourceTree = "<group>"; };
 		C2E652561DF1335F008A5B7F /* FDSunriseView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FDSunriseView.m; sourceTree = "<group>"; };
+		C2F018DC1E0A869E00CC3EC3 /* UIView+OldSchoolSnapshots.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+OldSchoolSnapshots.h"; sourceTree = "<group>"; };
+		C2F018DD1E0A869E00CC3EC3 /* UIView+OldSchoolSnapshots.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+OldSchoolSnapshots.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -571,6 +574,8 @@
 		C2B2FFCC1DF010B500C1CD77 /* Category */ = {
 			isa = PBXGroup;
 			children = (
+				C2F018DC1E0A869E00CC3EC3 /* UIView+OldSchoolSnapshots.h */,
+				C2F018DD1E0A869E00CC3EC3 /* UIView+OldSchoolSnapshots.m */,
 				C2B2FFF41DF0373C00C1CD77 /* UIView+FDIconLabelView.h */,
 				C2B2FFF51DF0373C00C1CD77 /* UIView+FDIconLabelView.m */,
 				C2B2FFD01DF0183900C1CD77 /* UIColor+FDColor.h */,
@@ -877,6 +882,7 @@
 				C2B200171DF03B1900C1CD77 /* MASLayoutConstraint.m in Sources */,
 				C2827FAA1E07BDE2005B277F /* FDAqi.m in Sources */,
 				C2DCBF651DF15F0600D73815 /* FDSunriseTableViewCell.m in Sources */,
+				C2F018DE1E0A869E00CC3EC3 /* UIView+OldSchoolSnapshots.m in Sources */,
 				C28E79B41DF0FFB800E2C517 /* FDIconLabelView.m in Sources */,
 				C2B200141DF03B1900C1CD77 /* MASCompositeConstraint.m in Sources */,
 				C2C9348A1DF6B6FC00590921 /* FDManageCityViewController.m in Sources */,
@@ -1051,7 +1057,7 @@
 					"$(PROJECT_DIR)/FirstDemo/UMSocial/SocialLibraries/SMS",
 					"$(PROJECT_DIR)/FirstDemo/UMSocial/SocialLibraries/WeChat",
 				);
-				OTHER_LDFLAGS = "-Objc";
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = sss.FirstDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
@@ -1086,7 +1092,7 @@
 					"$(PROJECT_DIR)/FirstDemo/UMSocial/SocialLibraries/SMS",
 					"$(PROJECT_DIR)/FirstDemo/UMSocial/SocialLibraries/WeChat",
 				);
-				OTHER_LDFLAGS = "-Objc";
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = sss.FirstDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;

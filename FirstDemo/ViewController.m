@@ -16,6 +16,7 @@
 #import "FDUtils.h"
 #import "FDCity.h"
 #import "FDHudView.h"
+#import "UIView+OldSchoolSnapshots.h"
 
 #import "Masonry/Masonry.h"
 
@@ -268,8 +269,55 @@ static NSString * const FDMainCollectionViewCellIdentifier = @"FDMainCollectionV
 }
 
 - (void)share:(id)sender {
-    // __weak typeof(self) weakSelf = self;
+    
+    NSInteger page = _collectionView.contentOffset.x / SCREEN_WIDTH;
+    
+    [UMSocialUIManager removeAllCustomPlatformWithoutFilted];
+    [UMSocialShareUIConfig shareInstance].sharePageGroupViewConfig.sharePageGroupViewPostionType = UMSocialSharePageGroupViewPositionType_Bottom;
+    [UMSocialShareUIConfig shareInstance].sharePageScrollViewConfig.shareScrollViewPageItemStyleType = UMSocialPlatformItemViewBackgroudType_IconAndBGRadius;
     [UMSocialUIManager showShareMenuViewInWindowWithPlatformSelectionBlock:^(UMSocialPlatformType platformType, NSDictionary *userInfo) {
+        
+        // 创建分享消息对象
+        UMSocialMessageObject *messageObject = [UMSocialMessageObject messageObject];
+        
+        // 创建消息
+        FDCity *city = _cities[page];
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        dateFormatter.dateFormat = @"yyyy年MM月dd日";
+        NSString *dateString = [dateFormatter stringFromDate:city.saveTime];
+        NSString *desc = [NSString stringWithFormat:@"%@%@,%@℃,%@,%@%@级,湿度%@,空气指数%@,%@。更多天气信息,请点击 http://www.51wnl.com/products.html?f=15&cityid=%@&p=i", dateString, city.cityName, city.curr.currentTemp, city.curr.weatherType, city.curr.windDirection, city.curr.windSpeed, city.curr.sendibleTemp, city.aqi.pm25, city.aqi.grade, city.cityCode];
+        
+        UIImage *image = [self.view ar_snapshot];
+        
+        if (platformType == UMSocialPlatformType_Email) {
+            UMShareEmailObject *shareObject = [UMShareEmailObject shareObjectWithTitle:@"万年历" descr:desc thumImage:image];
+            messageObject.shareObject = shareObject;
+        } else if (platformType == UMSocialPlatformType_Sms) {
+            UMShareSmsObject *shareObject = [UMShareSmsObject shareObjectWithTitle:@"万年历" descr:desc thumImage:image];
+            messageObject.shareObject = shareObject;
+        } else {
+            UMShareWebpageObject *shareObject = [UMShareWebpageObject shareObjectWithTitle:@"万年历" descr:desc thumImage:image];
+            shareObject.webpageUrl = [NSString stringWithFormat:@"http://www.51wnl.com/products.html?f=15&cityid=%@&p=i", _cities[page].cityCode];
+            messageObject.shareObject = shareObject;
+        }
+        
+        // 调用分享接口
+        [[UMSocialManager defaultManager] shareToPlatform:platformType messageObject:messageObject currentViewController:self completion:^(id data, NSError *error) {
+            if (error) {
+                UMSocialLogInfo(@"************Share fail with error %@*********",error);
+            }else{
+                if ([data isKindOfClass:[UMSocialShareResponse class]]) {
+                    UMSocialShareResponse *resp = data;
+                    //分享结果消息
+                    UMSocialLogInfo(@"response message is %@",resp.message);
+                    //第三方原始返回的数据
+                    UMSocialLogInfo(@"response originalResponse data is %@",resp.originalResponse);
+                    
+                }else{
+                    UMSocialLogInfo(@"response data is %@",data);
+                }
+            }
+        }];
         
     }];
 }

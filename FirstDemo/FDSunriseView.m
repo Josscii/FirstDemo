@@ -14,6 +14,9 @@
 @property (nonatomic, strong) CAShapeLayer *backgorundLayer;
 @property (nonatomic, strong) CAShapeLayer *progressLayer;
 @property (nonatomic, assign) CGPoint startPoint;
+@property (nonatomic, assign) CGPoint endPoint;
+
+@property (nonatomic, strong) CALayer *sunImageView;
  
 @end
 
@@ -97,25 +100,30 @@
     [self.layer addSublayer:dot2];
     
     // 太阳图片
-    _sunImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"tq-view-sun-icon"]];
-    _sunImageView.center = _startPoint;
-    _sunImageView.alpha = 0;
-    [self addSubview:_sunImageView];
+    _sunImageView = [CALayer layer];
+    _sunImageView.frame = CGRectMake(0, 0, 20, 20);
+    _sunImageView.contents = (__bridge id)([UIImage imageNamed:@"tq-view-sun-icon"].CGImage);
+    _sunImageView.position = _startPoint;
+    _sunImageView.opacity = 0;
+    [self.layer addSublayer:_sunImageView];
 }
 
 - (void)animatedSunRise {
     if ([_currentTime compare:_endTime] == NSOrderedDescending) {
-        _sunImageView.alpha = 0;
-        // workaround: reset the stoke end 
+        _sunImageView.opacity = 0;
+        
+        // workaround: reset the stoke end and position of
         CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
         animation.toValue = 0;
         animation.duration = 0;
         animation.fillMode = kCAFillModeBoth;
         animation.removedOnCompletion = NO;
         [_progressLayer addAnimation:animation forKey:animation.keyPath];
+        
         return;
     } else {
-        _sunImageView.alpha = 1;
+        _sunImageView.position = _startPoint;
+        _sunImageView.opacity = 1;
     }
     
     CGFloat propation = [_currentTime timeIntervalSinceDate:_startTime] / [_endTime timeIntervalSinceDate:_startTime];
@@ -141,15 +149,14 @@
     CAKeyframeAnimation *keyAnimation = [CAKeyframeAnimation animationWithKeyPath:@"position"];
     keyAnimation.path = path.CGPath;
     keyAnimation.duration = 2;
-    keyAnimation.fillMode = kCAFillModeForwards;
+    keyAnimation.fillMode = kCAFillModeBoth;
     keyAnimation.removedOnCompletion = NO;
     keyAnimation.calculationMode =  kCAAnimationPaced;
     keyAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
-    [_sunImageView.layer addAnimation:keyAnimation forKey:keyAnimation.keyPath];
+    [_sunImageView addAnimation:keyAnimation forKey:keyAnimation.keyPath];
     
-    // need to think
-    _sunImageView.layer.position = path.currentPoint;
+    // we don't need this
+    //_sunImageView.position = path.currentPoint;
 }
-
 
 @end

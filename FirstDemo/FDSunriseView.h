@@ -14,8 +14,6 @@
 @property (nonatomic, strong) NSDate *endTime;
 @property (nonatomic, strong) NSDate *currentTime;
 
-@property (nonatomic, strong) UIImageView *sunImageView;
-
 - (void)animatedSunRise;
 
 @end

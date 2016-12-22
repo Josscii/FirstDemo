@@ -15,4 +15,7 @@
 // use this when need force refresh
 - (void)refreshCellWithData:(id)data;
 
+- (void)startLoading;
+- (void)endLoading;
+
 @end

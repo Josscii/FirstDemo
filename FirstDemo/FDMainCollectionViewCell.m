@@ -14,6 +14,7 @@
 #import "FDSuggestionTableViewCell.h"
 #import "FDSunriseTableViewCell.h"
 #import "FDCity.h"
+#import "FDHudView.h"
 
 #import "UIColor+FDColor.h"
 #import "FDConstants.h"
@@ -32,6 +33,7 @@ static NSString * const FDSunriseTableViewCellCelldentifier = @"FDSunriseTableVi
 @property (nonatomic, strong) FDCity *city;
 @property (nonatomic, strong) UITableView *mainTableView;
 @property (nonatomic, assign) BOOL hasAnimated;
+@property (nonatomic, strong) FDHudView *hud;
 
 @end
 
@@ -69,11 +71,17 @@ static NSString * const FDSunriseTableViewCellCelldentifier = @"FDSunriseTableVi
     [_mainTableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(self.contentView);
     }];
+    
+    _hud = [[FDHudView alloc] initWithFrame:self.contentView.bounds];
+    _hud.alpha = 0;
+    [self.contentView addSubview:_hud];
 }
 
 - (void)prepareForReuse {
     _hasAnimated = NO;
     _city = nil;
+    _hud.alpha = 0;
+    _mainTableView.alpha = 1;
 }
 
 #pragma mark -
@@ -143,6 +151,16 @@ static NSString * const FDSunriseTableViewCellCelldentifier = @"FDSunriseTableVi
     _city = data;
     _hasAnimated = NO;
     [_mainTableView reloadData];
+}
+
+- (void)startLoading {
+    _hud.alpha = 1;
+    _mainTableView.alpha = 0;
+}
+
+- (void)endLoading {
+    _hud.alpha = 0;
+    _mainTableView.alpha = 1;
 }
 
 @end

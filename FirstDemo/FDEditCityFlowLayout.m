@@ -14,11 +14,15 @@
 @property (nonatomic, strong) NSIndexPath *indexPathForReordering;
 @property (nonatomic, strong) UIView *snapshotView;
 @property (nonatomic, strong) UILongPressGestureRecognizer *longPressGesture;
-
+@property (nonatomic, weak) id<FDEditCityDelegate> editCityDelegate;
 
 @end
 
 @implementation FDEditCityFlowLayout
+
+- (id<FDEditCityDelegate>)editCityDelegate {
+    return (id<FDEditCityDelegate>)self.collectionView.dataSource;
+}
 
 - (void)prepareLayout {
     [super prepareLayout];
@@ -37,8 +41,10 @@
     CGPoint location = [gesture locationInView:gesture.view];
     NSIndexPath *indexPath = [self.collectionView indexPathForItemAtPoint:location];
     
-    if (![_editCityDelegate fd_collectionView:self.collectionView canMoveItemAtIndexPath:indexPath]) {
-        return;
+    if ([self.editCityDelegate respondsToSelector:@selector(fd_collectionView:canMoveItemAtIndexPath:)]) {
+        if (![self.editCityDelegate fd_collectionView:self.collectionView canMoveItemAtIndexPath:indexPath]) {
+            return;
+        }
     }
     
     switch(gesture.state) {
@@ -56,7 +62,11 @@
         {
             _snapshotView.center = location;
             if (indexPath) {
-                [_editCityDelegate fd_collectionView:self.collectionView moveItemAtIndexPath:_indexPathForReordering toIndexPath:indexPath];
+                
+                if ([self.editCityDelegate respondsToSelector:@selector(fd_collectionView:moveItemAtIndexPath:toIndexPath:)]) {
+                    [self.editCityDelegate fd_collectionView:self.collectionView moveItemAtIndexPath:_indexPathForReordering toIndexPath:indexPath];
+                }
+                
                 [self.collectionView moveItemAtIndexPath:_indexPathForReordering toIndexPath:indexPath];
                 
                 _indexPathForReordering = indexPath;

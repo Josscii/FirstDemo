@@ -78,7 +78,6 @@ static NSString * const FdAddCotyCollectionViewCellIdentifier = @"FdAddCotyColle
     _flowLayout.minimumLineSpacing = 0;
     _flowLayout.itemSize = CGSizeMake((SCREEN_WIDTH - 15 - 5) / 3, 129);
     _flowLayout.sectionInset = UIEdgeInsetsMake(64, 15, 0, 5);
-    _flowLayout.editCityDelegate = self;
     
     _collectionView = [[UICollectionView alloc] initWithFrame:self.view.bounds collectionViewLayout:_flowLayout];
     [_collectionView registerClass:[FDEditCityCollectionViewCell class] forCellWithReuseIdentifier:FDEditCityCollectionViewCellIdentifier];

@@ -328,6 +328,7 @@ static NSString * const FDMainCollectionViewCellIdentifier = @"FDMainCollectionV
     animation.duration = 1;
     animation.repeatCount = CGFLOAT_MAX;
     [_refreshButton.layer addAnimation:animation forKey:nil];
+    _refreshButton.userInteractionEnabled = NO;
     
     [FDUtils fetchDataWithCityCode:city.cityCode completionBlock:^(NSDictionary *weatherData) {
         [city configureWihtDictionary:weatherData];
@@ -335,6 +336,8 @@ static NSString * const FDMainCollectionViewCellIdentifier = @"FDMainCollectionV
         
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.9 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [self endLoadingWithCell:cell];
+            _refreshButton.userInteractionEnabled = YES;
+            [_refreshButton.layer removeAllAnimations];
             [cell refreshCellWithData:city];
         });
     }];
@@ -364,7 +367,6 @@ static NSString * const FDMainCollectionViewCellIdentifier = @"FDMainCollectionV
 }
 
 - (void)endLoadingWithCell:(FDMainCollectionViewCell *)cell {
-    [_refreshButton.layer removeAllAnimations];
     [cell endLoading];
 }
 

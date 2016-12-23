@@ -37,6 +37,8 @@ static NSString * const FdAddCotyCollectionViewCellIdentifier = @"FdAddCotyColle
 
 @implementation FDManageCityViewController
 
+@synthesize editingCity;
+
 #pragma mark - life cycle
 
 - (void)viewDidLoad {
@@ -44,6 +46,7 @@ static NSString * const FdAddCotyCollectionViewCellIdentifier = @"FdAddCotyColle
     // Do any additional setup after loading the view.
     [self setupView];
     
+    self.editingCity = NO;
     _cities = [[FDUtils getAllSeletedCities] mutableCopy];
     [_collectionView reloadData];
 }
@@ -76,7 +79,8 @@ static NSString * const FdAddCotyCollectionViewCellIdentifier = @"FdAddCotyColle
     _flowLayout.scrollDirection = UICollectionViewScrollDirectionVertical;
     _flowLayout.minimumInteritemSpacing = 0;
     _flowLayout.minimumLineSpacing = 0;
-    _flowLayout.itemSize = CGSizeMake((SCREEN_WIDTH - 15 - 5) / 3, 129);
+    CGFloat width = (SCREEN_WIDTH - 15 - 5) / 3;
+    _flowLayout.itemSize = CGSizeMake(width, width * 1.34);
     _flowLayout.sectionInset = UIEdgeInsetsMake(64, 15, 0, 5);
     
     _collectionView = [[UICollectionView alloc] initWithFrame:self.view.bounds collectionViewLayout:_flowLayout];
@@ -124,10 +128,6 @@ static NSString * const FdAddCotyCollectionViewCellIdentifier = @"FdAddCotyColle
         make.right.equalTo(navView).offset(-15);
         make.top.equalTo(navView).offset(32);
     }];
-    
-    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:EDITINGCITY];
-    // pre logic
-    //[[NSUserDefaults standardUserDefaults] setInteger:0 forKey:@"defaultCityIndex"];
 }
 
 #pragma mark -
@@ -136,21 +136,19 @@ static NSString * const FdAddCotyCollectionViewCellIdentifier = @"FdAddCotyColle
 - (void)editCity:(id)sender {
     if ([_editButton.titleLabel.text isEqualToString:@"编辑"]) {
         [_editButton setTitle:@"完成" forState:UIControlStateNormal];
-        _flowLayout.itemSize = CGSizeMake((SCREEN_WIDTH - 15 - 5) / 3, 155);
-        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:EDITINGCITY];
+        CGFloat width = (SCREEN_WIDTH - 15 - 5) / 3;
+        _flowLayout.itemSize = CGSizeMake(width, width * 1.52);
         
-        [_flowLayout invalidateLayout];
+        self.editingCity = YES;
+        
+        [_collectionView reloadData];
     } else {
         [_editButton setTitle:@"编辑" forState:UIControlStateNormal];
-        _flowLayout.itemSize = CGSizeMake((SCREEN_WIDTH - 15 - 5) / 3, 129);
-        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:EDITINGCITY];
+        CGFloat width = (SCREEN_WIDTH - 15 - 5) / 3;
+        _flowLayout.itemSize = CGSizeMake(width, width * 1.34);
         
-        // pre logic
-        //NSInteger defaultIndex = [[NSUserDefaults standardUserDefaults] integerForKey:@"defaultCityIndex"];
-        //[_cities exchangeObjectAtIndex:defaultIndex withObjectAtIndex:0];
-        //[[NSUserDefaults standardUserDefaults] setInteger:0 forKey:@"defaultCityIndex"];
-        
-        [_flowLayout invalidateLayout];
+        self.editingCity = NO;
+        [_collectionView reloadData];
     }
 }
 
@@ -158,24 +156,30 @@ static NSString * const FdAddCotyCollectionViewCellIdentifier = @"FdAddCotyColle
 #pragma mark - FDEditCityCollectionViewCellDelegate
 
 - (void)deleteCell:(UICollectionViewCell *)cell {
-    
     NSInteger deleteIndex = [_collectionView indexPathForCell:cell].item;
-    NSInteger defaultIndex = [[NSUserDefaults standardUserDefaults] integerForKey:DEFAULTCIYTINDEX];
-    
-    if (defaultIndex > deleteIndex) {
-        [[NSUserDefaults standardUserDefaults] setInteger:defaultIndex-1 forKey:DEFAULTCIYTINDEX];
-    }
-    
     [_cities removeObjectAtIndex:deleteIndex];
-    [[NSUserDefaults standardUserDefaults] setInteger:_cities.count forKey:CURRENTCITYCOUNT];
     [_collectionView deleteItemsAtIndexPaths: @[[NSIndexPath indexPathForItem:deleteIndex inSection:0]]];
-    
+}
+
+- (void)makeCellDefault:(UICollectionViewCell *)cell {
+    NSInteger defaultIndex = [_collectionView indexPathForCell:cell].item;
+    for (FDCity *city in _cities) {
+        if (city.isDefaultCity) {
+            city.defaultCity = NO;
+        }
+    }
+    _cities[defaultIndex].defaultCity = YES;
+    [_collectionView reloadData];
 }
 
 #pragma mark - 
 #pragma mark - collection view delegate and datasource
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+    if (self.isEditingCity || _cities.count >= 9) {
+        return _cities.count;
+    }
+    
     return _cities.count+1;
 }
 
@@ -220,7 +224,7 @@ static NSString * const FdAddCotyCollectionViewCellIdentifier = @"FdAddCotyColle
         return;
     }
     
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:EDITINGCITY]) {
+    if (self.isEditingCity) {
         return;
     }
     
@@ -235,36 +239,10 @@ static NSString * const FdAddCotyCollectionViewCellIdentifier = @"FdAddCotyColle
     FDCity *model = _cities[sourceIndexPath.item];
     [_cities removeObjectAtIndex:sourceIndexPath.item];
     [_cities insertObject:model atIndex:destinationIndexPath.item];
-    
-    // not exchange !!!
-    // [_cities exchangeObjectAtIndex:sourceIndexPath.item withObjectAtIndex:destinationIndexPath.item];
-    
-    // current logic of reranging cells
-    NSInteger defaultIndex = [[NSUserDefaults standardUserDefaults] integerForKey:DEFAULTCIYTINDEX];
-    if (sourceIndexPath.item == defaultIndex) {
-        [[NSUserDefaults standardUserDefaults] setInteger:destinationIndexPath.item forKey:DEFAULTCIYTINDEX];
-    } else {
-        if (sourceIndexPath.item > defaultIndex) {
-            if (destinationIndexPath.item > defaultIndex) {
-                return;
-            } else {
-                [[NSUserDefaults standardUserDefaults] setInteger:defaultIndex+1 forKey:DEFAULTCIYTINDEX];
-            }
-        } else {
-            if (destinationIndexPath.item < defaultIndex) {
-                return;
-            } else {
-                [[NSUserDefaults standardUserDefaults] setInteger:defaultIndex-1 forKey:DEFAULTCIYTINDEX];
-            }
-        }
-    }
 }
 
 - (BOOL)fd_collectionView:(UICollectionView *)collectionView canMoveItemAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.item == _cities.count) {
-        return NO;
-    }
-    return YES;
+    return self.editingCity;
 }
 
 #pragma mark -

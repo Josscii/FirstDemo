@@ -38,7 +38,6 @@ static NSString * const FDMainCollectionViewCellIdentifier = @"FDMainCollectionV
 @property (nonatomic, strong) UIView *navView;
 @property (nonatomic, strong) CAGradientLayer *navLayer;
 
-@property (nonatomic, assign) BOOL forceRefresh;
 @property (nonatomic, assign) BOOL firstLoad;
 
 @property (nonatomic, strong) AMapLocationManager *locationManager;
@@ -54,10 +53,9 @@ static NSString * const FDMainCollectionViewCellIdentifier = @"FDMainCollectionV
     [self setupView];
     
     _firstLoad = YES;
-    _forceRefresh = NO;
     _cities = [[FDUtils getAllSeletedCities] mutableCopy];
     
-    if (_cities.count == 0) {
+    if (!_cities) {
         _cities = [NSMutableArray array];
         
         _locationManager = [[AMapLocationManager alloc] init];
@@ -69,12 +67,14 @@ static NSString * const FDMainCollectionViewCellIdentifier = @"FDMainCollectionV
             NSString *cityName = [regeocode.district substringToIndex:2];
             NSString *cityCode = [FDUtils codeOfCity:cityName];
             
+            [[NSUserDefaults standardUserDefaults] setObject:cityName forKey:LOCATION];
+            
             FDCity *current = [[FDCity alloc] initWithCityName:cityName cityCode:cityCode];
+            current.currentLocation = YES;
+            current.defaultCity = YES;
             
             [_cities addObject:current];
             [FDUtils saveAllSeletedCities:[_cities copy]];
-            
-            [[NSUserDefaults standardUserDefaults] setObject:cityName forKey:LOCATION];
             
             [self reloadDataWithPage:0 shouldReloadCollectionView:YES];
             [_collectionView reloadData];

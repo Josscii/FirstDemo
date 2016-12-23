@@ -23,7 +23,9 @@
 @property (nonatomic, strong) FDForecastItemDate *curr;
 @property (nonatomic, strong) NSDate *saveTime; // 数据保存时间
 
-@property (nonatomic, getter=isExpired,assign) BOOL expired;
+@property (nonatomic, getter=isExpired, assign) BOOL expired;
+@property (nonatomic, getter=isDefaultCity, assign) BOOL defaultCity;
+@property (nonatomic, getter=isCurrentLocation, assign) BOOL currentLocation;
 
 - (instancetype)initWithCityName:(NSString *)cityName cityCode:(NSString *)cityCod;
 - (void)configureWihtDictionary:(NSDictionary *)dic;

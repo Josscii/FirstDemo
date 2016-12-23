@@ -15,6 +15,8 @@
     if (self) {
         _cityName = cityName;
         _cityCode = cityCode;
+        _currentLocation = NO;
+        _defaultCity = NO;
     }
     return self;
 }
@@ -66,6 +68,8 @@
         _sunFallTime = [aDecoder decodeObjectForKey:@"ss"];
         _curr = [aDecoder decodeObjectForKey:@"curr"];
         _saveTime = [aDecoder decodeObjectForKey:@"saveTime"];
+        _defaultCity = [aDecoder decodeBoolForKey:@"defaultCity"];
+        _currentLocation = [aDecoder decodeBoolForKey:@"currentLocation"];
     }
     return self;
 }
@@ -80,6 +84,8 @@
     [aCoder encodeObject:_sunFallTime forKey:@"ss"];
     [aCoder encodeObject:_curr forKey:@"curr"];
     [aCoder encodeObject:_saveTime forKey:@"saveTime"];
+    [aCoder encodeBool:_defaultCity forKey:@"defaultCity"];
+    [aCoder encodeBool:_currentLocation forKey:@"currentLocation"];
 }
 
 - (BOOL)isExpired {

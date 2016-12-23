@@ -11,7 +11,10 @@
 
 @protocol FDEditCityCollectionViewCellDelegate <NSObject>
 
+@property (nonatomic, getter=isEditingCity,assign) BOOL editingCity;
+
 - (void)deleteCell:(UICollectionViewCell *)cell;
+- (void)makeCellDefault:(UICollectionViewCell *)cell;
 
 @end
 

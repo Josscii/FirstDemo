@@ -425,6 +425,7 @@ static NSString * const FDCityCollectionViewCellIdentifier = @"FDCityCollectionV
     }
     
     FDCity *city = [[FDCity alloc] initWithCityName:cityName cityCode:[FDUtils codeOfCity:cityName]];
+    city.currentLocation = YES;
     [_cities addObject:city];
     [FDUtils saveAllSeletedCities:_cities];
     [self.navigationController popViewControllerAnimated:YES];

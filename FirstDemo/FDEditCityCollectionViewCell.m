@@ -28,7 +28,6 @@
 
 @property (nonatomic, strong) FDDefaultView *defaultImageView;
 @property (nonatomic, strong) UILabel *loadingLabel;
-@property (nonatomic, strong) NSIndexPath *indexPath;
 
 @end
 
@@ -38,18 +37,15 @@
     self = [super initWithFrame:frame];
     if (self) {
         [self setupView];
-        //[self feedFakeData];
-        
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(configureEditingMode) name:@"FDShouldInavidateCellLayout" object:nil];
     }
     return self;
 }
 
-- (void)dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"FDShouldInavidateCellLayout" object:nil];
-}
-
 - (void)prepareForReuse {
+    _deleteButton.alpha = 0;
+    _defaultImageView.alpha = 0;
+    _checkLabel.alpha = 0;
+    _checkIcon.alpha = 0;
     _weatherIcon.image = nil;
     _tempLabel.text = @"";
     _weatherLabel.text = @"";
@@ -83,6 +79,7 @@
     }];
     
     _positionImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"tq-view-local-icon"]];
+    _positionImageView.alpha = 0;
     [container addSubview:_positionImageView];
     
     [_positionImageView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -129,6 +126,7 @@
     
     // defaultImageView
     _defaultImageView = [[FDDefaultView alloc] init];
+    _defaultImageView.alpha = 0;
     [container addSubview:_defaultImageView];
     
     [_defaultImageView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -138,8 +136,10 @@
     _checkIcon = [[UIImageView alloc] init];
     _checkIcon.image = [UIImage imageNamed:UNCHECKEDICON];
     _checkIcon.userInteractionEnabled = YES;
+    _checkIcon.alpha = 0;
     _checkLabel = [UILabel commonLableWithFontName:PFSCR FontSize:12 colorAlpha:1];
     _checkLabel.text = @"设为默认";
+    _checkLabel.alpha = 0;
     
     UIStackView *stackView = [[UIStackView alloc] initWithArrangedSubviews:@[_checkIcon, _checkLabel]];
     
@@ -162,6 +162,7 @@
     
     // delete button
     _deleteButton = [[FDDeleteButton alloc] init];
+    _deleteButton.alpha = 0;
     [self.contentView addSubview:_deleteButton];
     
     [_deleteButton mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -189,54 +190,7 @@
 }
 
 - (void)didTapToMakeItDefault:(id)sender {
-    [[NSUserDefaults standardUserDefaults] setInteger:_indexPath.item forKey:DEFAULTCIYTINDEX];
-    
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"FDShouldInavidateCellLayout" object:nil];
-}
-
-- (void)configureEditingMode {
-    BOOL editingCity = [[NSUserDefaults standardUserDefaults] boolForKey:EDITINGCITY];
-    
-    if (editingCity) {
-        _checkLabel.alpha = 1;
-        _checkIcon.alpha = 1;
-        _deleteButton.alpha = 1;
-        
-        _defaultImageView.alpha = 0;
-        
-        NSInteger defaultIndex = [[NSUserDefaults standardUserDefaults] integerForKey:DEFAULTCIYTINDEX];
-        if (_indexPath.item == defaultIndex) {
-            _checkIcon.image = [UIImage imageNamed:CHECKEDICON];
-            _checkLabel.text = @"默认";
-            _deleteButton.alpha = 0;
-        } else {
-            _checkIcon.image = [UIImage imageNamed:UNCHECKEDICON];
-            _checkLabel.text = @"设为默认";
-        }
-    } else {
-        _checkLabel.alpha = 0;
-        _checkIcon.alpha = 0;
-        _deleteButton.alpha = 0;
-        
-        NSInteger defaultIndex = [[NSUserDefaults standardUserDefaults] integerForKey:DEFAULTCIYTINDEX];
-        if (_indexPath.item == defaultIndex) {
-            _defaultImageView.alpha = 1;
-        } else {
-            _defaultImageView.alpha = 0;
-        }
-    }
-    
-    if ([_cityLabel.text isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:LOCATION]]) {
-        _positionImageView.alpha = 1;
-    } else {
-        _positionImageView.alpha = 0;
-    }
-}
-
-- (void)applyLayoutAttributes:(UICollectionViewLayoutAttributes *)layoutAttributes {
-    _indexPath = layoutAttributes.indexPath;
-    
-    [self configureEditingMode];
+    [_delegate makeCellDefault:self];
 }
 
 - (void)configreCellWithData:(id)data {
@@ -269,13 +223,41 @@
         }
     }
     
-    if ([_cityLabel.text isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:LOCATION]]) {
+    if (city.isCurrentLocation) {
         _positionImageView.alpha = 1;
     } else {
         _positionImageView.alpha = 0;
     }
     
     _loadingLabel.alpha = 0;
+    
+    if (_delegate.isEditingCity) {
+        _checkLabel.alpha = 1;
+        _checkIcon.alpha = 1;
+        _deleteButton.alpha = 1;
+        
+        _defaultImageView.alpha = 0;
+        
+        if (city.isDefaultCity) {
+            _checkIcon.image = [UIImage imageNamed:CHECKEDICON];
+            _checkLabel.text = @"默认";
+            _deleteButton.alpha = 0;
+        } else {
+            _checkIcon.image = [UIImage imageNamed:UNCHECKEDICON];
+            _checkLabel.text = @"设为默认";
+        }
+    } else {
+        _checkLabel.alpha = 0;
+        _checkIcon.alpha = 0;
+        _deleteButton.alpha = 0;
+        
+        if (city.isDefaultCity) {
+            _defaultImageView.alpha = 1;
+        } else {
+            _defaultImageView.alpha = 0;
+        }
+    }
+    
 }
 
 - (void)feedFakeData {

@@ -17,6 +17,7 @@
 #import "FDCity.h"
 #import "FDHudView.h"
 #import "UIView+OldSchoolSnapshots.h"
+#import "FDShareViewController.h"
 
 #import "Masonry/Masonry.h"
 
@@ -26,7 +27,7 @@
 
 static NSString * const FDMainCollectionViewCellIdentifier = @"FDMainCollectionViewCellIdentifier";
 
-@interface ViewController () <UICollectionViewDelegate, UICollectionViewDataSource>
+@interface ViewController () <UICollectionViewDelegate, UICollectionViewDataSource, UIViewControllerTransitioningDelegate, UIViewControllerAnimatedTransitioning>
 
 @property (nonatomic, strong) UIImageView *backgroundImageView;
 
@@ -37,6 +38,8 @@ static NSString * const FDMainCollectionViewCellIdentifier = @"FDMainCollectionV
 @property (nonatomic, strong) UIButton *refreshButton;
 @property (nonatomic, strong) UIView *navView;
 @property (nonatomic, strong) CAGradientLayer *navLayer;
+@property (nonatomic, strong) UIButton *dimmingView;
+@property (nonatomic, strong) FDShareViewController *shareViewController;
 
 @property (nonatomic, assign) BOOL firstLoad;
 
@@ -134,13 +137,13 @@ static NSString * const FDMainCollectionViewCellIdentifier = @"FDMainCollectionV
     _collectionView.showsHorizontalScrollIndicator = NO;
     _collectionView.bounces = NO;
     _collectionView.pagingEnabled = YES;
-    _collectionView.prefetchingEnabled = NO;
+    //_collectionView.prefetchingEnabled = NO;
     [_collectionView registerClass:[FDMainCollectionViewCell class] forCellWithReuseIdentifier:FDMainCollectionViewCellIdentifier];
-    [self.view addSubview:_collectionView];
+    //[self.view addSubview:_collectionView];
     
-    [_collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo(self.view);
-    }];
+    //[_collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
+    //    make.edges.equalTo(self.view);
+    //}];
     
     // nav layer
     _navLayer = [CAGradientLayer layer];
@@ -265,53 +268,23 @@ static NSString * const FDMainCollectionViewCellIdentifier = @"FDMainCollectionV
     
     NSInteger page = _collectionView.contentOffset.x / SCREEN_WIDTH;
     
-    [UMSocialShareUIConfig shareInstance].sharePageGroupViewConfig.sharePageGroupViewPostionType = UMSocialSharePageGroupViewPositionType_Bottom;
-    [UMSocialShareUIConfig shareInstance].sharePageScrollViewConfig.shareScrollViewPageItemStyleType = UMSocialPlatformItemViewBackgroudType_IconAndBGRadius;
-    [UMSocialShareUIConfig shareInstance].shareTitleViewConfig.isShow = NO;
+    FDCity *city = _cities[page];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    dateFormatter.dateFormat = @"yyyy年MM月dd日";
+    NSString *dateString = [dateFormatter stringFromDate:city.saveTime];
+    NSString *desc = [NSString stringWithFormat:@"%@%@,%@℃,%@,%@%@级,湿度%@,空气指数%@,%@。更多天气信息,请点击 http://www.51wnl.com/products.html?f=15&cityid=%@&p=i", dateString, city.cityName, city.curr.currentTemp, city.curr.weatherType, city.curr.windDirection, city.curr.windSpeed, city.curr.sendibleTemp, city.aqi.pm25, city.aqi.grade, city.cityCode];
+    UIImage *image = [self.view ar_snapshot];
     
-    [UMSocialUIManager showShareMenuViewInWindowWithPlatformSelectionBlock:^(UMSocialPlatformType platformType, NSDictionary *userInfo) {
-        
-        // 创建分享消息对象
-        UMSocialMessageObject *messageObject = [UMSocialMessageObject messageObject];
-        
-        // 创建消息
-        FDCity *city = _cities[page];
-        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-        dateFormatter.dateFormat = @"yyyy年MM月dd日";
-        NSString *dateString = [dateFormatter stringFromDate:city.saveTime];
-        NSString *desc = [NSString stringWithFormat:@"%@%@,%@℃,%@,%@%@级,湿度%@,空气指数%@,%@。更多天气信息,请点击 http://www.51wnl.com/products.html?f=15&cityid=%@&p=i", dateString, city.cityName, city.curr.currentTemp, city.curr.weatherType, city.curr.windDirection, city.curr.windSpeed, city.curr.sendibleTemp, city.aqi.pm25, city.aqi.grade, city.cityCode];
-        UIImage *image = [self.view ar_snapshot];
-        
-        if (platformType == UMSocialPlatformType_Email || platformType == UMSocialPlatformType_Sms) {
-            messageObject.text = desc;
-            UMShareImageObject *shareObject = [[UMShareImageObject alloc] init];
-            shareObject.shareImage = image;
-            messageObject.shareObject = shareObject;
-        } else {
-            UMShareWebpageObject *shareObject = [UMShareWebpageObject shareObjectWithTitle:@"万年历" descr:desc thumImage:image];
-            shareObject.webpageUrl = [NSString stringWithFormat:@"http://www.51wnl.com/products.html?f=15&cityid=%@&p=i", _cities[page].cityCode];
-            messageObject.shareObject = shareObject;
-        }
-        
-        // 调用分享接口
-        [[UMSocialManager defaultManager] shareToPlatform:platformType messageObject:messageObject currentViewController:self completion:^(id data, NSError *error) {
-            if (error) {
-                UMSocialLogInfo(@"************Share fail with error %@*********",error);
-            }else{
-                if ([data isKindOfClass:[UMSocialShareResponse class]]) {
-                    UMSocialShareResponse *resp = data;
-                    //分享结果消息
-                    UMSocialLogInfo(@"response message is %@",resp.message);
-                    //第三方原始返回的数据
-                    UMSocialLogInfo(@"response originalResponse data is %@",resp.originalResponse);
-                    
-                }else{
-                    UMSocialLogInfo(@"response data is %@",data);
-                }
-            }
-        }];
-        
-    }];
+    if (!_shareViewController) {
+        _shareViewController = [[FDShareViewController alloc] init];
+        _shareViewController.modalPresentationStyle = UIModalPresentationCustom;
+        _shareViewController.transitioningDelegate = self;
+    }
+    _shareViewController.image = image;
+    _shareViewController.desc = desc;
+    _shareViewController.city = city;
+    
+    [self presentViewController:_shareViewController animated:YES completion:nil];
 }
 
 - (void)refresh:(id)sender {
@@ -405,6 +378,53 @@ static NSString * const FDMainCollectionViewCellIdentifier = @"FDMainCollectionV
             }
         }
     }];
+}
+
+#pragma mark -
+#pragma mark - UIViewControllerTransitioningDelegate
+
+- (id<UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController:(UIViewController *)dismissed {
+    return self;
+}
+
+- (id<UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented presentingController:(UIViewController *)presenting sourceController:(UIViewController *)source {
+    return self;
+}
+
+- (NSTimeInterval)transitionDuration:(id<UIViewControllerContextTransitioning>)transitionContext {
+    return 0.25;
+}
+
+- (void)animateTransition:(id<UIViewControllerContextTransitioning>)transitionContext {
+    UIViewController* toViewController = [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
+    UIViewController* fromViewController = [transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
+    
+    if (!_dimmingView) {
+        _dimmingView = [[UIButton alloc] initWithFrame:self.view.bounds];
+        _dimmingView.backgroundColor = [UIColor blackColor];
+    }
+    
+    if (toViewController.isBeingPresented) {
+        _dimmingView.alpha = 0;
+        [[transitionContext containerView] addSubview:_dimmingView];
+        [[transitionContext containerView] addSubview:toViewController.view];
+        
+        toViewController.view.transform = CGAffineTransformMakeTranslation(0, SCREEN_HEIGHT);
+        
+        [UIView animateWithDuration:[self transitionDuration:transitionContext] animations:^{
+            toViewController.view.transform = CGAffineTransformIdentity;
+            _dimmingView.alpha = 0.5;
+        } completion:^(BOOL finished) {
+            [transitionContext completeTransition:finished];
+        }];
+    } else {
+        [UIView animateWithDuration:[self transitionDuration:transitionContext] animations:^{
+            fromViewController.view.transform = CGAffineTransformMakeTranslation(0, SCREEN_HEIGHT);
+            _dimmingView.alpha = 0;
+        } completion:^(BOOL finished) {
+            [transitionContext completeTransition:finished];
+        }];
+    }
 }
 
 @end

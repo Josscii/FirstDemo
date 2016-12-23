@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		C200BC621DF97B5A00BB9EA8 /* FDCityCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C200BC611DF97B5A00BB9EA8 /* FDCityCollectionViewCell.m */; };
 		C200BC651DF9802E00BB9EA8 /* FDCityCollectionViewHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = C200BC641DF9802E00BB9EA8 /* FDCityCollectionViewHeader.m */; };
+		C21AEB601E0CEB05004465ED /* FDShareCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C21AEB5F1E0CEB05004465ED /* FDShareCollectionViewCell.m */; };
+		C21AEB631E0CEE7D004465ED /* FDShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C21AEB621E0CEE7D004465ED /* FDShareViewController.m */; };
 		C21EB5CA1DF26F8B00A5C595 /* FDSuggestionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C21EB5C91DF26F8B00A5C595 /* FDSuggestionTableViewCell.m */; };
 		C21FCB5A1E08FAC000534A80 /* libSocialEmail.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C21FCB311E08FAC000534A80 /* libSocialEmail.a */; };
 		C21FCB5B1E08FAC000534A80 /* libSocialQQ.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C21FCB341E08FAC000534A80 /* libSocialQQ.a */; };
@@ -116,6 +118,10 @@
 		C200BC611DF97B5A00BB9EA8 /* FDCityCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FDCityCollectionViewCell.m; sourceTree = "<group>"; };
 		C200BC631DF9802E00BB9EA8 /* FDCityCollectionViewHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FDCityCollectionViewHeader.h; sourceTree = "<group>"; };
 		C200BC641DF9802E00BB9EA8 /* FDCityCollectionViewHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FDCityCollectionViewHeader.m; sourceTree = "<group>"; };
+		C21AEB5E1E0CEB05004465ED /* FDShareCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FDShareCollectionViewCell.h; sourceTree = "<group>"; };
+		C21AEB5F1E0CEB05004465ED /* FDShareCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FDShareCollectionViewCell.m; sourceTree = "<group>"; };
+		C21AEB611E0CEE7D004465ED /* FDShareViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FDShareViewController.h; sourceTree = "<group>"; };
+		C21AEB621E0CEE7D004465ED /* FDShareViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FDShareViewController.m; sourceTree = "<group>"; };
 		C21EB5C81DF26F8B00A5C595 /* FDSuggestionTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FDSuggestionTableViewCell.h; sourceTree = "<group>"; };
 		C21EB5C91DF26F8B00A5C595 /* FDSuggestionTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FDSuggestionTableViewCell.m; sourceTree = "<group>"; };
 		C21FCB311E08FAC000534A80 /* libSocialEmail.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libSocialEmail.a; sourceTree = "<group>"; };
@@ -618,6 +624,8 @@
 				C29F50C31DF6CB42001A92E3 /* FDEditCityCollectionViewCell.m */,
 				C200BC601DF97B5A00BB9EA8 /* FDCityCollectionViewCell.h */,
 				C200BC611DF97B5A00BB9EA8 /* FDCityCollectionViewCell.m */,
+				C21AEB5E1E0CEB05004465ED /* FDShareCollectionViewCell.h */,
+				C21AEB5F1E0CEB05004465ED /* FDShareCollectionViewCell.m */,
 			);
 			name = CollectionViewCells;
 			sourceTree = "<group>";
@@ -699,6 +707,8 @@
 				C2C934891DF6B6FC00590921 /* FDManageCityViewController.m */,
 				C2D7C6481DF9621600F1D0B8 /* FDSelectCityViewController.h */,
 				C2D7C6491DF9621600F1D0B8 /* FDSelectCityViewController.m */,
+				C21AEB611E0CEE7D004465ED /* FDShareViewController.h */,
+				C21AEB621E0CEE7D004465ED /* FDShareViewController.m */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -870,6 +880,7 @@
 				C2B2FFE21DF02A5700C1CD77 /* UIImageView+FDImageView.m in Sources */,
 				C2B2001D1DF03B1900C1CD77 /* ViewController+MASAdditions.m in Sources */,
 				C2A3DC2B1DF9323E00829575 /* FDDeleteButton.m in Sources */,
+				C21AEB631E0CEE7D004465ED /* FDShareViewController.m in Sources */,
 				C28E79B71DF1067E00E2C517 /* FDTodayWeatherTableViewCell.m in Sources */,
 				C2D7C64A1DF9621600F1D0B8 /* FDSelectCityViewController.m in Sources */,
 				C2C9348D1DF6B85E00590921 /* FDNavigationController.m in Sources */,
@@ -880,6 +891,7 @@
 				C2B2FFD21DF0183900C1CD77 /* UIColor+FDColor.m in Sources */,
 				C200BC651DF9802E00BB9EA8 /* FDCityCollectionViewHeader.m in Sources */,
 				C2B200171DF03B1900C1CD77 /* MASLayoutConstraint.m in Sources */,
+				C21AEB601E0CEB05004465ED /* FDShareCollectionViewCell.m in Sources */,
 				C2827FAA1E07BDE2005B277F /* FDAqi.m in Sources */,
 				C2DCBF651DF15F0600D73815 /* FDSunriseTableViewCell.m in Sources */,
 				C2F018DE1E0A869E00CC3EC3 /* UIView+OldSchoolSnapshots.m in Sources */,

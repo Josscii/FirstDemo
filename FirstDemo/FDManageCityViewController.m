@@ -80,7 +80,7 @@ static NSString * const FdAddCotyCollectionViewCellIdentifier = @"FdAddCotyColle
     _flowLayout.minimumInteritemSpacing = 0;
     _flowLayout.minimumLineSpacing = 0;
     CGFloat width = (SCREEN_WIDTH - 15 - 5) / 3;
-    _flowLayout.itemSize = CGSizeMake(width, width * 1.34);
+    _flowLayout.itemSize = CGSizeMake(width, width * 1.13);
     _flowLayout.sectionInset = UIEdgeInsetsMake(64, 15, 0, 5);
     
     _collectionView = [[UICollectionView alloc] initWithFrame:self.view.bounds collectionViewLayout:_flowLayout];
@@ -137,7 +137,7 @@ static NSString * const FdAddCotyCollectionViewCellIdentifier = @"FdAddCotyColle
     if ([_editButton.titleLabel.text isEqualToString:@"编辑"]) {
         [_editButton setTitle:@"完成" forState:UIControlStateNormal];
         CGFloat width = (SCREEN_WIDTH - 15 - 5) / 3;
-        _flowLayout.itemSize = CGSizeMake(width, width * 1.52);
+        _flowLayout.itemSize = CGSizeMake(width, width * 1.34);
         
         self.editingCity = YES;
         
@@ -145,7 +145,7 @@ static NSString * const FdAddCotyCollectionViewCellIdentifier = @"FdAddCotyColle
     } else {
         [_editButton setTitle:@"编辑" forState:UIControlStateNormal];
         CGFloat width = (SCREEN_WIDTH - 15 - 5) / 3;
-        _flowLayout.itemSize = CGSizeMake(width, width * 1.34);
+        _flowLayout.itemSize = CGSizeMake(width, width * 1.13);
         
         self.editingCity = NO;
         [_collectionView reloadData];

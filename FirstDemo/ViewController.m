@@ -137,13 +137,13 @@ static NSString * const FDMainCollectionViewCellIdentifier = @"FDMainCollectionV
     _collectionView.showsHorizontalScrollIndicator = NO;
     _collectionView.bounces = NO;
     _collectionView.pagingEnabled = YES;
-    //_collectionView.prefetchingEnabled = NO;
+    _collectionView.prefetchingEnabled = NO;
     [_collectionView registerClass:[FDMainCollectionViewCell class] forCellWithReuseIdentifier:FDMainCollectionViewCellIdentifier];
-    //[self.view addSubview:_collectionView];
+    [self.view addSubview:_collectionView];
     
-    //[_collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
-    //    make.edges.equalTo(self.view);
-    //}];
+    [_collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(self.view);
+    }];
     
     // nav layer
     _navLayer = [CAGradientLayer layer];

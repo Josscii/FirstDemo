@@ -166,6 +166,8 @@
                 //第三方原始返回的数据
                 UMSocialLogInfo(@"response originalResponse data is %@",resp.originalResponse);
                 
+                [self dismissViewControllerAnimated:YES completion:nil];
+                
             }else{
                 UMSocialLogInfo(@"response data is %@",data);
             }

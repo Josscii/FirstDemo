@@ -32,7 +32,6 @@ static NSString * const FDMainCollectionViewCellIdentifier = @"FDMainCollectionV
 @property (nonatomic, strong) UIImageView *backgroundImageView;
 
 @property (nonatomic, strong) UICollectionView *collectionView;
-@property (nonatomic, strong) NSMutableArray<FDCity *> *cities;
 @property (nonatomic, strong) UIPageControl *pageControl;
 @property (nonatomic, strong) FDSwitchCityButton *switchCityButton;
 @property (nonatomic, strong) UIButton *refreshButton;
@@ -41,6 +40,8 @@ static NSString * const FDMainCollectionViewCellIdentifier = @"FDMainCollectionV
 @property (nonatomic, strong) UIButton *dimmingView;
 @property (nonatomic, strong) FDShareViewController *shareViewController;
 
+@property (nonatomic, strong) NSMutableArray<FDCity *> *cities;
+@property (nonatomic, strong) NSMutableArray *fetchDataTasks;
 @property (nonatomic, assign) BOOL firstLoad;
 
 @property (nonatomic, strong) AMapLocationManager *locationManager;
@@ -57,35 +58,48 @@ static NSString * const FDMainCollectionViewCellIdentifier = @"FDMainCollectionV
     
     _firstLoad = YES;
     _cities = [[FDUtils getAllSeletedCities] mutableCopy];
+    _fetchDataTasks = [NSMutableArray array];
     
     if (!_cities) {
         _cities = [NSMutableArray array];
-        
-        _locationManager = [[AMapLocationManager alloc] init];
-        [_locationManager setDesiredAccuracy:kCLLocationAccuracyHundredMeters];
-        [_locationManager setLocationTimeout:6];
-        [_locationManager setReGeocodeTimeout:3];
-        
-        [_locationManager requestLocationWithReGeocode:YES completionBlock:^(CLLocation *location, AMapLocationReGeocode *regeocode, NSError *error) {
-            NSString *cityName = [regeocode.district substringToIndex:2];
-            NSString *cityCode = [FDUtils codeOfCity:cityName];
-            
-            [[NSUserDefaults standardUserDefaults] setObject:cityName forKey:LOCATION];
-            
-            FDCity *current = [[FDCity alloc] initWithCityName:cityName cityCode:cityCode];
-            current.currentLocation = YES;
-            current.defaultCity = YES;
-            
-            [_cities addObject:current];
-            [FDUtils saveAllSeletedCities:[_cities copy]];
-            
-            [self reloadDataWithPage:0 shouldReloadCollectionView:YES];
-            [_collectionView reloadData];
-        }];
     } else {
         [self reloadDataWithPage:0 shouldReloadCollectionView:YES];
-        [self setBackgroundColorWithCity:_cities[0] refresh:YES];
-        [_collectionView reloadData];
+    }
+    
+    NSDate *lastLocationTime = [[NSUserDefaults standardUserDefaults] objectForKey:@"lastLocationTime"];
+    
+    if (!lastLocationTime || [[NSDate date] timeIntervalSinceDate:lastLocationTime] > 1) {
+        _locationManager = [[AMapLocationManager alloc] init];
+        [_locationManager setDesiredAccuracy:kCLLocationAccuracyHundredMeters];
+        
+        [_locationManager requestLocationWithReGeocode:YES completionBlock:^(CLLocation *location, AMapLocationReGeocode *regeocode, NSError *error) {
+            if (error) {
+                if (_cities.count == 0) {
+                    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"定位失败" message:@"请检查网络或是否为本APP开启权限, 已为您自动设为北京市" preferredStyle:UIAlertControllerStyleAlert];
+                    UIAlertAction *action = [UIAlertAction actionWithTitle:@"好的" style:UIAlertActionStyleDefault handler:nil];
+                    [alert addAction:action];
+                    [self presentViewController:alert animated:YES completion:nil];
+                    
+                    FDCity *defaultCity = [[FDCity alloc] initWithCityName:@"北京" cityCode:[FDUtils codeOfCity: @"北京"]];
+                    defaultCity.defaultCity = YES;
+                    [_cities addObject:defaultCity];
+                    [self reloadDataWithPage:0 shouldReloadCollectionView:YES];
+                }
+            } else {
+                [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:@"lastLocationTime"];
+                NSString *cityName = [regeocode.district substringToIndex:2];
+                NSString *cityCode = [FDUtils codeOfCity:cityName];
+                [[NSUserDefaults standardUserDefaults] setObject:cityName forKey:LOCATION];
+                
+                if (_cities.count == 0) {
+                    FDCity *current = [[FDCity alloc] initWithCityName:cityName cityCode:cityCode];
+                    current.currentLocation = YES;
+                    current.defaultCity = YES;
+                    [_cities addObject:current];
+                    [self reloadDataWithPage:0 shouldReloadCollectionView:YES];
+                }
+            }
+        }];
     }
 }
 
@@ -107,6 +121,10 @@ static NSString * const FDMainCollectionViewCellIdentifier = @"FDMainCollectionV
     [super viewWillDisappear:animated];
     
     [FDUtils saveAllSeletedCities:[_cities copy]];
+    for (NSURLSessionDataTask *task in _fetchDataTasks) {
+        _refreshButton.userInteractionEnabled = YES;
+        [task cancel];
+    }
 }
 
 - (void)setupView {
@@ -202,6 +220,7 @@ static NSString * const FDMainCollectionViewCellIdentifier = @"FDMainCollectionV
     [_switchCityButton addTarget:self action:@selector(shouldSwitchCity:) forControlEvents:UIControlEventTouchUpInside];
     
     _pageControl = [[UIPageControl alloc] init];
+    _pageControl.userInteractionEnabled = NO;
     _pageControl.numberOfPages = _cities.count;
     _pageControl.hidesForSinglePage = YES;
     [self.view addSubview:_pageControl];
@@ -224,25 +243,35 @@ static NSString * const FDMainCollectionViewCellIdentifier = @"FDMainCollectionV
     
     FDCity *city = _cities[indexPath.item];
     
-    if (!city.saveTime) {
+    if (city.isUpdating) {
         [self startLoadingWithCell:cell];
-        [FDUtils fetchDataWithCityCode:city.cityCode completionBlock:^(NSDictionary *weatherData) {
+        return cell;
+    }
+    
+    if (!city.saveTime) {
+        city.updating = YES;
+        [self startLoadingWithCell:cell];
+        NSURLSessionDataTask *task = [FDUtils fetchDataWithCityCode:city.cityCode completionBlock:^(NSDictionary *weatherData) {
             [city configureWihtDictionary:weatherData];
             [self setBackgroundColorWithCity:city refresh:YES];
             [self endLoadingWithCell:cell];
             [cell feedCellWithData:city];
         }];
+        [_fetchDataTasks addObject:task];
     } else {
         if (city.isExpired) {
+            city.updating = YES;
             [self startLoadingWithCell:cell];
-            [FDUtils fetchDataWithCityCode:city.cityCode completionBlock:^(NSDictionary *weatherData) {
+            NSURLSessionDataTask *task = [FDUtils fetchDataWithCityCode:city.cityCode completionBlock:^(NSDictionary *weatherData) {
                 [city configureWihtDictionary:weatherData];
                 [self setBackgroundColorWithCity:city refresh:YES];
                 [self endLoadingWithCell:cell];
                 [cell feedCellWithData:city];
             }];
+            [_fetchDataTasks addObject:task];
         } else {
             [cell feedCellWithData:city];
+            [self setBackgroundColorWithCity:city refresh:YES];
         }
     }
     
@@ -293,27 +322,27 @@ static NSString * const FDMainCollectionViewCellIdentifier = @"FDMainCollectionV
     FDCity *city = _cities[page];
     FDMainCollectionViewCell *cell = (FDMainCollectionViewCell *)[_collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:page inSection:0]];
     
+    city.updating = YES;
     [self startLoadingWithCell:cell];
     
-    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
-    animation.fromValue = 0;
-    animation.toValue = [NSNumber numberWithDouble:-M_PI * 2];
-    animation.duration = 1;
-    animation.repeatCount = CGFLOAT_MAX;
-    [_refreshButton.layer addAnimation:animation forKey:nil];
-    _refreshButton.userInteractionEnabled = NO;
-    
-    [FDUtils fetchDataWithCityCode:city.cityCode completionBlock:^(NSDictionary *weatherData) {
-        [city configureWihtDictionary:weatherData];
-        [self setBackgroundColorWithCity:city refresh:YES];
-        
+    if ([[NSDate date] timeIntervalSinceDate:city.saveTime] < 5 * 60 * 60) {
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.9 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            city.updating = NO;
             [self endLoadingWithCell:cell];
-            _refreshButton.userInteractionEnabled = YES;
-            [_refreshButton.layer removeAllAnimations];
             [cell refreshCellWithData:city];
         });
-    }];
+    } else {
+        [FDUtils fetchDataWithCityCode:city.cityCode completionBlock:^(NSDictionary *weatherData) {
+            [city configureWihtDictionary:weatherData];
+            city.updating = NO;
+            [self setBackgroundColorWithCity:city refresh:YES];
+            
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.9 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [self endLoadingWithCell:cell];
+                [cell refreshCellWithData:city];
+            });
+        }];
+    }
 }
 
 #pragma mark -
@@ -336,10 +365,23 @@ static NSString * const FDMainCollectionViewCellIdentifier = @"FDMainCollectionV
 }
 
 - (void)startLoadingWithCell:(FDMainCollectionViewCell *)cell {
+    
+    if (!_refreshButton.layer.animationKeys) {
+        CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
+        animation.fromValue = 0;
+        animation.toValue = [NSNumber numberWithDouble:-M_PI * 2];
+        animation.duration = 1;
+        animation.repeatCount = CGFLOAT_MAX;
+        [_refreshButton.layer addAnimation:animation forKey:@"rotationAnimation"];
+        _refreshButton.userInteractionEnabled = NO;
+    }
+    
     [cell startLoading];
 }
 
 - (void)endLoadingWithCell:(FDMainCollectionViewCell *)cell {
+    _refreshButton.userInteractionEnabled = YES;
+    [_refreshButton.layer removeAllAnimations];
     [cell endLoading];
 }
 

@@ -20,7 +20,7 @@
 static NSString * const FDEditCityCollectionViewCellIdentifier = @"FDEditCityCollectionViewCell";
 static NSString * const FdAddCotyCollectionViewCellIdentifier = @"FdAddCotyCollectionViewCell";
 
-@interface FDManageCityViewController () <UICollectionViewDelegate, UICollectionViewDataSource, FDEditCityCollectionViewCellDelegate, FDEditCityDelegate>
+@interface FDManageCityViewController () <UICollectionViewDelegate, UICollectionViewDataSource, FDEditCityCollectionViewCellDelegate, FDEditCityDelegate, NSURLSessionDelegate>
 
 @property (nonatomic, strong) UICollectionView *collectionView;
 @property (nonatomic, strong) FDEditCityFlowLayout *flowLayout;
@@ -32,6 +32,8 @@ static NSString * const FdAddCotyCollectionViewCellIdentifier = @"FdAddCotyColle
 
 @property (nonatomic, strong) NSIndexPath *indexPathForReordering;
 @property (nonatomic, strong) UIView *snapshotView;
+
+@property (nonatomic, strong) NSMutableArray *fetchDataDasks;
 
 @end
 
@@ -48,6 +50,7 @@ static NSString * const FdAddCotyCollectionViewCellIdentifier = @"FdAddCotyColle
     
     self.editingCity = NO;
     _cities = [[FDUtils getAllSeletedCities] mutableCopy];
+    _fetchDataDasks = [NSMutableArray array];
     [_collectionView reloadData];
 }
 
@@ -61,6 +64,14 @@ static NSString * const FdAddCotyCollectionViewCellIdentifier = @"FdAddCotyColle
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     [FDUtils saveAllSeletedCities:[_cities copy]];
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    
+    for (NSURLSessionDataTask *task in _fetchDataDasks) {
+        [task cancel];
+    }
 }
 
 - (void)setupView {
@@ -197,18 +208,18 @@ static NSString * const FdAddCotyCollectionViewCellIdentifier = @"FdAddCotyColle
     cell.cityLabel.text = city.cityName;
     
     if (!city.saveTime) {
-        [FDUtils fetchDataWithCityCode:city.cityCode completionBlock:^(NSDictionary *weatherData) {
+        NSURLSessionDataTask *task = [FDUtils fetchDataWithCityCode:city.cityCode completionBlock:^(NSDictionary *weatherData) {
             [city configureWihtDictionary:weatherData];
-            
             [cell configreCellWithData:city];
         }];
+        [_fetchDataDasks addObject:task];
     } else {
         if (city.isExpired) {
-            [FDUtils fetchDataWithCityCode:city.cityCode completionBlock:^(NSDictionary *weatherData) {
+            NSURLSessionDataTask *task = [FDUtils fetchDataWithCityCode:city.cityCode completionBlock:^(NSDictionary *weatherData) {
                 [city configureWihtDictionary:weatherData];
-                
                 [cell configreCellWithData:city];
             }];
+            [_fetchDataDasks addObject:task];
         } else {
             [cell configreCellWithData:city];
         }

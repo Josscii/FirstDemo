@@ -27,6 +27,8 @@
 @property (nonatomic, getter=isDefaultCity, assign) BOOL defaultCity;
 @property (nonatomic, getter=isCurrentLocation, assign) BOOL currentLocation;
 
+@property (nonatomic, getter=isUpdating, assign) BOOL updating;
+
 - (instancetype)initWithCityName:(NSString *)cityName cityCode:(NSString *)cityCod;
 - (void)configureWihtDictionary:(NSDictionary *)dic;
 

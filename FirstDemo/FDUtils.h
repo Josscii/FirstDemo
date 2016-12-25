@@ -24,7 +24,7 @@
 + (NSArray<FDCity *> *)getAllSeletedCities;
 + (void)saveAllSeletedCities:(NSArray<FDCity *> *)cities;
 
-+ (void)fetchDataWithCityCode:(NSString *)cityCode completionBlock:(void (^)(NSDictionary *weatherData))block;
++ (NSURLSessionDataTask *)fetchDataWithCityCode:(NSString *)cityCode completionBlock:(void (^)(NSDictionary *weatherData))block;
 
 + (NSString *)provinceOfCity:(FDCity *)city;
 + (NSString *)codeOfCity:(NSString *)cityName;

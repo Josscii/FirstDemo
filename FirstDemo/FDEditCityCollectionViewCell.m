@@ -28,6 +28,7 @@
 
 @property (nonatomic, strong) FDDefaultView *defaultImageView;
 @property (nonatomic, strong) UILabel *loadingLabel;
+@property (nonatomic, strong) UIStackView *checkView;
 
 @end
 
@@ -44,8 +45,7 @@
 - (void)prepareForReuse {
     _deleteButton.alpha = 0;
     _defaultImageView.alpha = 0;
-    _checkLabel.alpha = 0;
-    _checkIcon.alpha = 0;
+    _checkView.alpha = 0;
     _weatherIcon.image = nil;
     _tempLabel.text = @"";
     _weatherLabel.text = @"";
@@ -136,29 +136,27 @@
     _checkIcon = [[UIImageView alloc] init];
     _checkIcon.image = [UIImage imageNamed:UNCHECKEDICON];
     _checkIcon.userInteractionEnabled = YES;
-    _checkIcon.alpha = 0;
     _checkLabel = [UILabel commonLableWithFontName:PFSCR FontSize:12 colorAlpha:1];
     _checkLabel.text = @"设为默认";
-    _checkLabel.alpha = 0;
     
-    UIStackView *stackView = [[UIStackView alloc] initWithArrangedSubviews:@[_checkIcon, _checkLabel]];
+    _checkView = [[UIStackView alloc] initWithArrangedSubviews:@[_checkIcon, _checkLabel]];
     
-    stackView.axis = UILayoutConstraintAxisHorizontal;
-    stackView.distribution = UIStackViewDistributionFill;
-    stackView.alignment = UIStackViewAlignmentCenter;
-    stackView.spacing = 5;
+    _checkView.axis = UILayoutConstraintAxisHorizontal;
+    _checkView.distribution = UIStackViewDistributionFill;
+    _checkView.alignment = UIStackViewAlignmentCenter;
+    _checkView.spacing = 5;
     
-    [container addSubview:stackView];
+    [container addSubview:_checkView];
     
-    stackView.backgroundColor = [UIColor redColor];
+    _checkView.backgroundColor = [UIColor redColor];
     
-    [stackView mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_checkView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(container).offset(-8);
         make.centerX.equalTo(container);
     }];
     
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTapToMakeItDefault:)];
-    [stackView addGestureRecognizer:tapGesture];
+    [_checkView addGestureRecognizer:tapGesture];
     
     // delete button
     _deleteButton = [[FDDeleteButton alloc] init];
@@ -232,8 +230,9 @@
     _loadingLabel.alpha = 0;
     
     if (_delegate.isEditingCity) {
-        _checkLabel.alpha = 1;
-        _checkIcon.alpha = 1;
+        _checkView.alpha = 1;
+//        _checkLabel.alpha = 1;
+//        _checkIcon.alpha = 1;
         _deleteButton.alpha = 1;
         
         _defaultImageView.alpha = 0;
@@ -247,8 +246,9 @@
             _checkLabel.text = @"设为默认";
         }
     } else {
-        _checkLabel.alpha = 0;
-        _checkIcon.alpha = 0;
+        _checkView.alpha = 0;
+//        _checkLabel.alpha = 0;
+//        _checkIcon.alpha = 0;
         _deleteButton.alpha = 0;
         
         if (city.isDefaultCity) {

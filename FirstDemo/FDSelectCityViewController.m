@@ -16,6 +16,7 @@
 #import "FDUtils.h"
 #import "FDQueryCityOperation.h"
 #import "FDCity.h"
+#import <CoreLocation/CoreLocation.h>
 
 static NSString * const FDCityCollectionViewCellIdentifier = @"FDCityCollectionViewCell";
 
@@ -144,11 +145,17 @@ static NSString * const FDCityCollectionViewCellIdentifier = @"FDCityCollectionV
         make.left.equalTo(currentPositionView).offset(15);
     }];
     
+    // current position label
     _positionLabel = [UILabel commonLableWithFontName:PFSCR FontSize:16 colorAlpha:1];
     _positionLabel.textColor = [UIColor colorFromHexString:@"#333333"];
     
     NSString *cityName = [[NSUserDefaults standardUserDefaults] objectForKey:LOCATION];
-    _positionLabel.text = [NSString stringWithFormat:@"%@ %@", cityName, [FDUtils provinceOfCity:[[FDCity alloc] initWithCityName:cityName cityCode:[FDUtils codeOfCity:cityName]]]];
+    
+    if (!cityName) {
+        _positionLabel.text = @"定位失败";
+    } else {
+        _positionLabel.text = [NSString stringWithFormat:@"%@ %@", cityName, [FDUtils provinceOfCity:[[FDCity alloc] initWithCityName:cityName cityCode:[FDUtils codeOfCity:cityName]]]];
+    }
     
     [currentPositionView addSubview:_positionLabel];
     [_positionLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -418,6 +425,11 @@ static NSString * const FDCityCollectionViewCellIdentifier = @"FDCityCollectionV
 
 - (void)didSelectCurrentLocation:(id)sender {
     NSString *cityName = [[NSUserDefaults standardUserDefaults] objectForKey:LOCATION];
+    
+    if (!cityName) {
+        return;
+    }
+    
     for (FDCity *city in _cities) {
         if ([city.cityName isEqualToString:cityName]) {
             return;

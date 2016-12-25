@@ -17,6 +17,7 @@
         _cityCode = cityCode;
         _currentLocation = NO;
         _defaultCity = NO;
+        _updating = NO;
     }
     return self;
 }
@@ -54,6 +55,9 @@
     
     // save time
     _saveTime = [NSDate date];
+    
+    // finished updating
+    _updating = NO;
 }
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
@@ -70,6 +74,7 @@
         _saveTime = [aDecoder decodeObjectForKey:@"saveTime"];
         _defaultCity = [aDecoder decodeBoolForKey:@"defaultCity"];
         _currentLocation = [aDecoder decodeBoolForKey:@"currentLocation"];
+        _updating = [aDecoder decodeBoolForKey:@"updating"];
     }
     return self;
 }
@@ -86,6 +91,7 @@
     [aCoder encodeObject:_saveTime forKey:@"saveTime"];
     [aCoder encodeBool:_defaultCity forKey:@"defaultCity"];
     [aCoder encodeBool:_currentLocation forKey:@"currentLocation"];
+    [aCoder encodeBool:_updating forKey:@"updating"];
 }
 
 - (BOOL)isExpired {

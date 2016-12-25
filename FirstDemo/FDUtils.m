@@ -179,7 +179,7 @@
     [NSKeyedArchiver archiveRootObject:cities toFile:filePath];
 }
 
-+ (void)fetchDataWithCityCode:(NSString *)cityCode completionBlock:(void (^)(NSDictionary *weatherData))block {
++ (NSURLSessionDataTask *)fetchDataWithCityCode:(NSString *)cityCode completionBlock:(void (^)(NSDictionary *weatherData))block {
     
     NSString *urlString1 = @"http://192.168.1.110:5001/CttApi/GetWeatherDetail?tkn=6480F2A608958030D190E9E62590174A&cid=Youloft_IOS&av=4.4.2&mac=00:11:22:33:44:55&did=b622c089e7e14d2c2fa8c9129dafbb51&chn=wnl_anzhi&cc=CN&lang=zh&bd=com.youloft.calendar&t=1430366273&cver=6.0&lasttimestamp=&model=iphone&cardId=78&";
     NSString *urlString2 = [NSString stringWithFormat:@"citycode=%@", cityCode];
@@ -192,17 +192,21 @@
     
     NSURLSessionDataTask *task = [session dataTaskWithURL:url completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         
-        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
-        NSDictionary *weatherData = dic[@"data"];
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            // reload data
-            block(weatherData);
-        });
+        if (!error) {
+            NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+            NSDictionary *weatherData = dic[@"data"];
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                // reload data
+                block(weatherData);
+            });
+        }
         
     }];
     
     [task resume];
+    
+    return task;
 }
 
 + (NSString *)provinceOfCity:(FDCity *)city {

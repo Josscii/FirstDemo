@@ -46,7 +46,8 @@
     if (self.cancelled) {
         return;
     }
-    // 找到包含这个字的省份的所有城市
+    
+    // 找到包含这个字的所有省的所有城市
     for (NSDictionary *province in provinces) {
         NSString *provinceName = province[@"name"];
         NSString *pinyin = province[@"pinyin"];
@@ -63,18 +64,23 @@
             if ([tempProvinceName hasPrefix:_text]) {
                 NSString *provinceId = province[@"id"];
                 
-                // 忽略直辖市
                 if ([provinceId isEqualToString:@"01"] ||
                     [provinceId isEqualToString:@"02"] ||
                     [provinceId isEqualToString:@"03"] ||
                     [provinceId isEqualToString:@"04"]) {
-                    break;
-                }
-                
-                for (NSDictionary *city in cities[provinceId]) {
-                    NSString *cityCode = [NSString stringWithFormat:@"101%@01", city[@"id"]];
-                    FDCity *model = [[FDCity alloc] initWithCityName:city[@"name"] cityCode:cityCode];
-                    [results addObject:model];
+                    
+                    NSString *key = [NSString stringWithFormat:@"%@01", provinceId];
+                    
+                    for (NSDictionary *country in counties[key]) {
+                        FDCity *model = [[FDCity alloc] initWithCityName:country[@"name"] cityCode:country[@"id"]];
+                        [results addObject:model];
+                    }
+                } else {
+                    for (NSDictionary *city in cities[provinceId]) {
+                        NSString *cityCode = [NSString stringWithFormat:@"101%@01", city[@"id"]];
+                        FDCity *model = [[FDCity alloc] initWithCityName:city[@"name"] cityCode:cityCode];
+                        [results addObject:model];
+                    }
                 }
             } else { // 如果字符串和拼音的首字母相同
                 
@@ -104,13 +110,19 @@
                         [provinceId isEqualToString:@"02"] ||
                         [provinceId isEqualToString:@"03"] ||
                         [provinceId isEqualToString:@"04"]) {
-                        break;
-                    }
-                    
-                    for (NSDictionary *city in cities[provinceId]) {
-                        NSString *cityCode = [NSString stringWithFormat:@"101%@01", city[@"id"]];
-                        FDCity *model = [[FDCity alloc] initWithCityName:city[@"name"] cityCode:cityCode];
-                        [results addObject:model];
+                        
+                        NSString *key = [NSString stringWithFormat:@"%@01", provinceId];
+                        
+                        for (NSDictionary *country in counties[key]) {
+                            FDCity *model = [[FDCity alloc] initWithCityName:country[@"name"] cityCode:country[@"id"]];
+                            [results addObject:model];
+                        }
+                    } else {
+                        for (NSDictionary *city in cities[provinceId]) {
+                            NSString *cityCode = [NSString stringWithFormat:@"101%@01", city[@"id"]];
+                            FDCity *model = [[FDCity alloc] initWithCityName:city[@"name"] cityCode:cityCode];
+                            [results addObject:model];
+                        }
                     }
                 }
             }
@@ -122,13 +134,19 @@
                     [provinceId isEqualToString:@"02"] ||
                     [provinceId isEqualToString:@"03"] ||
                     [provinceId isEqualToString:@"04"]) {
-                    break;
-                }
-                
-                for (NSDictionary *city in cities[provinceId]) {
-                    NSString *cityCode = [NSString stringWithFormat:@"101%@01", city[@"id"]];
-                    FDCity *model = [[FDCity alloc] initWithCityName:city[@"name"] cityCode:cityCode];
-                    [results addObject:model];
+                    
+                    NSString *key = [NSString stringWithFormat:@"%@01", provinceId];
+                    
+                    for (NSDictionary *country in counties[key]) {
+                        FDCity *model = [[FDCity alloc] initWithCityName:country[@"name"] cityCode:country[@"id"]];
+                        [results addObject:model];
+                    }
+                } else {
+                    for (NSDictionary *city in cities[provinceId]) {
+                        NSString *cityCode = [NSString stringWithFormat:@"101%@01", city[@"id"]];
+                        FDCity *model = [[FDCity alloc] initWithCityName:city[@"name"] cityCode:cityCode];
+                        [results addObject:model];
+                    }
                 }
             }
         }
@@ -137,13 +155,23 @@
     if (self.cancelled) {
         return;
     }
+    
     // 找到包含这个字的所有区
     for (NSArray *tempCountries in counties.allValues) {
         for (NSDictionary *country in tempCountries) {
             NSString *countryName = country[@"name"];
+            NSString *countryId = country[@"id"];
             NSString *pinyin = country[@"pinyin"];
             
             if ([countryName isEqualToString:@"自动定位"]) {
+                continue;
+            }
+            
+            if ([countryName isEqualToString:@"北京"] ||
+                [countryName isEqualToString:@"天津"] ||
+                [countryName isEqualToString:@"上海"] ||
+                [countryName isEqualToString:@"重庆"]) {
+                
                 continue;
             }
             
@@ -153,7 +181,7 @@
                 
                 // 如果是以这个字符串开头
                 if ([tempCountryName hasPrefix:_text]) {
-                    FDCity *model = [[FDCity alloc] initWithCityName:country[@"name"] cityCode:country[@"id"]];
+                    FDCity *model = [[FDCity alloc] initWithCityName:countryName cityCode:countryId];
                     [results addObject:model];
                 } else { // 如果字符串和拼音的首字母相同
                     
@@ -177,13 +205,13 @@
                     }
                     
                     if (find) {
-                        FDCity *model = [[FDCity alloc] initWithCityName:country[@"name"] cityCode:country[@"id"]];
+                        FDCity *model = [[FDCity alloc] initWithCityName:countryName cityCode:countryId];
                         [results addObject:model];
                     }
                 }
             } else {
                 if ([countryName containsString:_text]) {
-                    FDCity *model = [[FDCity alloc] initWithCityName:country[@"name"] cityCode:country[@"id"]];
+                    FDCity *model = [[FDCity alloc] initWithCityName:countryName cityCode:countryId];
                     [results addObject:model];
                 }
             }

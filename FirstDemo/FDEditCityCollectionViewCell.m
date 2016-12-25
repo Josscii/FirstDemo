@@ -21,6 +21,8 @@
 
 @interface FDEditCityCollectionViewCell ()
 
+@property (nonatomic, strong) UIImageView *checkIcon;
+@property (nonatomic, strong) UILabel *checkLabel;
 @property (nonatomic, strong) UIImageView *positionImageView;
 @property (nonatomic, strong) UIImageView *weatherIcon;
 @property (nonatomic, strong) UILabel *tempLabel;
@@ -29,6 +31,8 @@
 @property (nonatomic, strong) FDDefaultView *defaultImageView;
 @property (nonatomic, strong) UILabel *loadingLabel;
 @property (nonatomic, strong) UIStackView *checkView;
+
+@property (nonatomic, strong) NSURLSessionDataTask *task;
 
 @end
 
@@ -40,6 +44,10 @@
         [self setupView];
     }
     return self;
+}
+
+- (void)dealloc {
+    [_task cancel];
 }
 
 - (void)prepareForReuse {
@@ -140,6 +148,7 @@
     _checkLabel.text = @"设为默认";
     
     _checkView = [[UIStackView alloc] initWithArrangedSubviews:@[_checkIcon, _checkLabel]];
+    _checkView.alpha = 0;
     
     _checkView.axis = UILayoutConstraintAxisHorizontal;
     _checkView.distribution = UIStackViewDistributionFill;
@@ -196,6 +205,59 @@
     FDCity *city = data;
     
     _cityLabel.text = city.cityName;
+    
+    if (_delegate.isEditingCity) {
+        _checkView.alpha = 1;
+        _deleteButton.alpha = 1;
+        
+        _defaultImageView.alpha = 0;
+        
+        if (city.isDefaultCity) {
+            _checkIcon.image = [UIImage imageNamed:CHECKEDICON];
+            _checkLabel.text = @"默认";
+            _deleteButton.alpha = 0;
+        } else {
+            _checkIcon.image = [UIImage imageNamed:UNCHECKEDICON];
+            _checkLabel.text = @"设为默认";
+        }
+    } else {
+        _checkView.alpha = 0;
+        _deleteButton.alpha = 0;
+        
+        if (city.isDefaultCity) {
+            _defaultImageView.alpha = 1;
+        } else {
+            _defaultImageView.alpha = 0;
+        }
+    }
+    
+    if (city.isCurrentLocation) {
+        _positionImageView.alpha = 1;
+    } else {
+        _positionImageView.alpha = 0;
+    }
+    
+    if (!city.saveTime) {
+        _task = [FDUtils fetchDataWithCityCode:city.cityCode completionBlock:^(NSDictionary *weatherData) {
+            [city configureWihtDictionary:weatherData];
+            [self feedCellWithCity:city];
+            _loadingLabel.alpha = 0;
+        }];
+    } else {
+        if (city.isExpired) {
+            _task = [FDUtils fetchDataWithCityCode:city.cityCode completionBlock:^(NSDictionary *weatherData) {
+                [city configureWihtDictionary:weatherData];
+                [self feedCellWithCity:city];
+                _loadingLabel.alpha = 0;
+            }];
+        } else {
+            [self feedCellWithCity:city];
+            _loadingLabel.alpha = 0;
+        }
+    }
+}
+
+- (void)feedCellWithCity:(FDCity *)city {
     _tempLabel.text = [NSString stringWithFormat:@"%@/%@°", city.curr.tempLow, city.curr.tempHigh];
     _weatherLabel.text = [FDUtils weatherType:city.curr.weatherType.integerValue];
     
@@ -220,44 +282,6 @@
             _weatherIcon.image = [UIImage imageNamed: [NSString stringWithFormat:@"nn%@", city.curr.weatherType]];
         }
     }
-    
-    if (city.isCurrentLocation) {
-        _positionImageView.alpha = 1;
-    } else {
-        _positionImageView.alpha = 0;
-    }
-    
-    _loadingLabel.alpha = 0;
-    
-    if (_delegate.isEditingCity) {
-        _checkView.alpha = 1;
-//        _checkLabel.alpha = 1;
-//        _checkIcon.alpha = 1;
-        _deleteButton.alpha = 1;
-        
-        _defaultImageView.alpha = 0;
-        
-        if (city.isDefaultCity) {
-            _checkIcon.image = [UIImage imageNamed:CHECKEDICON];
-            _checkLabel.text = @"默认";
-            _deleteButton.alpha = 0;
-        } else {
-            _checkIcon.image = [UIImage imageNamed:UNCHECKEDICON];
-            _checkLabel.text = @"设为默认";
-        }
-    } else {
-        _checkView.alpha = 0;
-//        _checkLabel.alpha = 0;
-//        _checkIcon.alpha = 0;
-        _deleteButton.alpha = 0;
-        
-        if (city.isDefaultCity) {
-            _defaultImageView.alpha = 1;
-        } else {
-            _defaultImageView.alpha = 0;
-        }
-    }
-    
 }
 
 - (void)feedFakeData {

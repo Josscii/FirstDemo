@@ -252,10 +252,13 @@ static NSString * const FDMainCollectionViewCellIdentifier = @"FDMainCollectionV
         city.updating = YES;
         [self startLoadingWithCell:cell];
         NSURLSessionDataTask *task = [FDUtils fetchDataWithCityCode:city.cityCode completionBlock:^(NSDictionary *weatherData) {
-            [city configureWihtDictionary:weatherData];
-            [self setBackgroundColorWithCity:city refresh:YES];
-            [self endLoadingWithCell:cell];
-            [cell feedCellWithData:city];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.9 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [city configureWihtDictionary:weatherData];
+                city.updating = NO;
+                [self setBackgroundColorWithCity:city refresh:YES];
+                [self endLoadingWithCell:cell];
+                [cell feedCellWithData:city];
+            });
         }];
         [_fetchDataTasks addObject:task];
     } else {
@@ -263,10 +266,13 @@ static NSString * const FDMainCollectionViewCellIdentifier = @"FDMainCollectionV
             city.updating = YES;
             [self startLoadingWithCell:cell];
             NSURLSessionDataTask *task = [FDUtils fetchDataWithCityCode:city.cityCode completionBlock:^(NSDictionary *weatherData) {
-                [city configureWihtDictionary:weatherData];
-                [self setBackgroundColorWithCity:city refresh:YES];
-                [self endLoadingWithCell:cell];
-                [cell feedCellWithData:city];
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.9 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    [city configureWihtDictionary:weatherData];
+                    city.updating = NO;
+                    [self setBackgroundColorWithCity:city refresh:YES];
+                    [self endLoadingWithCell:cell];
+                    [cell feedCellWithData:city];
+                });
             }];
             [_fetchDataTasks addObject:task];
         } else {

@@ -20,7 +20,6 @@
 #import "FDShareViewController.h"
 
 #import "Masonry/Masonry.h"
-
 #import <AMapFoundationKit/AMapFoundationKit.h>
 #import <AMapLocationKit/AMapLocationKit.h>
 #import "UShareUI/UMSocialUIManager.h"
@@ -93,6 +92,7 @@ static NSString * const FDMainCollectionViewCellIdentifier = @"FDMainCollectionV
                 
                 if (_cities.count == 0) {
                     FDCity *current = [[FDCity alloc] initWithCityName:cityName cityCode:cityCode];
+                    [[FDUtils sharedUtil].sharedDefaults setObject:current.cityName forKey:@"defaultCity"];
                     current.currentLocation = YES;
                     current.defaultCity = YES;
                     [_cities addObject:current];

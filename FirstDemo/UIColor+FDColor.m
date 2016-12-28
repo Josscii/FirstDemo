@@ -38,4 +38,12 @@
     return [UIColor colorWithRed:((rgbValue & 0xFF0000) >> 16)/255.0 green:((rgbValue & 0xFF00) >> 8)/255.0 blue:(rgbValue & 0xFF)/255.0 alpha:1.0];
 }
 
++ (UIColor *)wd_redColor {
+    return [UIColor colorWithRed:235.0/255.0 green:70.0/255.0 blue:70.0/255.0 alpha:1.0];
+}
+
++ (UIColor *)wd_blackColor {
+    return [UIColor colorWithRed:51.0/255.0 green:51.0/255.0 blue:51.0/255.0 alpha:1.0];
+}
+
 @end

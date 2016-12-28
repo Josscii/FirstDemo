@@ -12,6 +12,10 @@
 
 @interface FDUtils : NSObject
 
+@property (nonatomic, strong) NSUserDefaults *sharedDefaults;
+
++ (instancetype)sharedUtil;
+
 + (NSString *)weatherType:(WeatherType)type;
 + (NSString *)windDirection:(WindDirection)type;
 + (NSString *)tempWithNumber:(NSNumber *)number;
@@ -28,5 +32,7 @@
 
 + (NSString *)provinceOfCity:(FDCity *)city;
 + (NSString *)codeOfCity:(NSString *)cityName;
+
++ (NSArray *)getAllCalendarModels;
 
 @end

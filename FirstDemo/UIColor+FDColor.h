@@ -19,5 +19,8 @@
 
 + (UIColor *)colorFromHexString:(NSString *)hexString;
 
++ (UIColor *)wd_redColor;
++ (UIColor *)wd_blackColor;
+
 
 @end

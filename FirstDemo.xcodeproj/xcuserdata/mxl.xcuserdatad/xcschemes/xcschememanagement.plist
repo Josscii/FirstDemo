@@ -11,15 +11,35 @@
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
+		<key>widget.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>1</integer>
+		</dict>
+		<key>widget2.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>2</integer>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>C2426EC31E1208640026A473</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>C2B2FF9A1DEFF52F00C1CD77</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
 		<key>C2B2FFB31DEFF52F00C1CD77</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>C2E249051E129EA200207FC5</key>
 		<dict>
 			<key>primary</key>
 			<true/>

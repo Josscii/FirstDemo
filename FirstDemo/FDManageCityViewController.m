@@ -168,6 +168,9 @@ static NSString * const FdAddCotyCollectionViewCellIdentifier = @"FdAddCotyColle
             city.defaultCity = NO;
         }
     }
+    
+    [[FDUtils sharedUtil].sharedDefaults setObject:_cities[defaultIndex] forKey:@"defaultCity"];
+    
     _cities[defaultIndex].defaultCity = YES;
     [_collectionView reloadData];
 }

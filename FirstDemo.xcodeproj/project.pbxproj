@@ -28,9 +28,53 @@
 		C21FCB671E08FAC000534A80 /* UMSocialNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C21FCB561E08FAC000534A80 /* UMSocialNetwork.framework */; };
 		C21FCB681E08FAC000534A80 /* UMSocialSDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C21FCB581E08FAC000534A80 /* UMSocialSDKResources.bundle */; };
 		C21FCB691E08FAC000534A80 /* UShareUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C21FCB591E08FAC000534A80 /* UShareUI.framework */; };
+		C22659B21E1352D800459948 /* WidgetCalendarModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C22659B11E1352D800459948 /* WidgetCalendarModel.m */; };
+		C22659B71E1382C100459948 /* WidgetCalendarModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C22659B11E1352D800459948 /* WidgetCalendarModel.m */; };
+		C22659B81E13834500459948 /* FDUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = C26C8A271DF2B353009BF06C /* FDUtils.m */; };
+		C22659B91E13835700459948 /* WidgetCalendarModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C22659B11E1352D800459948 /* WidgetCalendarModel.m */; };
+		C22659C01E138CDE00459948 /* festival.json in Resources */ = {isa = PBXBuildFile; fileRef = C22659BE1E138CDE00459948 /* festival.json */; };
+		C22659C11E138CDE00459948 /* vocation.json in Resources */ = {isa = PBXBuildFile; fileRef = C22659BF1E138CDE00459948 /* vocation.json */; };
+		C22659C21E1390BE00459948 /* festival.json in Resources */ = {isa = PBXBuildFile; fileRef = C22659BE1E138CDE00459948 /* festival.json */; };
+		C22659C31E1390BE00459948 /* vocation.json in Resources */ = {isa = PBXBuildFile; fileRef = C22659BF1E138CDE00459948 /* vocation.json */; };
+		C22659C41E1390C300459948 /* festival.json in Resources */ = {isa = PBXBuildFile; fileRef = C22659BE1E138CDE00459948 /* festival.json */; };
+		C22659C51E1390C300459948 /* vocation.json in Resources */ = {isa = PBXBuildFile; fileRef = C22659BF1E138CDE00459948 /* vocation.json */; };
+		C22659C61E1391FF00459948 /* MASCompositeConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = C2B2FFFB1DF03B1900C1CD77 /* MASCompositeConstraint.m */; };
+		C22659C71E1391FF00459948 /* MASConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = C2B2FFFE1DF03B1900C1CD77 /* MASConstraint.m */; };
+		C22659C81E1391FF00459948 /* MASConstraintMaker.m in Sources */ = {isa = PBXBuildFile; fileRef = C2B200001DF03B1900C1CD77 /* MASConstraintMaker.m */; };
+		C22659C91E1391FF00459948 /* MASLayoutConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = C2B200021DF03B1900C1CD77 /* MASLayoutConstraint.m */; };
+		C22659CA1E1391FF00459948 /* MASViewAttribute.m in Sources */ = {isa = PBXBuildFile; fileRef = C2B200061DF03B1900C1CD77 /* MASViewAttribute.m */; };
+		C22659CB1E1391FF00459948 /* MASViewConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = C2B200081DF03B1900C1CD77 /* MASViewConstraint.m */; };
+		C22659CC1E1391FF00459948 /* NSArray+MASAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C2B2000A1DF03B1900C1CD77 /* NSArray+MASAdditions.m */; };
+		C22659CD1E1391FF00459948 /* NSLayoutConstraint+MASDebugAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C2B2000D1DF03B1900C1CD77 /* NSLayoutConstraint+MASDebugAdditions.m */; };
+		C22659CE1E1391FF00459948 /* View+MASAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C2B2000F1DF03B1900C1CD77 /* View+MASAdditions.m */; };
+		C22659CF1E1391FF00459948 /* ViewController+MASAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C2B200121DF03B1900C1CD77 /* ViewController+MASAdditions.m */; };
 		C240210F1E08C9390064CE01 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = C240210E1E08C9390064CE01 /* libsqlite3.tbd */; };
 		C24021111E08C95D0064CE01 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C24021101E08C95D0064CE01 /* ImageIO.framework */; };
 		C24021151E08DE870064CE01 /* FDHudView.m in Sources */ = {isa = PBXBuildFile; fileRef = C24021141E08DE870064CE01 /* FDHudView.m */; };
+		C2426EC61E1208640026A473 /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2426EC51E1208640026A473 /* NotificationCenter.framework */; };
+		C2426ECA1E1208640026A473 /* TodayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C2426EC91E1208640026A473 /* TodayViewController.m */; };
+		C2426ECD1E1208640026A473 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C2426ECB1E1208640026A473 /* MainInterface.storyboard */; };
+		C2426ED11E1208640026A473 /* widget.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = C2426EC41E1208640026A473 /* widget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		C2426ED91E120EDA0026A473 /* WidgetTableViewCell1.m in Sources */ = {isa = PBXBuildFile; fileRef = C2426ED81E120EDA0026A473 /* WidgetTableViewCell1.m */; };
+		C2426F5F1E1218330026A473 /* WidgetTableViewCell2.m in Sources */ = {isa = PBXBuildFile; fileRef = C2426F5E1E1218330026A473 /* WidgetTableViewCell2.m */; };
+		C2426F621E122EF20026A473 /* WidgetTableViewCell3.m in Sources */ = {isa = PBXBuildFile; fileRef = C2426F611E122EF20026A473 /* WidgetTableViewCell3.m */; };
+		C2426F651E1236080026A473 /* WidgetTableViewCell4.m in Sources */ = {isa = PBXBuildFile; fileRef = C2426F641E1236080026A473 /* WidgetTableViewCell4.m */; };
+		C2426F681E1236A50026A473 /* WidgetCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C2426F671E1236A50026A473 /* WidgetCollectionViewCell.m */; };
+		C2426F741E12523B0026A473 /* FDUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = C26C8A271DF2B353009BF06C /* FDUtils.m */; };
+		C2426F7D1E125A5A0026A473 /* MASCompositeConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = C2B2FFFB1DF03B1900C1CD77 /* MASCompositeConstraint.m */; };
+		C2426F7E1E125A6B0026A473 /* MASConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = C2B2FFFE1DF03B1900C1CD77 /* MASConstraint.m */; };
+		C2426F7F1E125A6B0026A473 /* MASConstraintMaker.m in Sources */ = {isa = PBXBuildFile; fileRef = C2B200001DF03B1900C1CD77 /* MASConstraintMaker.m */; };
+		C2426F801E125A6B0026A473 /* MASLayoutConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = C2B200021DF03B1900C1CD77 /* MASLayoutConstraint.m */; };
+		C2426F811E125A6B0026A473 /* MASViewAttribute.m in Sources */ = {isa = PBXBuildFile; fileRef = C2B200061DF03B1900C1CD77 /* MASViewAttribute.m */; };
+		C2426F821E125A6B0026A473 /* MASViewConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = C2B200081DF03B1900C1CD77 /* MASViewConstraint.m */; };
+		C2426F831E125A6B0026A473 /* NSArray+MASAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C2B2000A1DF03B1900C1CD77 /* NSArray+MASAdditions.m */; };
+		C2426F841E125A6B0026A473 /* NSLayoutConstraint+MASDebugAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C2B2000D1DF03B1900C1CD77 /* NSLayoutConstraint+MASDebugAdditions.m */; };
+		C2426F851E125A6B0026A473 /* View+MASAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C2B2000F1DF03B1900C1CD77 /* View+MASAdditions.m */; };
+		C2426F861E125A6B0026A473 /* ViewController+MASAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C2B200121DF03B1900C1CD77 /* ViewController+MASAdditions.m */; };
+		C2426F8B1E12604E0026A473 /* FDCity.m in Sources */ = {isa = PBXBuildFile; fileRef = C2827F9F1E07BC34005B277F /* FDCity.m */; };
+		C2426F8C1E12604E0026A473 /* FDForecastItemHour.m in Sources */ = {isa = PBXBuildFile; fileRef = C2827FA21E07BD02005B277F /* FDForecastItemHour.m */; };
+		C2426F8D1E12604E0026A473 /* FDForecastItemDate.m in Sources */ = {isa = PBXBuildFile; fileRef = C2827FA61E07BD1D005B277F /* FDForecastItemDate.m */; };
+		C2426F8E1E12604E0026A473 /* FDAqi.m in Sources */ = {isa = PBXBuildFile; fileRef = C2827FA91E07BDE2005B277F /* FDAqi.m */; };
 		C26C8A281DF2B353009BF06C /* FDUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = C26C8A271DF2B353009BF06C /* FDUtils.m */; };
 		C27D46511DFA4E5F00707F76 /* hotcity.json in Resources */ = {isa = PBXBuildFile; fileRef = C27D46501DFA4E5F00707F76 /* hotcity.json */; };
 		C27D465E1DFA72AD00707F76 /* FDDefaultView.m in Sources */ = {isa = PBXBuildFile; fileRef = C27D465D1DFA72AD00707F76 /* FDDefaultView.m */; };
@@ -53,7 +97,6 @@
 		C2A3DC2B1DF9323E00829575 /* FDDeleteButton.m in Sources */ = {isa = PBXBuildFile; fileRef = C2A3DC2A1DF9323E00829575 /* FDDeleteButton.m */; };
 		C2A705F81DF946EE00110C96 /* FDMainCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C2A705F71DF946EE00110C96 /* FDMainCollectionViewCell.m */; };
 		C2A706051DF95C9300110C96 /* FdAddCotyCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C2A706041DF95C9300110C96 /* FdAddCotyCollectionViewCell.m */; };
-		C2B200131DF03B1900C1CD77 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C2B2FFF91DF03B1900C1CD77 /* Info.plist */; };
 		C2B200141DF03B1900C1CD77 /* MASCompositeConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = C2B2FFFB1DF03B1900C1CD77 /* MASCompositeConstraint.m */; };
 		C2B200151DF03B1900C1CD77 /* MASConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = C2B2FFFE1DF03B1900C1CD77 /* MASConstraint.m */; };
 		C2B200161DF03B1900C1CD77 /* MASConstraintMaker.m in Sources */ = {isa = PBXBuildFile; fileRef = C2B200001DF03B1900C1CD77 /* MASConstraintMaker.m */; };
@@ -99,11 +142,34 @@
 		C2DE49331DFE37AB0001A4D5 /* libstdc++.6.0.9.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = C2DE49321DFE37AB0001A4D5 /* libstdc++.6.0.9.tbd */; };
 		C2DE49351DFE37BA0001A4D5 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2DE49341DFE37BA0001A4D5 /* Security.framework */; };
 		C2DE49371DFE37D90001A4D5 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2DE49361DFE37D90001A4D5 /* CoreTelephony.framework */; };
+		C2E248FE1E126A2800207FC5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C2B2FFAA1DEFF52F00C1CD77 /* Assets.xcassets */; };
+		C2E248FF1E126A3900207FC5 /* province.xml in Resources */ = {isa = PBXBuildFile; fileRef = C2827F991E07A377005B277F /* province.xml */; };
+		C2E249001E126A3900207FC5 /* city.xml in Resources */ = {isa = PBXBuildFile; fileRef = C2827F981E07A377005B277F /* city.xml */; };
+		C2E249011E126A3900207FC5 /* county.xml in Resources */ = {isa = PBXBuildFile; fileRef = C2827F9A1E07A377005B277F /* county.xml */; };
+		C2E249071E129EA200207FC5 /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2426EC51E1208640026A473 /* NotificationCenter.framework */; };
+		C2E2490B1E129EA200207FC5 /* TodayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C2E2490A1E129EA200207FC5 /* TodayViewController.m */; };
+		C2E2490E1E129EA200207FC5 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C2E2490C1E129EA200207FC5 /* MainInterface.storyboard */; };
+		C2E249121E129EA200207FC5 /* widget2.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = C2E249061E129EA200207FC5 /* widget2.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		C2E249191E129EED00207FC5 /* WidgetDayCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C2E249181E129EED00207FC5 /* WidgetDayCollectionViewCell.m */; };
+		C2E2491A1E12A20400207FC5 /* UIColor+FDColor.m in Sources */ = {isa = PBXBuildFile; fileRef = C2B2FFD11DF0183900C1CD77 /* UIColor+FDColor.m */; };
+		C2E2491B1E12A32A00207FC5 /* SanFranciscoDisplay-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = C28E79B81DF10AD500E2C517 /* SanFranciscoDisplay-Bold.otf */; };
+		C2E2491C1E12A32A00207FC5 /* SanFranciscoDisplay-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = C2B2FFDE1DF0277500C1CD77 /* SanFranciscoDisplay-Regular.otf */; };
+		C2E2491D1E12A32A00207FC5 /* SanFranciscoDisplay-Ultralight.otf in Resources */ = {isa = PBXBuildFile; fileRef = C2B2FFDC1DF0270000C1CD77 /* SanFranciscoDisplay-Ultralight.otf */; };
+		C2E2491E1E12A32A00207FC5 /* SanFranciscoDisplay-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = C28E79B81DF10AD500E2C517 /* SanFranciscoDisplay-Bold.otf */; };
+		C2E2491F1E12A32A00207FC5 /* SanFranciscoDisplay-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = C2B2FFDE1DF0277500C1CD77 /* SanFranciscoDisplay-Regular.otf */; };
+		C2E249201E12A32A00207FC5 /* SanFranciscoDisplay-Ultralight.otf in Resources */ = {isa = PBXBuildFile; fileRef = C2B2FFDC1DF0270000C1CD77 /* SanFranciscoDisplay-Ultralight.otf */; };
 		C2E652571DF1335F008A5B7F /* FDSunriseView.m in Sources */ = {isa = PBXBuildFile; fileRef = C2E652561DF1335F008A5B7F /* FDSunriseView.m */; };
 		C2F018DE1E0A869E00CC3EC3 /* UIView+OldSchoolSnapshots.m in Sources */ = {isa = PBXBuildFile; fileRef = C2F018DD1E0A869E00CC3EC3 /* UIView+OldSchoolSnapshots.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		C2426ECF1E1208640026A473 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C2B2FF931DEFF52F00C1CD77 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C2426EC31E1208640026A473;
+			remoteInfo = widget;
+		};
 		C2B2FFB51DEFF52F00C1CD77 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = C2B2FF931DEFF52F00C1CD77 /* Project object */;
@@ -111,7 +177,29 @@
 			remoteGlobalIDString = C2B2FF9A1DEFF52F00C1CD77;
 			remoteInfo = FirstDemo;
 		};
+		C2E249101E129EA200207FC5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C2B2FF931DEFF52F00C1CD77 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C2E249051E129EA200207FC5;
+			remoteInfo = widget2;
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		C2426ED51E1208640026A473 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 12;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				C2426ED11E1208640026A473 /* widget.appex in Embed App Extensions */,
+				C2E249121E129EA200207FC5 /* widget2.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		C200BC601DF97B5A00BB9EA8 /* FDCityCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FDCityCollectionViewCell.h; sourceTree = "<group>"; };
@@ -160,10 +248,32 @@
 		C21FCB581E08FAC000534A80 /* UMSocialSDKResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = UMSocialSDKResources.bundle; sourceTree = "<group>"; };
 		C21FCB591E08FAC000534A80 /* UShareUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UShareUI.framework; sourceTree = "<group>"; };
 		C21FCB6A1E08FCDD00534A80 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		C22659B01E1352D800459948 /* WidgetCalendarModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WidgetCalendarModel.h; sourceTree = "<group>"; };
+		C22659B11E1352D800459948 /* WidgetCalendarModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WidgetCalendarModel.m; sourceTree = "<group>"; };
+		C22659BE1E138CDE00459948 /* festival.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = festival.json; sourceTree = "<group>"; };
+		C22659BF1E138CDE00459948 /* vocation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = vocation.json; sourceTree = "<group>"; };
 		C240210E1E08C9390064CE01 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		C24021101E08C95D0064CE01 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		C24021131E08DE870064CE01 /* FDHudView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FDHudView.h; sourceTree = "<group>"; };
 		C24021141E08DE870064CE01 /* FDHudView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FDHudView.m; sourceTree = "<group>"; };
+		C2426EC41E1208640026A473 /* widget.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = widget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		C2426EC51E1208640026A473 /* NotificationCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NotificationCenter.framework; path = System/Library/Frameworks/NotificationCenter.framework; sourceTree = SDKROOT; };
+		C2426EC81E1208640026A473 /* TodayViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TodayViewController.h; sourceTree = "<group>"; };
+		C2426EC91E1208640026A473 /* TodayViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TodayViewController.m; sourceTree = "<group>"; };
+		C2426ECC1E1208640026A473 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
+		C2426ECE1E1208640026A473 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C2426ED71E120EDA0026A473 /* WidgetTableViewCell1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WidgetTableViewCell1.h; sourceTree = "<group>"; };
+		C2426ED81E120EDA0026A473 /* WidgetTableViewCell1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WidgetTableViewCell1.m; sourceTree = "<group>"; };
+		C2426F5D1E1218330026A473 /* WidgetTableViewCell2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WidgetTableViewCell2.h; sourceTree = "<group>"; };
+		C2426F5E1E1218330026A473 /* WidgetTableViewCell2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WidgetTableViewCell2.m; sourceTree = "<group>"; };
+		C2426F601E122EF20026A473 /* WidgetTableViewCell3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WidgetTableViewCell3.h; sourceTree = "<group>"; };
+		C2426F611E122EF20026A473 /* WidgetTableViewCell3.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WidgetTableViewCell3.m; sourceTree = "<group>"; };
+		C2426F631E1236080026A473 /* WidgetTableViewCell4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WidgetTableViewCell4.h; sourceTree = "<group>"; };
+		C2426F641E1236080026A473 /* WidgetTableViewCell4.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WidgetTableViewCell4.m; sourceTree = "<group>"; };
+		C2426F661E1236A50026A473 /* WidgetCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WidgetCollectionViewCell.h; sourceTree = "<group>"; };
+		C2426F671E1236A50026A473 /* WidgetCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WidgetCollectionViewCell.m; sourceTree = "<group>"; };
+		C2426F8F1E1264E50026A473 /* FirstDemo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = FirstDemo.entitlements; sourceTree = "<group>"; };
+		C2426F901E1264F30026A473 /* widget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = widget.entitlements; sourceTree = "<group>"; };
 		C26C8A261DF2B353009BF06C /* FDUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FDUtils.h; sourceTree = "<group>"; };
 		C26C8A271DF2B353009BF06C /* FDUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FDUtils.m; sourceTree = "<group>"; };
 		C27D46501DFA4E5F00707F76 /* hotcity.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = hotcity.json; sourceTree = "<group>"; };
@@ -290,6 +400,14 @@
 		C2DE49321DFE37AB0001A4D5 /* libstdc++.6.0.9.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.6.0.9.tbd"; path = "usr/lib/libstdc++.6.0.9.tbd"; sourceTree = SDKROOT; };
 		C2DE49341DFE37BA0001A4D5 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		C2DE49361DFE37D90001A4D5 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		C2E249061E129EA200207FC5 /* widget2.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = widget2.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		C2E249091E129EA200207FC5 /* TodayViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TodayViewController.h; sourceTree = "<group>"; };
+		C2E2490A1E129EA200207FC5 /* TodayViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TodayViewController.m; sourceTree = "<group>"; };
+		C2E2490D1E129EA200207FC5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
+		C2E2490F1E129EA200207FC5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C2E249161E129EAC00207FC5 /* widget2.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = widget2.entitlements; sourceTree = "<group>"; };
+		C2E249171E129EED00207FC5 /* WidgetDayCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WidgetDayCollectionViewCell.h; sourceTree = "<group>"; };
+		C2E249181E129EED00207FC5 /* WidgetDayCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WidgetDayCollectionViewCell.m; sourceTree = "<group>"; };
 		C2E652551DF1335F008A5B7F /* FDSunriseView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FDSunriseView.h; sourceTree = "<group>"; };
 		C2E652561DF1335F008A5B7F /* FDSunriseView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FDSunriseView.m; sourceTree = "<group>"; };
 		C2F018DC1E0A869E00CC3EC3 /* UIView+OldSchoolSnapshots.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+OldSchoolSnapshots.h"; sourceTree = "<group>"; };
@@ -297,6 +415,14 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		C2426EC11E1208640026A473 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C2426EC61E1208640026A473 /* NotificationCenter.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C2B2FF981DEFF52F00C1CD77 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -330,6 +456,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C2E249031E129EA200207FC5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C2E249071E129EA200207FC5 /* NotificationCenter.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -451,6 +585,36 @@
 			name = Map;
 			sourceTree = "<group>";
 		};
+		C2426EC71E1208640026A473 /* widget */ = {
+			isa = PBXGroup;
+			children = (
+				C2426F901E1264F30026A473 /* widget.entitlements */,
+				C2426ED61E120E9C0026A473 /* TableViewCells */,
+				C2426EC81E1208640026A473 /* TodayViewController.h */,
+				C2426EC91E1208640026A473 /* TodayViewController.m */,
+				C2426ECB1E1208640026A473 /* MainInterface.storyboard */,
+				C2426ECE1E1208640026A473 /* Info.plist */,
+			);
+			path = widget;
+			sourceTree = "<group>";
+		};
+		C2426ED61E120E9C0026A473 /* TableViewCells */ = {
+			isa = PBXGroup;
+			children = (
+				C2426ED71E120EDA0026A473 /* WidgetTableViewCell1.h */,
+				C2426ED81E120EDA0026A473 /* WidgetTableViewCell1.m */,
+				C2426F5D1E1218330026A473 /* WidgetTableViewCell2.h */,
+				C2426F5E1E1218330026A473 /* WidgetTableViewCell2.m */,
+				C2426F601E122EF20026A473 /* WidgetTableViewCell3.h */,
+				C2426F611E122EF20026A473 /* WidgetTableViewCell3.m */,
+				C2426F631E1236080026A473 /* WidgetTableViewCell4.h */,
+				C2426F641E1236080026A473 /* WidgetTableViewCell4.m */,
+				C2426F661E1236A50026A473 /* WidgetCollectionViewCell.h */,
+				C2426F671E1236A50026A473 /* WidgetCollectionViewCell.m */,
+			);
+			name = TableViewCells;
+			sourceTree = "<group>";
+		};
 		C27D46521DFA55ED00707F76 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -467,6 +631,7 @@
 				C28F81F91DFA9AAF00B27655 /* libxml2.2.tbd */,
 				C28F81F71DFA9A7400B27655 /* libxml2.tbd */,
 				C27D46531DFA55ED00707F76 /* CoreLocation.framework */,
+				C2426EC51E1208640026A473 /* NotificationCenter.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -519,6 +684,8 @@
 			children = (
 				C2B2FF9D1DEFF52F00C1CD77 /* FirstDemo */,
 				C2B2FFB71DEFF52F00C1CD77 /* FirstDemoTests */,
+				C2426EC71E1208640026A473 /* widget */,
+				C2E249081E129EA200207FC5 /* widget2 */,
 				C2B2FF9C1DEFF52F00C1CD77 /* Products */,
 				C27D46521DFA55ED00707F76 /* Frameworks */,
 			);
@@ -529,6 +696,8 @@
 			children = (
 				C2B2FF9B1DEFF52F00C1CD77 /* FirstDemo.app */,
 				C2B2FFB41DEFF52F00C1CD77 /* FirstDemoTests.xctest */,
+				C2426EC41E1208640026A473 /* widget.appex */,
+				C2E249061E129EA200207FC5 /* widget2.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -536,6 +705,7 @@
 		C2B2FF9D1DEFF52F00C1CD77 /* FirstDemo */ = {
 			isa = PBXGroup;
 			children = (
+				C2426F8F1E1264E50026A473 /* FirstDemo.entitlements */,
 				C2A207A01E03CBAB000028AB /* Operations */,
 				C2A705F91DF9567000110C96 /* Model */,
 				C2C9348E1DF6B86300590921 /* View Controllers */,
@@ -556,6 +726,8 @@
 		C2B2FF9E1DEFF52F00C1CD77 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				C22659BE1E138CDE00459948 /* festival.json */,
+				C22659BF1E138CDE00459948 /* vocation.json */,
 				C2827F991E07A377005B277F /* province.xml */,
 				C2827F981E07A377005B277F /* city.xml */,
 				C2827F9A1E07A377005B277F /* county.xml */,
@@ -738,9 +910,42 @@
 			name = "Custom Views";
 			sourceTree = "<group>";
 		};
+		C2E249081E129EA200207FC5 /* widget2 */ = {
+			isa = PBXGroup;
+			children = (
+				C22659B01E1352D800459948 /* WidgetCalendarModel.h */,
+				C22659B11E1352D800459948 /* WidgetCalendarModel.m */,
+				C2E249161E129EAC00207FC5 /* widget2.entitlements */,
+				C2E249091E129EA200207FC5 /* TodayViewController.h */,
+				C2E2490A1E129EA200207FC5 /* TodayViewController.m */,
+				C2E2490C1E129EA200207FC5 /* MainInterface.storyboard */,
+				C2E2490F1E129EA200207FC5 /* Info.plist */,
+				C2E249171E129EED00207FC5 /* WidgetDayCollectionViewCell.h */,
+				C2E249181E129EED00207FC5 /* WidgetDayCollectionViewCell.m */,
+			);
+			path = widget2;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		C2426EC31E1208640026A473 /* widget */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C2426ED41E1208640026A473 /* Build configuration list for PBXNativeTarget "widget" */;
+			buildPhases = (
+				C2426EC01E1208640026A473 /* Sources */,
+				C2426EC11E1208640026A473 /* Frameworks */,
+				C2426EC21E1208640026A473 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = widget;
+			productName = widget;
+			productReference = C2426EC41E1208640026A473 /* widget.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		C2B2FF9A1DEFF52F00C1CD77 /* FirstDemo */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = C2B2FFBD1DEFF52F00C1CD77 /* Build configuration list for PBXNativeTarget "FirstDemo" */;
@@ -748,10 +953,13 @@
 				C2B2FF971DEFF52F00C1CD77 /* Sources */,
 				C2B2FF981DEFF52F00C1CD77 /* Frameworks */,
 				C2B2FF991DEFF52F00C1CD77 /* Resources */,
+				C2426ED51E1208640026A473 /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				C2426ED01E1208640026A473 /* PBXTargetDependency */,
+				C2E249111E129EA200207FC5 /* PBXTargetDependency */,
 			);
 			name = FirstDemo;
 			productName = FirstDemo;
@@ -776,6 +984,23 @@
 			productReference = C2B2FFB41DEFF52F00C1CD77 /* FirstDemoTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		C2E249051E129EA200207FC5 /* widget2 */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C2E249151E129EA200207FC5 /* Build configuration list for PBXNativeTarget "widget2" */;
+			buildPhases = (
+				C2E249021E129EA200207FC5 /* Sources */,
+				C2E249031E129EA200207FC5 /* Frameworks */,
+				C2E249041E129EA200207FC5 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = widget2;
+			productName = widget2;
+			productReference = C2E249061E129EA200207FC5 /* widget2.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -785,15 +1010,40 @@
 				LastUpgradeCheck = 0810;
 				ORGANIZATIONNAME = tbw;
 				TargetAttributes = {
+					C2426EC31E1208640026A473 = {
+						CreatedOnToolsVersion = 8.1;
+						DevelopmentTeam = 6Q3X7AW5CU;
+						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+						};
+					};
 					C2B2FF9A1DEFF52F00C1CD77 = {
 						CreatedOnToolsVersion = 8.0;
 						DevelopmentTeam = 6Q3X7AW5CU;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+						};
 					};
 					C2B2FFB31DEFF52F00C1CD77 = {
 						CreatedOnToolsVersion = 8.0;
 						ProvisioningStyle = Automatic;
 						TestTargetID = C2B2FF9A1DEFF52F00C1CD77;
+					};
+					C2E249051E129EA200207FC5 = {
+						CreatedOnToolsVersion = 8.1;
+						DevelopmentTeam = 6Q3X7AW5CU;
+						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -812,11 +1062,30 @@
 			targets = (
 				C2B2FF9A1DEFF52F00C1CD77 /* FirstDemo */,
 				C2B2FFB31DEFF52F00C1CD77 /* FirstDemoTests */,
+				C2426EC31E1208640026A473 /* widget */,
+				C2E249051E129EA200207FC5 /* widget2 */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		C2426EC21E1208640026A473 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C2E249001E126A3900207FC5 /* city.xml in Resources */,
+				C22659C41E1390C300459948 /* festival.json in Resources */,
+				C22659C51E1390C300459948 /* vocation.json in Resources */,
+				C2E248FE1E126A2800207FC5 /* Assets.xcassets in Resources */,
+				C2E2491C1E12A32A00207FC5 /* SanFranciscoDisplay-Regular.otf in Resources */,
+				C2426ECD1E1208640026A473 /* MainInterface.storyboard in Resources */,
+				C2E2491B1E12A32A00207FC5 /* SanFranciscoDisplay-Bold.otf in Resources */,
+				C2E248FF1E126A3900207FC5 /* province.xml in Resources */,
+				C2E2491D1E12A32A00207FC5 /* SanFranciscoDisplay-Ultralight.otf in Resources */,
+				C2E249011E126A3900207FC5 /* county.xml in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C2B2FF991DEFF52F00C1CD77 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -824,6 +1093,8 @@
 				C21FCB5D1E08FAC000534A80 /* TencentOpenApi_IOS_Bundle.bundle in Resources */,
 				C27D46511DFA4E5F00707F76 /* hotcity.json in Resources */,
 				C2827F9C1E07A377005B277F /* province.xml in Resources */,
+				C22659C11E138CDE00459948 /* vocation.json in Resources */,
+				C22659C01E138CDE00459948 /* festival.json in Resources */,
 				C28E79B91DF10AD500E2C517 /* SanFranciscoDisplay-Bold.otf in Resources */,
 				C21FCB651E08FAC000534A80 /* README.txt in Resources */,
 				C2B2FFAE1DEFF52F00C1CD77 /* LaunchScreen.storyboard in Resources */,
@@ -831,7 +1102,6 @@
 				C21FCB641E08FAC000534A80 /* read_me.txt in Resources */,
 				C2827F9D1E07A377005B277F /* county.xml in Resources */,
 				C2B2FFDF1DF0277500C1CD77 /* SanFranciscoDisplay-Regular.otf in Resources */,
-				C2B200131DF03B1900C1CD77 /* Info.plist in Resources */,
 				C21FCB601E08FAC000534A80 /* WeiboSDK.bundle in Resources */,
 				C2B2FFAB1DEFF52F00C1CD77 /* Assets.xcassets in Resources */,
 				C21FCB681E08FAC000534A80 /* UMSocialSDKResources.bundle in Resources */,
@@ -847,9 +1117,51 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		C2E249041E129EA200207FC5 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C22659C31E1390BE00459948 /* vocation.json in Resources */,
+				C2E2491F1E12A32A00207FC5 /* SanFranciscoDisplay-Regular.otf in Resources */,
+				C22659C21E1390BE00459948 /* festival.json in Resources */,
+				C2E2490E1E129EA200207FC5 /* MainInterface.storyboard in Resources */,
+				C2E249201E12A32A00207FC5 /* SanFranciscoDisplay-Ultralight.otf in Resources */,
+				C2E2491E1E12A32A00207FC5 /* SanFranciscoDisplay-Bold.otf in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		C2426EC01E1208640026A473 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C2426F8E1E12604E0026A473 /* FDAqi.m in Sources */,
+				C2426F831E125A6B0026A473 /* NSArray+MASAdditions.m in Sources */,
+				C2426F821E125A6B0026A473 /* MASViewConstraint.m in Sources */,
+				C2426F741E12523B0026A473 /* FDUtils.m in Sources */,
+				C2426F7F1E125A6B0026A473 /* MASConstraintMaker.m in Sources */,
+				C2426F851E125A6B0026A473 /* View+MASAdditions.m in Sources */,
+				C2426F681E1236A50026A473 /* WidgetCollectionViewCell.m in Sources */,
+				C22659B91E13835700459948 /* WidgetCalendarModel.m in Sources */,
+				C2426F8B1E12604E0026A473 /* FDCity.m in Sources */,
+				C2426F7E1E125A6B0026A473 /* MASConstraint.m in Sources */,
+				C2426F621E122EF20026A473 /* WidgetTableViewCell3.m in Sources */,
+				C2426F8D1E12604E0026A473 /* FDForecastItemDate.m in Sources */,
+				C2426F811E125A6B0026A473 /* MASViewAttribute.m in Sources */,
+				C2426F8C1E12604E0026A473 /* FDForecastItemHour.m in Sources */,
+				C2426F841E125A6B0026A473 /* NSLayoutConstraint+MASDebugAdditions.m in Sources */,
+				C2426ECA1E1208640026A473 /* TodayViewController.m in Sources */,
+				C2426F7D1E125A5A0026A473 /* MASCompositeConstraint.m in Sources */,
+				C2426F801E125A6B0026A473 /* MASLayoutConstraint.m in Sources */,
+				C2426F651E1236080026A473 /* WidgetTableViewCell4.m in Sources */,
+				C2426F5F1E1218330026A473 /* WidgetTableViewCell2.m in Sources */,
+				C2426F861E125A6B0026A473 /* ViewController+MASAdditions.m in Sources */,
+				C2426ED91E120EDA0026A473 /* WidgetTableViewCell1.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C2B2FF971DEFF52F00C1CD77 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -901,6 +1213,7 @@
 				C2B2FFA01DEFF52F00C1CD77 /* main.m in Sources */,
 				C28E79BC1DF113E200E2C517 /* FDForecastWeatherTableViewCell.m in Sources */,
 				C2DCBF6E1DF17E2600D73815 /* FDTableViewCell.m in Sources */,
+				C22659B71E1382C100459948 /* WidgetCalendarModel.m in Sources */,
 				C21EB5CA1DF26F8B00A5C595 /* FDSuggestionTableViewCell.m in Sources */,
 				C2E652571DF1335F008A5B7F /* FDSunriseView.m in Sources */,
 				C2B2FFED1DF0333200C1CD77 /* FDForecastWeatherCollectionViewCell.m in Sources */,
@@ -920,17 +1233,57 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		C2E249021E129EA200207FC5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C22659CD1E1391FF00459948 /* NSLayoutConstraint+MASDebugAdditions.m in Sources */,
+				C2E2491A1E12A20400207FC5 /* UIColor+FDColor.m in Sources */,
+				C22659CB1E1391FF00459948 /* MASViewConstraint.m in Sources */,
+				C2E2490B1E129EA200207FC5 /* TodayViewController.m in Sources */,
+				C22659B81E13834500459948 /* FDUtils.m in Sources */,
+				C2E249191E129EED00207FC5 /* WidgetDayCollectionViewCell.m in Sources */,
+				C22659CE1E1391FF00459948 /* View+MASAdditions.m in Sources */,
+				C22659C61E1391FF00459948 /* MASCompositeConstraint.m in Sources */,
+				C22659CA1E1391FF00459948 /* MASViewAttribute.m in Sources */,
+				C22659C81E1391FF00459948 /* MASConstraintMaker.m in Sources */,
+				C22659CC1E1391FF00459948 /* NSArray+MASAdditions.m in Sources */,
+				C22659CF1E1391FF00459948 /* ViewController+MASAdditions.m in Sources */,
+				C22659C71E1391FF00459948 /* MASConstraint.m in Sources */,
+				C22659C91E1391FF00459948 /* MASLayoutConstraint.m in Sources */,
+				C22659B21E1352D800459948 /* WidgetCalendarModel.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		C2426ED01E1208640026A473 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C2426EC31E1208640026A473 /* widget */;
+			targetProxy = C2426ECF1E1208640026A473 /* PBXContainerItemProxy */;
+		};
 		C2B2FFB61DEFF52F00C1CD77 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = C2B2FF9A1DEFF52F00C1CD77 /* FirstDemo */;
 			targetProxy = C2B2FFB51DEFF52F00C1CD77 /* PBXContainerItemProxy */;
 		};
+		C2E249111E129EA200207FC5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C2E249051E129EA200207FC5 /* widget2 */;
+			targetProxy = C2E249101E129EA200207FC5 /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		C2426ECB1E1208640026A473 /* MainInterface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C2426ECC1E1208640026A473 /* Base */,
+			);
+			name = MainInterface.storyboard;
+			sourceTree = "<group>";
+		};
 		C2B2FFA71DEFF52F00C1CD77 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -947,9 +1300,45 @@
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
 		};
+		C2E2490C1E129EA200207FC5 /* MainInterface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C2E2490D1E129EA200207FC5 /* Base */,
+			);
+			name = MainInterface.storyboard;
+			sourceTree = "<group>";
+		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		C2426ED21E1208640026A473 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = widget/widget.entitlements;
+				DEVELOPMENT_TEAM = 6Q3X7AW5CU;
+				INFOPLIST_FILE = widget/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = sss.FirstDemo.widget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		C2426ED31E1208640026A473 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = widget/widget.entitlements;
+				DEVELOPMENT_TEAM = 6Q3X7AW5CU;
+				INFOPLIST_FILE = widget/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = sss.FirstDemo.widget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
 		C2B2FFBB1DEFF52F00C1CD77 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1048,6 +1437,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
+				CODE_SIGN_ENTITLEMENTS = FirstDemo/FirstDemo.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 6Q3X7AW5CU;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1083,6 +1473,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
+				CODE_SIGN_ENTITLEMENTS = FirstDemo/FirstDemo.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 6Q3X7AW5CU;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1136,9 +1527,46 @@
 			};
 			name = Release;
 		};
+		C2E249131E129EA200207FC5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = widget2/widget2.entitlements;
+				DEVELOPMENT_TEAM = 6Q3X7AW5CU;
+				INFOPLIST_FILE = widget2/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = sss.FirstDemo.widget2;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		C2E249141E129EA200207FC5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = widget2/widget2.entitlements;
+				DEVELOPMENT_TEAM = 6Q3X7AW5CU;
+				INFOPLIST_FILE = widget2/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = sss.FirstDemo.widget2;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		C2426ED41E1208640026A473 /* Build configuration list for PBXNativeTarget "widget" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C2426ED21E1208640026A473 /* Debug */,
+				C2426ED31E1208640026A473 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		C2B2FF961DEFF52F00C1CD77 /* Build configuration list for PBXProject "FirstDemo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -1162,6 +1590,15 @@
 			buildConfigurations = (
 				C2B2FFC11DEFF52F00C1CD77 /* Debug */,
 				C2B2FFC21DEFF52F00C1CD77 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C2E249151E129EA200207FC5 /* Build configuration list for PBXNativeTarget "widget2" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C2E249131E129EA200207FC5 /* Debug */,
+				C2E249141E129EA200207FC5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

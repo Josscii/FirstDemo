@@ -97,7 +97,7 @@
     [self.contentView addSubview:_vocationView];
     
     [_vocationView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.width.mas_equalTo(10);
+        make.width.height.mas_equalTo(10);
         make.top.right.equalTo(self.contentView);
     }];
 }
@@ -116,8 +116,8 @@
     }
     
     if (model.festival) {
-        _lunarDayLabel.text = model.festival.length <= 4 ? model.festival : [model.festival substringToIndex:4];
-        _lunarDayLabel.textColor = [[UIColor blueColor] colorWithAlphaComponent:0.4];
+        _lunarDayLabel.text = model.festival.length <= 5 ? model.festival : [model.festival substringToIndex:5];
+        _lunarDayLabel.textColor = [UIColor wd_blueColor];
     }
     
     if (model.jieqi) {
@@ -127,10 +127,13 @@
     
     if (model.vocation.integerValue == 1) {
         _vocationView.titleLabel.text = @"休";
-        _vocationView.backgroundColor = [[UIColor blueColor] colorWithAlphaComponent:0.4];
+        _vocationView.backgroundColor = [UIColor wd_blueColor];
     } else if (model.vocation.integerValue == 2) {
         _vocationView.titleLabel.text = @"班";
         _vocationView.backgroundColor = [UIColor wd_redColor];
+    } else {
+        _vocationView.titleLabel.text = @"";
+        _vocationView.backgroundColor = [UIColor clearColor];
     }
     
     if (index == 0 || index == 6 || index == 7 || index == 13 || index == 14 || index == 20 || index == 21 || index == 27 || index == 28 || index == 34) {

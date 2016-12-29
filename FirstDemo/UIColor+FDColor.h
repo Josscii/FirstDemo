@@ -21,6 +21,7 @@
 
 + (UIColor *)wd_redColor;
 + (UIColor *)wd_blackColor;
++ (UIColor *)wd_blueColor;
 
 
 @end

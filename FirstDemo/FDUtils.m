@@ -423,6 +423,54 @@ static int32_t gLunarHolDay[]=
     
 };
 
++ (NSString *)currentDateInfo {
+    NSArray *chineseMonths = [NSArray arrayWithObjects:
+                              @"正月", @"二月", @"三月", @"四月", @"五月", @"六月", @"七月", @"八月",
+                              @"九月", @"十月", @"冬月", @"腊月", nil];
+    
+    
+    NSArray *chineseDays = [NSArray arrayWithObjects:
+                            @"初一", @"初二", @"初三", @"初四", @"初五", @"初六", @"初七", @"初八", @"初九", @"初十",
+                            @"十一", @"十二", @"十三", @"十四", @"十五", @"十六", @"十七", @"十八", @"十九", @"二十",
+                            @"廿一", @"廿二", @"廿三", @"廿四", @"廿五", @"廿六", @"廿七", @"廿八", @"廿九", @"三十",  nil];
+    
+    NSDate *today = [NSDate date];
+    NSCalendar *current = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    NSCalendar *lunarCalendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierChinese];
+    
+    NSDateComponents *components = [current components:NSCalendarUnitMonth | NSCalendarUnitDay | NSCalendarUnitWeekday | NSCalendarUnitWeekOfYear fromDate:today];
+    NSDateComponents *lunarcomponents = [lunarCalendar components:NSCalendarUnitMonth | NSCalendarUnitDay fromDate:today];
+    
+    NSString *weekday = nil;
+    switch (components.weekday) {
+        case 1:
+            weekday = @"周日";
+            break;
+        case 2:
+            weekday = @"周一";
+            break;
+        case 3:
+            weekday = @"周二";
+            break;
+        case 4:
+            weekday = @"周三";
+            break;
+        case 5:
+            weekday = @"周四";
+            break;
+        case 6:
+            weekday = @"周五";
+            break;
+        case 7:
+            weekday = @"周六";
+            break;
+        default:
+            break;
+    }
+    
+    return [NSString stringWithFormat:@"%@月%@日 %@ 第%@周 农历%@%@", @(components.month), @(components.day), weekday, @(components.weekOfYear), chineseMonths[lunarcomponents.month-1], chineseDays[lunarcomponents.day-1]];
+}
+
 + (NSArray *)getAllCalendarModels {
     
     NSMutableArray *results = [NSMutableArray array];
@@ -456,7 +504,7 @@ static int32_t gLunarHolDay[]=
     NSInteger year = [current component:NSCalendarUnitYear fromDate:today];
     
     NSDateComponents *currentMonthComponents = [current components:(NSCalendarUnitYear | NSCalendarUnitMonth) fromDate:today];
-    [currentMonthComponents setDay:2];
+    [currentMonthComponents setDay:1];
     NSDate *date = [current dateFromComponents:currentMonthComponents];
     
     NSInteger weekday = [current component:NSCalendarUnitWeekday fromDate:date];

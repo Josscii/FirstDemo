@@ -81,6 +81,7 @@
     for (FDForecastItemDate *date in _city.fcd) {
         if ([date.date isEqualToString:_city.curr.date]) {
             _tomorrowIndex = [_city.fcd indexOfObject:date] + 1;
+            break;
         }
     }
     

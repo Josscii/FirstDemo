@@ -18,11 +18,12 @@
 
 @property (nonatomic, strong) UICollectionView *collectionView;
 @property (nonatomic, strong) UILabel *dateLabel;
-
-@property (nonatomic, strong) UICollectionView *collectionView1;
 @property (nonatomic, copy) NSArray *calendarModels;
 
 @property (nonatomic, strong) UIView *separator;
+@property (nonatomic, assign) NSInteger todayIndex;
+
+@property (nonatomic, assign) BOOL weekView;
 
 @end
 
@@ -32,9 +33,22 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
+    _weekView = NO;
+    
     _calendarModels = [FDUtils getAllCalendarModels];
     
+    /// find the today
+    [_calendarModels enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        WidgetCalendarModel *model = obj;
+        if (model.isToday) {
+            _todayIndex = idx;
+            *stop = YES;
+        }
+    }];
+    
     [self setupView];
+    
+    _dateLabel.text = [FDUtils currentDateInfo];
 }
 
 - (void)setupView {
@@ -111,33 +125,7 @@
         make.top.equalTo(header.mas_bottom);
     }];
     
-    // collectionView1
-    UICollectionViewFlowLayout *flowLayout1 = [[UICollectionViewFlowLayout alloc] init];
-    flowLayout1.scrollDirection = UICollectionViewScrollDirectionVertical;
-    flowLayout1.itemSize = CGSizeMake(45, 45);
-    flowLayout1.sectionInset = UIEdgeInsetsMake(0, 5, 15, 5);
-    flowLayout1.minimumLineSpacing = 0;
-    flowLayout1.minimumInteritemSpacing = 0;
-    
-    _collectionView1 = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:flowLayout1];
-    _collectionView1.delegate = self;
-    _collectionView1.dataSource = self;
-    _collectionView1.showsVerticalScrollIndicator = NO;
-    _collectionView1.showsHorizontalScrollIndicator = NO;
-    _collectionView1.backgroundColor = [UIColor clearColor];
-    [_collectionView1 registerClass:[WidgetDayCollectionViewCell class] forCellWithReuseIdentifier:@"cell"];
-    
-    [self.view addSubview:_collectionView1];
-    
-    [_collectionView1 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.right.equalTo(self.view);
-        make.height.mas_equalTo(60);
-        make.top.equalTo(header.mas_bottom);
-    }];
-    
     self.extensionContext.widgetLargestAvailableDisplayMode = NCWidgetDisplayModeExpanded;
-    
-    _dateLabel.text = @"9月26日  周一  第48周  农历八月廿六";
 }
 
 #pragma mark -
@@ -145,7 +133,7 @@
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     
-    if ([collectionView isEqual:_collectionView1]) {
+    if (_weekView) {
         return 7;
     }
     
@@ -157,10 +145,12 @@
     
     WidgetCalendarModel *model = nil;
     
-    if ([collectionView isEqual:_collectionView]) {
+    if (!_weekView) {
         model = _calendarModels[indexPath.item];
     } else {
-        model = _calendarModels[indexPath.item + 28];
+        
+        NSInteger offset = floor(_todayIndex/7.0) * 7;
+        model = _calendarModels[indexPath.item + offset];
     }
     
     [cell configureCellWithData:model index: indexPath.item];
@@ -185,9 +175,11 @@
     if (activeDisplayMode == NCWidgetDisplayModeCompact) {
         self.preferredContentSize = maxSize;
         
+        _weekView = YES;
+        
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.25 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            _collectionView1.hidden = NO;
-            _collectionView.hidden = YES;
+            
+            [_collectionView reloadData];
             
             [_dateLabel mas_updateConstraints:^(MASConstraintMaker *make) {
                 make.top.equalTo(self.view).offset(8.5);
@@ -200,9 +192,10 @@
     } else {
         self.preferredContentSize = CGSizeMake(0, 313.5);
         
+        _weekView = NO;
+        
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.25 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            _collectionView1.hidden = YES;
-            _collectionView.hidden = NO;
+            [_collectionView reloadData];
             
             [_dateLabel mas_updateConstraints:^(MASConstraintMaker *make) {
                 make.top.equalTo(self.view).offset(13);

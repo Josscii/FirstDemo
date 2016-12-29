@@ -34,5 +34,6 @@
 + (NSString *)codeOfCity:(NSString *)cityName;
 
 + (NSArray *)getAllCalendarModels;
++ (NSString *)currentDateInfo;
 
 @end
